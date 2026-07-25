@@ -31,7 +31,7 @@ if [ -z "$AWG_CONTAINER" ]; then
 fi
 echo -e "${GREEN}Найден контейнер: $AWG_CONTAINER${NC}"
 
-# ИСПРАВЛЕНО: Ищем именно сеть amnezia, игнорируя стандартный bridge
+# Ищем именно сеть amnezia, игнорируя стандартный bridge
 NETWORK_NAME=$(docker inspect "$AWG_CONTAINER" --format '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}' | grep 'amnezia' | head -n1)
 if [ -z "$NETWORK_NAME" ]; then
     NETWORK_NAME=$(docker inspect "$AWG_CONTAINER" --format '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}' | head -n1)
@@ -43,7 +43,12 @@ if [ -z "$DOCKER_NETS" ]; then
     exit 1
 fi
 
-WG_PORT=$(docker port "$AWG_CONTAINER" | grep '/udp' | awk -F'-' '{print $1}' | awk -F':' '{print $2}' | head -n1)
+# ИСПРАВЛЕНО: Железобетонный парсинг порта UDP
+WG_PORT=$(docker port "$AWG_CONTAINER" | grep '/udp' | head -n1 | awk -F'/' '{print $1}')
+if [ -z "$WG_PORT" ]; then
+    # Запасной вариант через инспект контейнера
+    WG_PORT=$(docker inspect "$AWG_CONTAINER" --format '{{range $k, $v := .NetworkSettings.Ports}}{{$k}}{{end}}' | grep '/udp' | head -n1 | awk -F'/' '{print $1}')
+fi
 if [ -z "$WG_PORT" ]; then
     echo -e "${RED}Ошибка: Не удалось определить порт AWG (UDP).${NC}"
     exit 1
