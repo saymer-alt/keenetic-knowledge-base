@@ -44,9 +44,10 @@ if [ -z "$DOCKER_NETS" ]; then
     exit 1
 fi
 
-WG_PORT=$(docker port "$AWG_CONTAINER" | grep 'udp' | awk -F'-' '{print $1}' | awk -F':' '{print $2}' | head -n1)
+# Ищем именно UDP порт
+WG_PORT=$(docker port "$AWG_CONTAINER" | grep '/udp' | awk -F'-' '{print $1}' | awk -F':' '{print $2}' | head -n1)
 if [ -z "$WG_PORT" ]; then
-    echo -e "${RED}Ошибка: Не удалось определить порт AWG.${NC}"
+    echo -e "${RED}Ошибка: Не удалось определить порт AWG (UDP).${NC}"
     exit 1
 fi
 
@@ -67,8 +68,8 @@ net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0
 EOF
 sysctl -p /etc/sysctl.d/99-amnezia-mihomo.conf > /dev/null
-# Принудительно отключаем rp_filter прямо сейчас
-for i in /proc/sys/net/ipv4/conf/*/rp_filter; do echo 0 > $i; done
+# Безопасное отключение rp_filter
+for i in /proc/sys/net/ipv4/conf/*/rp_filter; do echo 0 > "$i"; done
 
 # 3. Создание скрипта маршрутизации
 echo -e "${YELLOW}[*] Создание скрипта маршрутизации...${NC}"
@@ -82,7 +83,21 @@ WG_PORT="$WG_PORT"
 TABLE_ID="100"
 HOST_IF="$HOST_IF"
 
-for i in /proc/sys/net/ipv4/conf/*/rp_filter; do echo 0 > \$i; done
+# Обработка очистки правил (для systemctl stop)
+if [ "\${1:-}" = "cleanup" ]; then
+    ip rule del fwmark 0x88 lookup main priority 40 2>/dev/null || true
+    ip rule del from "\$DOCKER_NETS" lookup "\$TABLE_ID" priority 100 2>/dev/null || true
+    ip route del default table "\$TABLE_ID" 2>/dev/null || true
+    iptables -t mangle -D PREROUTING -s "\$DOCKER_NETS" -p udp --sport "\$WG_PORT" -j MARK --set-mark 0x88 2>/dev/null || true
+    iptables -t mangle -D FORWARD -s "\$DOCKER_NETS" -o "\$PROXY_IF" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu 2>/dev/null || true
+    iptables -t nat -D POSTROUTING -o "\$PROXY_IF" -j MASQUERADE 2>/dev/null || true
+    iptables -D FORWARD -s "\$DOCKER_NETS" -j ACCEPT 2>/dev/null || true
+    iptables -D FORWARD -d "\$DOCKER_NETS" -j ACCEPT 2>/dev/null || true
+    echo "Cleanup done."
+    exit 0
+fi
+
+for i in /proc/sys/net/ipv4/conf/*/rp_filter; do echo 0 > "\$i"; done
 
 if ! ip link show "\$PROXY_IF" >/dev/null 2>&1; then
     echo "Error: Interface '\$PROXY_IF' does not exist. Is Mihomo TUN running?"
@@ -101,25 +116,33 @@ ip route replace default dev "\$PROXY_IF" table "\$TABLE_ID"
 ip rule add from "\$DOCKER_NETS" lookup "\$TABLE_ID" priority 100
 ip rule add fwmark 0x88 lookup main priority 40
 
+# 1. Маркируем ОТВЕТЫ контейнера (порт AWG) МИМО ПРОКСИ
 iptables -t mangle -I PREROUTING 1 -s "\$DOCKER_NETS" -p udp --sport "\$WG_PORT" -j MARK --set-mark 0x88
+
+# 2. Корректируем MTU (MSS Clamping) против зависания крупных пакетов
+iptables -t mangle -A FORWARD -s "\$DOCKER_NETS" -o "\$PROXY_IF" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+# 3. МАСКАРАДИНГ В ПРОКСИ (NAT)
 iptables -t nat -A POSTROUTING -o "\$PROXY_IF" -j MASQUERADE
+
+# 4. АБСОЛЮТНЫЙ ПРИОРИТЕТ ДЛЯ ТРАФИКА КОНТЕЙНЕРА (Обход UFW DROP)
 iptables -I FORWARD 1 -s "\$DOCKER_NETS" -j ACCEPT
 iptables -I FORWARD 2 -d "\$DOCKER_NETS" -j ACCEPT
 EOF
 chmod +x /usr/local/sbin/warp-docker-routing.sh
 
-# 4. Создание systemd службы
+# 4. Создание systemd службы (БЕЗ жесткого Requires)
 echo -e "${YELLOW}[*] Создание systemd сервиса...${NC}"
 cat << 'EOF' > /etc/systemd/system/warp-docker-routing.service
 [Unit]
 Description=Route Amnezia Docker traffic through Mihomo TUN
-After=network-online.target docker.service mihomo.service
-Requires=mihomo.service
+After=network-online.target docker.service
 Wants=network-online.target docker.service
 
 [Service]
 Type=oneshot
 ExecStart=/usr/local/sbin/warp-docker-routing.sh
+ExecStop=/usr/local/sbin/warp-docker-routing.sh cleanup
 RemainAfterExit=yes
 ExecReload=/usr/local/sbin/warp-docker-routing.sh
 
@@ -135,9 +158,18 @@ PROXY_IF="$PROXY_IF"
 DOCKER_NETS="$DOCKER_NETS"
 
 if ! ip link show "\$PROXY_IF" >/dev/null 2>&1; then
-    logger "warp-check: Интерфейс \$PROXY_IF отсутствует. Перезапускаю Mihomo..."
-    systemctl restart mihomo.service
-    sleep 5
+    logger "warp-check: Интерфейс \$PROXY_IF отсутствует."
+    # Пытаемся перезапустить Mihomo (systemd или Docker)
+    if systemctl list-unit-files | grep -q "^mihomo.service"; then
+        systemctl restart mihomo.service
+    elif command -v docker >/dev/null 2>&1 && docker ps -a --format '{{.Names}}' | grep -q "mihomo"; then
+        docker restart mihomo
+    fi
+    # Ждем до 20 секунд появления интерфейса
+    for i in \$(seq 1 10); do
+        if ip link show "\$PROXY_IF" >/dev/null 2>&1; then break; fi
+        sleep 2
+    done
 fi
 
 if ! ip rule | grep -q "from \$DOCKER_NETS lookup 100"; then
@@ -170,23 +202,9 @@ OnUnitActiveSec=1min
 WantedBy=timers.target
 EOF
 
-# 6. Настройка автоперезапуска Mihomo
-if systemctl is-active --quiet mihomo; then
-    echo -e "${YELLOW}[*] Настройка автоперезапуска для mihomo.service...${NC}"
-    mkdir -p /etc/systemd/system/mihomo.service.d
-    cat << 'EOF' > /etc/systemd/system/mihomo.service.d/override.conf
-[Service]
-Restart=always
-RestartSec=5
-EOF
-else
-    echo -e "${YELLOW}[!] Внимание: mihomo.service не найден в systemd. Если Mihomo в Docker, настрой --restart unless-stopped вручную.${NC}"
-fi
-
-# 7. Запуск!
+# 6. Запуск!
 echo -e "${YELLOW}[*] Перезагрузка systemd и запуск служб...${NC}"
 systemctl daemon-reload
-systemctl restart mihomo 2>/dev/null || true
 systemctl enable --now warp-docker-routing.service
 systemctl enable --now check-warp-routing.timer
 
@@ -195,4 +213,3 @@ echo -e "УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!"
 echo -e "========================================================"
 echo -e "${NC}Теперь трафик Amnezia AWG направляется в ${PROXY_IF}."
 echo -e "Проверь подключение клиентом и зайди на 2ip.ru."
-echo -e "Если нужно откатить: systemctl stop warp-docker-routing.service && ip rule del from $DOCKER_NETS lookup 100"
