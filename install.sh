@@ -1,6 +1,6 @@
 #!/bin/bash
 # =========================================================
-# AmneziaAWG to Mihomo (TUN) Routing Installer
+# AmneziaAWG to Mihomo (TUN) Routing Installer (Production Ready)
 # =========================================================
 
 set -e
@@ -31,7 +31,6 @@ if [ -z "$AWG_CONTAINER" ]; then
 fi
 echo -e "${GREEN}Найден контейнер: $AWG_CONTAINER${NC}"
 
-# Ищем именно сеть amnezia, игнорируя стандартный bridge
 NETWORK_NAME=$(docker inspect "$AWG_CONTAINER" --format '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}' | grep 'amnezia' | head -n1)
 if [ -z "$NETWORK_NAME" ]; then
     NETWORK_NAME=$(docker inspect "$AWG_CONTAINER" --format '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}' | head -n1)
@@ -39,14 +38,12 @@ fi
 
 DOCKER_NETS=$(docker network inspect "$NETWORK_NAME" --format='{{range .IPAM.Config}}{{.Subnet}}{{end}}')
 if [ -z "$DOCKER_NETS" ]; then
-    echo -e "${RED}Ошибка: Не удалось определить подсеть Docker в сети $NETWORK_NAME.${NC}"
+    echo -e "${RED}Ошибка: Не удалось определить подсеть Docker.${NC}"
     exit 1
 fi
 
-# ИСПРАВЛЕНО: Железобетонный парсинг порта UDP
 WG_PORT=$(docker port "$AWG_CONTAINER" | grep '/udp' | head -n1 | awk -F'/' '{print $1}')
 if [ -z "$WG_PORT" ]; then
-    # Запасной вариант через инспект контейнера
     WG_PORT=$(docker inspect "$AWG_CONTAINER" --format '{{range $k, $v := .NetworkSettings.Ports}}{{$k}}{{end}}' | grep '/udp' | head -n1 | awk -F'/' '{print $1}')
 fi
 if [ -z "$WG_PORT" ]; then
@@ -73,7 +70,7 @@ EOF
 sysctl -p /etc/sysctl.d/99-amnezia-mihomo.conf > /dev/null
 for i in /proc/sys/net/ipv4/conf/*/rp_filter; do echo 0 > "$i"; done
 
-# 3. Скрипт маршрутизации
+# 3. Скрипт маршрутизации (с защитой от дублирования правил)
 echo -e "${YELLOW}[*] Создание скрипта маршрутизации...${NC}"
 cat << EOF > /usr/local/sbin/warp-docker-routing.sh
 #!/bin/sh
@@ -113,13 +110,23 @@ iptables -D FORWARD -s "\$DOCKER_NETS" -j ACCEPT 2>/dev/null || true
 iptables -D FORWARD -d "\$DOCKER_NETS" -j ACCEPT 2>/dev/null || true
 
 ip route replace default dev "\$PROXY_IF" table "\$TABLE_ID"
-ip rule add from "\$DOCKER_NETS" lookup "\$TABLE_ID" priority 100
-ip rule add fwmark 0x88 lookup main priority 40
+ip rule add from "\$DOCKER_NETS" lookup "\$TABLE_ID" priority 100 2>/dev/null || true
+ip rule add fwmark 0x88 lookup main priority 40 2>/dev/null || true
 
+# Добавляем правила только если их еще нет (защита от дублей)
+iptables -t mangle -C PREROUTING -s "\$DOCKER_NETS" -p udp --sport "\$WG_PORT" -j MARK --set-mark 0x88 2>/dev/null || \
 iptables -t mangle -I PREROUTING 1 -s "\$DOCKER_NETS" -p udp --sport "\$WG_PORT" -j MARK --set-mark 0x88
+
+iptables -t mangle -C FORWARD -s "\$DOCKER_NETS" -o "\$PROXY_IF" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu 2>/dev/null || \
 iptables -t mangle -A FORWARD -s "\$DOCKER_NETS" -o "\$PROXY_IF" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+iptables -t nat -C POSTROUTING -o "\$PROXY_IF" -j MASQUERADE 2>/dev/null || \
 iptables -t nat -A POSTROUTING -o "\$PROXY_IF" -j MASQUERADE
+
+iptables -C FORWARD -s "\$DOCKER_NETS" -j ACCEPT 2>/dev/null || \
 iptables -I FORWARD 1 -s "\$DOCKER_NETS" -j ACCEPT
+
+iptables -C FORWARD -d "\$DOCKER_NETS" -j ACCEPT 2>/dev/null || \
 iptables -I FORWARD 2 -d "\$DOCKER_NETS" -j ACCEPT
 EOF
 chmod +x /usr/local/sbin/warp-docker-routing.sh
@@ -143,7 +150,7 @@ ExecReload=/usr/local/sbin/warp-docker-routing.sh
 WantedBy=multi-user.target
 EOF
 
-# 5. Watchdog
+# 5. Watchdog (с корректным поиском контейнера Docker)
 echo -e "${YELLOW}[*] Настройка watchdog-таймера...${NC}"
 cat << EOF > /usr/local/sbin/check-warp-routing.sh
 #!/bin/sh
@@ -154,8 +161,11 @@ if ! ip link show "\$PROXY_IF" >/dev/null 2>&1; then
     logger "warp-check: Интерфейс \$PROXY_IF отсутствует."
     if systemctl list-unit-files | grep -q "^mihomo.service"; then
         systemctl restart mihomo.service
-    elif command -v docker >/dev/null 2>&1 && docker ps -a --format '{{.Names}}' | grep -q "mihomo"; then
-        docker restart mihomo
+    elif command -v docker >/dev/null 2>&1; then
+        MIHOMO_C=\$(docker ps -a --format '{{.Names}}' | grep "mihomo" | head -n1)
+        if [ -n "\$MIHOMO_C" ]; then
+            docker restart "\$MIHOMO_C"
+        fi
     fi
     for i in \$(seq 1 10); do
         if ip link show "\$PROXY_IF" >/dev/null 2>&1; then break; fi
