@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Укажите путь к вашему скрипту записи
+SCRIPT_PATH="/tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh"
+
+case "$1" in
+    start)
+        echo "Starting CCTV recording..."
+        sh $SCRIPT_PATH
+        ;;
+    stop)
+        echo "Stopping CCTV recording..."
+        rm -f /tmp/cctv_is_running
+        sleep 2
+        killall ffmpeg
+        ;;
+    restart)
+        $0 stop
+        sleep 5
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
