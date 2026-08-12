@@ -1,22 +1,40 @@
 #!/bin/sh
 
-# Укажите путь к вашему скрипту записи
 SCRIPT_PATH="/tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh"
 
 case "$1" in
     start)
+        if [ -f /tmp/cctv_is_running ]; then
+            echo "CCTV already running."
+            exit 0
+        fi
         echo "Starting CCTV recording..."
-        sh $SCRIPT_PATH
+        sh "$SCRIPT_PATH"
         ;;
     stop)
         echo "Stopping CCTV recording..."
         rm -f /tmp/cctv_is_running
-        sleep 2
-        killall ffmpeg
+        
+        # Мягкая остановка только наших процессов
+        for pidfile in /tmp/cctv_cam*.pid; do
+            [ -f "$pidfile" ] || continue
+            PID=$(cat "$pidfile")
+            kill -TERM "$PID" 2>/dev/null
+        done
+        
+        sleep 5
+        
+        # Добиваем, если кто-то завис
+        for pidfile in /tmp/cctv_cam*.pid; do
+            [ -f "$pidfile" ] || continue
+            PID=$(cat "$pidfile")
+            kill -0 "$PID" 2>/dev/null && kill -9 "$PID" 2>/dev/null
+            rm -f "$pidfile"
+        done
         ;;
     restart)
         $0 stop
-        sleep 5
+        sleep 2
         $0 start
         ;;
     *)
