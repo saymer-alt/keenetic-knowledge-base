@@ -17,7 +17,7 @@
    opkg update
    opkg install ffmpeg cron
 
-```
+
 
 ## Настройка
 
