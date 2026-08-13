@@ -1,39 +1,47 @@
-# Keenetic NVR + Streaming: Легковесный видеорегистратор и вещатель
+# Keenetic NVR + Streaming
 
-Набор скриптов для превращения роутера Keenetic (с установленной средой Entware) в полноценный сетевой видеорегистратор (NVR) и/или HTTP-вещатель для IP-камер. Тестировалось на Keenetic 1012 (MediaTek Filogic) — нагрузка на CPU при записи трех потоков H.265 (2K) практически нулевая благодаря прямому копированию потока (`-c copy`).
+Набор скриптов для превращения роутеров Keenetic (Entware) в автономный NVR и/или HTTP-вещатель для IP-камер. Тестировалось на Keenetic 1012 (MediaTek Filogic) — запись трёх потоков H.265 (2K) даёт почти нулевую нагрузку на CPU благодаря `-c copy`.
 
 ## Возможности
 
-### Режим NVR (Запись архива)
-* **Захват RTSP-потока** без транскодирования (Stream Copy).
-* **Сегментация** видео на отрезки по 15 минут.
-* **Умный Watchdog:** автоматический переподключение при обрывах связи, перезагрузке камеры, зависании процесса или отвале USB-диска.
-* **PID-менеджмент:** корректный `stop` через PID-файлы — не убивает чужие процессы `ffmpeg`.
-* **Кольцевой буфер:** автоматическое удаление старых записей (старше 72 часов) через Cron.
-* **Автозапуск:** старт записи при включении/перезагрузке роутера.
+**NVR (запись архива)**
+- Захват RTSP без транскодирования.
+- Нарезка на файлы по 15 минут.
+- Автозапуск после перезагрузки с ожиданием USB-диска (до 60 сек).
+- Watchdog через встроенный таймаут ffmpeg (`-stimeout`). Никаких «умных» проверок файлов.
+- Корректный `stop` через PID-файлы — не трогает чужие процессы.
+- Кольцевой буфер: автоудаление файлов старше 3 суток.
 
-### Режим Streaming (Вещание на ТВ/приставку)
-* **HTTP MPEG-TS** потоки для IPTV-приставок (например, Selenga) или VLC.
-* **Видео без нагрузки на CPU** (`-c:v copy`), звук транскодируется в AAC (`-c:a aac`).
-* **Встроенный HTTP-сервер** `ffmpeg -listen 1` — минимум ресурсов, максимум надёжности.
-* **Авто-перезапуск** при отключении клиента (телевизора).
+**Streaming (вещание на ТВ)**
+- HTTP MPEG-TS для IPTV-приставок (Selenga, VLC, Kodi).
+- Видео — copy, звук — AAC.
+- Лечение потока: `+genpts` и `+resend_headers` для капризных железных плееров.
+- Авто-перезапуск порта при отключении клиента.
+
+## Архитектура
+
+| Роутер | Роль | Инструмент |
+|---|---|---|
+| **Первый** | Ядро сети, VPN | KeeneticOS |
+| **Второй** | Архив, кольцевой буфер | `ffmpeg` + `segment` |
+| **Третий** | Живой эфир на ТВ | `ffmpeg` + `-listen 1` |
+
+Разделение труда. Никаких Docker, никаких `go2rtc`.
 
 ## Требования
-1. Роутер Keenetic с USB-накопителем (для NVR рекомендуется EXT4).
-2. Установленная среда Entware на USB-накопителе.
-3. Пакеты: `ffmpeg`, `cron` (для NVR).
-   ```sh
-   opkg update
-   opkg install ffmpeg cron
-   ```
+
+- Keenetic с Entware и USB-диском (для NVR желателен EXT4/exFAT).
+- Пакеты:
+  ```sh
+  opkg update
+  opkg install ffmpeg cron
+  ```
 
 ---
 
-## Часть 1. NVR — Запись архива на диск
+## Часть 1. NVR — запись архива
 
-### 1. Подготовка папок
-
-Замените `/tmp/mnt/YOUR_USB_DRIVE` на ваш путь к диску.
+### 1. Папки
 
 ```sh
 mkdir -p /tmp/mnt/YOUR_USB_DRIVE/cctv/cam101
@@ -41,26 +49,30 @@ mkdir -p /tmp/mnt/YOUR_USB_DRIVE/cctv/cam201
 mkdir -p /tmp/mnt/YOUR_USB_DRIVE/cctv/cam301
 ```
 
-### 2. Скрипт записи (`record_cctv.sh`)
+### 2. `record_cctv.sh`
 
-Сохраните в `/tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh` и отредактируйте переменные.
+Сохраните в `/tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh`. Замените `YOUR_*`.
 
 ```bash
 #!/bin/sh
 
-# === НАСТРОЙКИ ===
 BASE_DIR="/tmp/mnt/YOUR_USB_DRIVE/cctv"
 RTSP_USER="YOUR_USERNAME"
 RTSP_PASS="YOUR_PASSWORD"
 RTSP_IP="192.168.1.XXX"
 
-# Защита: если диск отвалился — не пишем во внутреннюю память
+# Ждем USB-диск после перезагрузки (до 60 сек)
+WAIT=0
+while [ ! -d "$BASE_DIR" ] && [ $WAIT -lt 60 ]; do
+    sleep 5
+    WAIT=$((WAIT + 5))
+done
+
 if [ ! -d "$BASE_DIR" ]; then
     echo "ERROR: Disk not mounted!" >&2
     exit 1
 fi
 
-# Защита от двойного запуска
 if [ -f /tmp/cctv_is_running ]; then
     echo "CCTV already running."
     exit 0
@@ -76,7 +88,10 @@ start_recording() {
     
     (
         while [ -f /tmp/cctv_is_running ]; do
+            rm -f /tmp/cctv_cam${CAM_ID}.pid
+            
             /opt/bin/ffmpeg -hide_banner -loglevel error \
+                -stimeout 15000000 \
                 -rtsp_transport tcp -i "$URL" \
                 -c copy -f segment -segment_time 900 \
                 -strftime 1 -reset_timestamps 1 \
@@ -84,26 +99,9 @@ start_recording() {
             
             PID=$!
             echo $PID > /tmp/cctv_cam${CAM_ID}.pid
-            
-            LASTFILE=""
-            # Если файл не растёт 2+ минуты — убиваем зависший ffmpeg
-            while kill -0 $PID 2>/dev/null; do
-                CURRENT=$(ls -t "$DIR"/cam${CAM_ID}_*.mkv 2>/dev/null | head -n 1)
-                if [ -n "$CURRENT" ] && [ "$CURRENT" != "$LASTFILE" ]; then
-                    LASTFILE="$CURRENT"
-                elif [ -n "$LASTFILE" ]; then
-                    NOW=$(date +%s)
-                    MTIME=$(stat -c %Y "$LASTFILE" 2>/dev/null)
-                    if [ -n "$MTIME" ] && [ $((NOW - MTIME)) -gt 120 ]; then
-                        kill $PID 2>/dev/null
-                        break
-                    fi
-                fi
-                sleep 30
-            done
-            
             wait $PID 2>/dev/null
             rm -f /tmp/cctv_cam${CAM_ID}.pid
+            
             sleep 5
         done
     ) > /dev/null 2>&1 &
@@ -116,19 +114,7 @@ start_recording "301"
 echo "CCTV recording started in watchdog mode."
 ```
 
-### 3. Скрипт очистки (`cleanup_cctv.sh`)
-
-```bash
-#!/bin/sh
-find /tmp/mnt/YOUR_USB_DRIVE/cctv/ -name "*.mkv" -type f -mtime +3 -delete
-```
-
-Если `find` не поддерживает `-delete`, замените последнее слово на:
-```bash
--exec rm -f {} +
-```
-
-### 4. Скрипт автозагрузки (`S99cctv`)
+### 3. `S99cctv` (автозагрузка)
 
 Сохраните в `/opt/etc/init.d/S99cctv`.
 
@@ -149,17 +135,8 @@ case "$1" in
     stop)
         echo "Stopping CCTV recording..."
         rm -f /tmp/cctv_is_running
+        sleep 12
         
-        # Мягко завершаем только наши процессы
-        for pidfile in /tmp/cctv_cam*.pid; do
-            [ -f "$pidfile" ] || continue
-            PID=$(cat "$pidfile")
-            kill -TERM "$PID" 2>/dev/null
-        done
-        
-        sleep 5
-        
-        # Добиваем, если кто-то завис
         for pidfile in /tmp/cctv_cam*.pid; do
             [ -f "$pidfile" ] || continue
             PID=$(cat "$pidfile")
@@ -179,7 +156,19 @@ case "$1" in
 esac
 ```
 
-### 5. Настройка Cron
+### 4. `cleanup_cctv.sh`
+
+```bash
+#!/bin/sh
+find /tmp/mnt/YOUR_USB_DRIVE/cctv/ -name "*.mkv" -type f -mtime +3 -delete
+```
+
+Если `find` не поддерживает `-delete`, замените на:
+```bash
+-exec rm -f {} +
+```
+
+### 5. Cron
 
 ```sh
 nano /opt/etc/crontab
@@ -190,12 +179,12 @@ nano /opt/etc/crontab
 0 * * * * root sh /tmp/mnt/YOUR_USB_DRIVE/cctv/cleanup_cctv.sh
 ```
 
-Перезапустите:
+Перезапустить:
 ```sh
 /opt/etc/init.d/S10cron restart
 ```
 
-### 6. Права и запуск
+### 6. Права и старт
 
 ```sh
 chmod +x /tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh
@@ -207,11 +196,9 @@ chmod +x /opt/etc/init.d/S99cctv
 
 ---
 
-## Часть 2. Streaming — Вещание на ТВ/приставку
+## Часть 2. Streaming — вещание на ТВ
 
-Для второго (или третьего) роутера, который отдаёт живой эфир по HTTP.
-
-### Скрипт вещания (`S99stream`)
+### `S99stream`
 
 Сохраните в `/opt/etc/init.d/S99stream`.
 
@@ -230,17 +217,17 @@ start_stream() {
     
     (
         while [ -f /tmp/${SCRIPT_NAME}_is_running ]; do
-            # Чистим мёртвые PID
             if [ -f /tmp/${SCRIPT_NAME}_cam${CAM_ID}.pid ]; then
                 OLD_PID=$(cat /tmp/${SCRIPT_NAME}_cam${CAM_ID}.pid)
                 kill -0 $OLD_PID 2>/dev/null || rm -f /tmp/${SCRIPT_NAME}_cam${CAM_ID}.pid
             fi
             
             /opt/bin/ffmpeg -hide_banner -loglevel error \
+                -fflags +genpts \
                 -rtsp_transport tcp -i "$URL" \
                 -map 0:v:0 -map 0:a? \
                 -c:v copy -c:a aac -b:a 64k \
-                -f mpegts -listen 1 \
+                -f mpegts -mpegts_flags +resend_headers -listen 1 \
                 "http://0.0.0.0:$PORT/stream$CAM_ID.ts" > /dev/null 2>&1 &
             
             PID=$!
@@ -262,9 +249,13 @@ case "$1" in
         fi
         echo "Starting CCTV HTTP streams..."
         touch /tmp/${SCRIPT_NAME}_is_running
-        start_stream "101" "8999"
-        start_stream "201" "9000"
-        start_stream "301" "9001"
+        
+        # Для аппаратных IPTV-приставок рекомендуется субпоток H.264 (102/202/302).
+        # Если приставка тянет H.265 — используйте основной поток (101/201/301).
+        start_stream "102" "8999"
+        start_stream "202" "9000"
+        start_stream "302" "9001"
+        
         echo "Done."
         ;;
     stop)
@@ -302,50 +293,34 @@ esac
 
 ```sh
 chmod +x /opt/etc/init.d/S99stream
-/opt/etc/init.d/S99stream start
+/opt/etc.init.d/S99stream start
 ```
 
-### URL для плеера/приставки
+### URL для плеера
 
 ```
-http://IP_РОУТЕРА:8999/stream101.ts
-http://IP_РОУТЕРА:9000/stream201.ts
-http://IP_РОУТЕРА:9001/stream301.ts
-```
-
----
-
-## Архитектура: разделение труда
-
-| Роутер | Роль | Инструмент |
-|---|---|---|
-| **Первый** | VPN, доступ извне | — |
-| **Второй** | Архив, кольцевой буфер | `ffmpeg` + `segment` |
-| **Третий** | Живой эфир на ТВ | `ffmpeg` + `-listen 1` |
-
-Каждый выполняет одну задачу. Никаких `go2rtc`, никаких лишних прослоек. Чистый Linux, чистый `ffmpeg`.
-
----
-
-## Проверка работы
-
-```sh
-# Сколько ffmpeg работает (должно быть 3)
-ps | grep ffmpeg | grep -v grep | wc -l
-
-# Сколько записано на диск (для NVR)
-du -sh /tmp/mnt/YOUR_USB_DRIVE/cctv/
-
-# Какой последний файл у камеры 101
-ls -lt /tmp/mnt/YOUR_USB_DRIVE/cctv/cam101/ | head -n 2
-
-# Открыты ли порты стриминга (для Streaming)
-netstat -tlnp | grep -E '8999|9000|9001'
+http://IP_РОУТЕРА:8999/stream102.ts
+http://IP_РОУТЕРА:9000/stream202.ts
+http://IP_РОУТЕРА:9001/stream302.ts
 ```
 
 ---
+
+## Лайфхаки и траблшутинг
+
+**Приставка виснет/чёрный экран**
+- Убедитесь, что в камере для субпотока включён звук: **Video & Audio** (не просто Video).
+- Если картинка есть, но нет звука — проверьте настройки аудио на субпотоке в веб-интерфейсе камеры.
+
+**Файлы в архиве разной длины (не ровно 15 мин)**
+- Нормально для H.265+/Smart Codec. Камера редко шлёт ключевые кадры при статической картинке, а ffmpeg режет только по ним. Размер файла при этом пропорционален времени.
+
+**Задержка на ТВ 10–15 секунд**
+- Буферизация MPEG-TS + Wi-Fi. На проводе будет меньше. Это не баг.
+
+**`ffmpeg: not found`**
+- Проверьте `which ffmpeg`. Если пусто — `opkg install ffmpeg`.
 
 ## Лицензия
 
-MIT. Делайте что хотите, главное — не пишите архив во внутреннюю память роутера. 😄
-
+MIT. Главное — не пишите архив во внутреннюю память роутера. 😄
