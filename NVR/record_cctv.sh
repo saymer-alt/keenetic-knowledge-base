@@ -1,21 +1,27 @@
 #!/bin/sh
 
-# === НАСТРОЙКИ (ЗАМЕНИТЕ НА СВОИ) ===
 BASE_DIR="/tmp/mnt/YOUR_USB_DRIVE/cctv"
 RTSP_USER="YOUR_USERNAME"
 RTSP_PASS="YOUR_PASSWORD"
 RTSP_IP="192.168.1.XXX"
 
-# Проверка: примонтирован ли диск?
-# Если команда "mountpoint" не найдена — эти 3 строки просто проигнорируются
-if ! mountpoint -q "$BASE_DIR" 2>/dev/null; then
-    if [ ! -d "$BASE_DIR" ]; then
-        echo "ERROR: Disk not mounted!" >&2
-        exit 1
-    fi
+# Ждем USB-диск после перезагрузки (до 60 сек)
+WAIT=0
+while [ ! -d "$BASE_DIR" ] && [ $WAIT -lt 60 ]; do
+    sleep 5
+    WAIT=$((WAIT + 5))
+done
+
+if [ ! -d "$BASE_DIR" ]; then
+    echo "ERROR: Disk not mounted!" >&2
+    exit 1
 fi
 
-# Флаг работы
+if [ -f /tmp/cctv_is_running ]; then
+    echo "CCTV already running."
+    exit 0
+fi
+
 touch /tmp/cctv_is_running
 
 start_recording() {
@@ -26,9 +32,10 @@ start_recording() {
     
     (
         while [ -f /tmp/cctv_is_running ]; do
-            echo "Starting record for Camera $CAM_ID..."
+            rm -f /tmp/cctv_cam${CAM_ID}.pid
             
             /opt/bin/ffmpeg -hide_banner -loglevel error \
+                -stimeout 15000000 \
                 -rtsp_transport tcp -i "$URL" \
                 -c copy -f segment -segment_time 900 \
                 -strftime 1 -reset_timestamps 1 \
@@ -36,29 +43,12 @@ start_recording() {
             
             PID=$!
             echo $PID > /tmp/cctv_cam${CAM_ID}.pid
-            
-            LASTFILE=""
-            # Следим за процессом: если файл не растёт 2+ минуты — убиваем
-            while kill -0 $PID 2>/dev/null; do
-                CURRENT=$(ls -t "$DIR"/cam${CAM_ID}_*.mkv 2>/dev/null | head -n 1)
-                if [ -n "$CURRENT" ] && [ "$CURRENT" != "$LASTFILE" ]; then
-                    LASTFILE="$CURRENT"
-                elif [ -n "$LASTFILE" ]; then
-                    NOW=$(date +%s)
-                    MTIME=$(stat -c %Y "$LASTFILE" 2>/dev/null)
-                    if [ -n "$MTIME" ] && [ $((NOW - MTIME)) -gt 120 ]; then
-                        kill $PID 2>/dev/null
-                        break
-                    fi
-                fi
-                sleep 30
-            done
-            
             wait $PID 2>/dev/null
             rm -f /tmp/cctv_cam${CAM_ID}.pid
+            
             sleep 5
         done
-    ) &
+    ) > /dev/null 2>&1 &
 }
 
 start_recording "101"
