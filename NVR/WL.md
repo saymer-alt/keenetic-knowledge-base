@@ -328,3 +328,198 @@ Keenetic
 И да, по переписке я бы сказал, что **ты ему технически объясняешь правильно, но слишком быстро перескакиваешь между уровнями**. Он задаёт вопрос про «политику устройства», а ты отвечаешь про «адреса облака». Для тебя связь очевидна, для него между этими двумя вещами пока отсутствует один промежуточный слой — **«правило маршрутизации конкретного соединения»**.
 
 Именно его ему, похоже, и не хватает.
+
+
+Да, могу. И я как раз сейчас посмотрел, что можно найти по официальной документации производителей. Но тут есть важный нюанс: **готового универсального списка «все IP камер» практически не существует**, потому что облака используют динамические IP, CDN, P2P/relay и разные региональные серверы. Например, Dahua прямо указывает, что серверы Imou используют динамические IP. ([Dahua Technology][1])
+
+Для твоей задачи это даже хорошо: **в MT лучше добавлять домены/маски доменов, а не статические IP**, где это возможно.
+
+### Что уже можно собрать
+
+**Hikvision / HiWatch → Hik-Connect**
+
+У Hikvision официально фигурируют:
+
+```text
+dev.hik-connect.com
+litedev.hik-connect.com
+dev.us.hik-connect.com
+litedev.us.hik-connect.com
+```
+
+Причём это прямо рекомендуемые Hikvision адреса для Platform Access / Hik-Connect. ([Hikvision Support USA][2])
+
+Для российского/регионального варианта встречаются также:
+
+```text
+dev.hik-connectru.com
+litedev.hik-connectru.com
+```
+
+И отдельно для HiWatch в русскоязычной документации/практике встречаются:
+
+```text
+dev.guardingvisionru.com
+litedev.guardingvisionru.com
+```
+
+Последние два я бы **не стал слепо считать официальным актуальным списком без проверки конкретной прошивки** — лучше проверить, что реально использует твой HiWatch.
+
+---
+
+### Dahua / Imou
+
+Тут уже есть очень хороший официальный документ Dahua.
+
+Для Imou перечислены, например:
+
+```text
+www.easy4ipcloud.com
+www.easy4ip.com
+dms.easy4ipcloud.com
+paas-dms-edge-fk.easy4ipcloud.com
+smartdeviceproxy-edge-fk.easy4ipcloud.com
+devaccess.easyipcloud.com
+dus.easy4ipcloud.com
+update.easy4ip.com
+update.easyviewercloud.com
+vrs.easy4ipcloud.com
+pps.easy4ipcloud.com
+das.easy4ipcloud.com
+das-fk.easy4ipcloud.com
+devicelogserver-fk.easy4ipcloud.com
+```
+
+И Dahua отдельно указывает, какие из них используются для регистрации, DMS, firmware update, video upload, message upload, logging и т. д. ([Dahua Technology][1])
+
+Но там же важный момент: для P2P используются динамические IP, поэтому **забивать эти IP в MT — плохая идея**. ([Dahua Technology][1])
+
+---
+
+### XMEye / Xiongmai
+
+Вот здесь можно найти уже и конкретные IP, потому что XMEye довольно давно исследовали.
+
+Например:
+
+```text
+mac.secu100.net
+pub-cfg.secu100.net
+upgrade.secu100.net
+xmeye.com
+xmsecu.com
+```
+
+и ряд IP-адресов, включая:
+
+```text
+112.124.0.188
+112.124.3.115
+114.215.197.205
+120.131.9.243
+120.132.78.111
+120.92.226.110
+123.57.7.3
+123.59.14.6
+123.59.25.129
+...
+```
+
+Но это **старое исследование**, поэтому я бы категорически не стал сегодня делать на его основе постоянное IP-правило. Оно полезно скорее как ориентир для определения XMEye-инфраструктуры. ([SEC Consult][3])
+
+---
+
+### TP-Link / Tapo
+
+Для Tapo встречаются:
+
+```text
+*.tplink.com
+tplinkcloud.com
+tplinknbu.com
+```
+
+Причём эти домены реально использовались для восстановления работы камеры за firewall, а TP-Link подтверждает, что камера использует обычный DNS через роутер/публичный DNS. ([TP-Link Community][4])
+
+Но TP-Link сам публично не даёт полного списка всех cloud/relay/STUN адресов, поэтому здесь опять лучше не пытаться составлять «вечный» IP-лист.
+
+---
+
+### Reolink
+
+У Reolink другая архитектура. При UID/P2P устройство использует **случайные UDP-порты**, поэтому фиксированный список IP/портов облака для такой схемы не очень пригоден. ([Reolink Поддержка][5])
+
+То есть для Reolink я бы особенно не пытался решать задачу простым списком IP.
+
+---
+
+## Но я бы сделал для твоего MT немного иначе
+
+И вот здесь как раз твой первоначальный замысел правильный.
+
+Не делать:
+
+```text
+КАМЕРА_1 → Mihomo
+КАМЕРА_2 → Mihomo
+КАМЕРА_3 → Mihomo
+```
+
+А сделать условно:
+
+```text
+Hikvision / HiWatch cloud → Mihomo
+Dahua / Imou cloud        → Mihomo
+XMEye cloud               → Mihomo
+Tapo cloud                → Mihomo
+...
+```
+
+Тогда получится:
+
+```text
+                  ┌── обычный интернет
+Камера ── MT ─────┤
+                  └── только cloud/P2P адреса → Mihomo
+```
+
+И это именно **точечная маршрутизация**, которую ты изначально и хотел.
+
+---
+
+### Но есть ещё более правильный способ именно для твоего случая
+
+Я бы **не стал сейчас пытаться найти «все камеры мира»**.
+
+Ты ведь знаешь конкретные камеры у этого клиента.
+
+Например:
+
+* Hikvision/HiWatch — такие-то модели;
+* Dahua — такая-то;
+* XMEye — такая-то;
+* ещё какая-нибудь.
+
+И тогда мы можем сделать **нормальный набор MT-правил именно под эти бренды**, а не огромную помойку из IP.
+
+Более того, поскольку камеры сейчас физически находятся у него в деревне, можно сделать ещё лучше: **посмотреть реальные DNS-запросы и соединения этих камер во время работы**. Тогда мы получим не теоретический список из интернета, а:
+
+> «Вот эта конкретная камера реально обращается вот сюда».
+
+И это для твоей архитектуры будет гораздо ценнее.
+
+Особенно потому, что производитель может сегодня использовать один relay, завтра другой CDN, а конкретная камера может вообще использовать только 3–5 адресов из огромного облачного хозяйства.
+
+Так что **да — я могу собрать тебе список для MT**, причём я бы сделал его в двух слоях:
+
+1. **известные официальные домены производителей**;
+2. **реально наблюдаемые домены/IP конкретных камер**, которые потом можно добавить в правила.
+
+И второй вариант я бы считал основным. Именно так получится действительно «пускаем через Mihomo только то, что нужно камере», а не «пускаем всю камеру через Mihomo».
+
+[1]: https://www.dahuasecurity.com/about-dahua/news-events/notice/faq-about-access-to-imou-cloud-port-and-domain-name?utm_source=chatgpt.com "FAQ About Access to Imou Cloud Port and Domain Name - Zhejiang Dahua Technology Co., Ltd."
+[2]: https://supportusa.hikvision.com/support/solutions/articles/17000146654-troubleshooting-platform-access-offline-on-device?utm_source=chatgpt.com "Troubleshooting platform access offline on device : Hikvision Portal"
+[3]: https://sec-consult.com/de/blog/detail/millionen-xiongmai-ueberwachungskameras-durch-cloud-feature-unsicher-xmeye-p2p-coud/?utm_source=chatgpt.com "Millionen Xiongmai-Überwachungskameras durch Cloud-Feature unsicher (XMEye P2P Coud) - SEC Consult"
+[4]: https://community.tp-link.com/en/home/forum/topic/517420?utm_source=chatgpt.com "Any special DNS outbound address needed for Tapo camera or app for PiHole - TP-Link Community"
+[5]: https://support.reolink.com/articles/900000627703-Which-Default-Ports-Used-by-Reolink-Cameras-Should-be-Allowed-to-Go-through-the-Firewall/?utm_source=chatgpt.com "Which Default Ports Used by Reolink Cameras Should be Allowed to Go through the Firewall"
+
