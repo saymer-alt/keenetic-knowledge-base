@@ -57,10 +57,17 @@ SENSITIVE_PATTERNS = [
     # (category, regex) - applied to plain text and hrefs; counts only, never
     # echoed into reports with the matched content.
     ("telegram-private-link", r"t\.me/(?:c/|\+|joinchat)"),
+    ("mtproto-proxy-secret", r"(?:tg://|t\.me/)proxy\?[^\s]*secret="),
     ("subscription-token-url", r"/api/v1/client/subscribe\?|sub\?token=|\?token=[A-Za-z0-9]{16,}"),
     ("proxy-credential-scheme", r"\b(?:vmess|vless|trojan|ss|ssr|hysteria2?|tuic|masque|webtunnel)://\S{8,}"),
     ("private-key-block", r"BEGIN [A-Z ]*PRIVATE KEY"),
     ("password-assignment", r"(?i)\b(passwd|password|passphrase|secret|api[_-]?key|auth[_-]?token)\s*[:=]\s*\S{6,}"),
+    # Russian-language credential lines found by the TASK-TB-03 manual audit
+    ("password-ru", r"Пароль\s*[:=]\s*\S{4,}"),
+    ("login-ru", r"Логин\s*[:=]\s*\S{3,}"),
+    ("psk-assignment", r"(?i)(?:общий\s+ключ\s+)?psk\s*[:=]\s*\S{4,}"),
+    ("url-embedded-credentials", r"[?&](?:user|username|pass|password)=\S{3,}|://[^/\s:]+:[^@\s]{3,}@"),
+    ("vpn-server-credentials", r"Сервер:\s*\d{1,3}(?:\.\d{1,3}){3}"),
 ]
 
 TRACKING_PARAMS = re.compile(r"^(utm_|yclid|fbclid|gclid|ref$|igshid)", re.IGNORECASE)
@@ -369,6 +376,7 @@ class ExportParser(HTMLParser):
         if m is None:
             return
         m["date_iso"] = date_to_iso(m.get("date"))
+        m["sensitive_flags"] = []  # category names only, filled by scan_sensitive
         self.messages[m["id"]] = m
 
 
@@ -423,15 +431,47 @@ def scan_sensitive(messages: list[dict]) -> dict:
             if re.search(rx, blob):
                 counts[cat] += 1
                 flagged_msgs[cat].append(m["id"])
+                m.setdefault("sensitive_flags", []).append(cat)
     return {"counts": counts,
             "message_ids": {k: v for k, v in flagged_msgs.items() if v}}
 
 
+def selftest():
+    """Synthetic detection/redaction check. Uses ONLY fake placeholder values
+    (never real secrets); prints PASS/FAIL, categories and counts, never values."""
+    fake = [
+        {"id": 1, "text": "see https://github.com/example/project releases",
+         "links": [{"href": "https://github.com/example/project", "text": ""}], "hashtags": []},
+        {"id": 2, "text": "tg proxy Пароль: fakepass123",
+         "links": [{"href": "tg://proxy?server=example&port=1&secret=" + "f" * 32, "text": ""}], "hashtags": []},
+        {"id": 3, "text": "IKEv2 Сервер: 192.0.2.1 Общий ключ PSK: fakepsk Логин: fakeuser",
+         "links": [], "hashtags": []},
+        {"id": 4, "text": "private invite",
+         "links": [{"href": "https://t.me/c/123456/7", "text": ""}], "hashtags": []},
+    ]
+    res = scan_sensitive(fake)
+    flagged_ids = {i for ids in res["message_ids"].values() for i in ids}
+    expect = {"mtproto-proxy-secret", "password-ru", "psk-assignment", "login-ru",
+              "vpn-server-credentials", "telegram-private-link"}
+    got = set(res["counts"])
+    ok = expect <= got and 1 not in flagged_ids and {2, 3, 4} <= flagged_ids
+    print("selftest:", "PASS" if ok else "FAIL",
+          "| detected:", sorted(got),
+          "| public-url msg flagged:", 1 in flagged_ids)
+    return 0 if ok else 1
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--out", required=True, help="work directory for JSON/digest outputs")
-    ap.add_argument("files", nargs="+", help="Telegram export HTML file(s)")
+    ap.add_argument("--out", help="work directory for JSON/digest outputs")
+    ap.add_argument("--selftest", action="store_true",
+                    help="run synthetic sensitive-detection checks and exit")
+    ap.add_argument("files", nargs="*", help="Telegram export HTML file(s)")
     args = ap.parse_args(argv)
+    if args.selftest:
+        return selftest()
+    if not args.out or not args.files:
+        ap.error("--out and at least one input file are required (or use --selftest)")
 
     outdir = Path(args.out)
     outdir.mkdir(parents=True, exist_ok=True)
@@ -510,7 +550,12 @@ def main(argv=None):
         encoding="utf-8", newline="\n")
 
     # digest: message ids of sensitive categories are still shown (ids only,
-    # never the content)
+    # never the content); the text preview of a flagged message is replaced
+    # with a category-only redaction notice
+    flag_map = {}
+    for cat, ids in sens["message_ids"].items():
+        for i in ids:
+            flag_map.setdefault(i, []).append(cat)
     lines = []
     for m in messages:
         flags = []
@@ -527,7 +572,10 @@ def main(argv=None):
             flags.append("links:%d[%s]" % (nlinks, ",".join(doms[:4])))
         if m["media_files"]:
             flags.append("files:" + ",".join(m["media_files"][:2]))
-        head = re.sub(r"\s+", " ", m["text"])[:200].strip()
+        if m["id"] in flag_map:
+            head = "[sensitive: %s - text preview omitted]" % ",".join(sorted(flag_map[m["id"]]))
+        else:
+            head = re.sub(r"\s+", " ", m["text"])[:200].strip()
         lines.append("#%d %s %s | %s" % (m["id"], (m.get("date_iso") or "")[:16], " ".join(flags), head))
     (outdir / "digest.txt").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
