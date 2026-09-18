@@ -11,15 +11,21 @@
 ## saymer-alt/keenetic-auto-setup
 
 - #14 (2025-09-16) — «редактируемый пост» со ссылкой на репозиторий и
-  curl-установкой **deploy.sh** (+ gist-зеркало). **Historical, внимание**:
-  `deploy.sh` удалён из репозитория 2026-09-17 (коммит 909a9cc);
-  единственный поддерживаемый путь — `install.sh`. Команды из #14 сейчас
-  ведут на 404 — кандидат на обновление закреплённого поста канала
-  (действие в Telegram, не в git).
+  curl-установкой **deploy.sh** (+ gist-зеркало). **Broken (проверено
+  2026-09-19)**: `deploy.sh` удалён из репозитория 2026-09-17 (коммит
+  909a9cc), gist-зеркало `ecd0706b…` также удалено (404 через API).
+  Единственный поддерживаемый путь — `install.sh`. Готовый текст замены
+  поста — в [OWNER_LINK_AUDIT.md](../OWNER_LINK_AUDIT.md).
 - #923 (2026-06-05) — история «Почему я вообще сделал Keenetic Auto Setup»:
   мотивация, цели, чего не хотелось. Ценный provenance для README проекта.
-- #1125 (2026-08-06) — рекомендация [ARCHITECTURE.md](https://github.com/saymer-alt/keenetic-auto-setup/blob/main/ARCHITECTURE.md).
+- #1125 (2026-08-06) — рекомендация [ARCHITECTURE.md](https://github.com/saymer-alt/keenetic-auto-setup/blob/main/ARCHITECTURE.md)
+  (файл существует — current).
 - #922 — прямая ссылка на репозиторий.
+- **Дипломированные артефакты канала** (проверено 2026-09-19): скрипт
+  `S00ubifs` из #13 теперь поставляется файлом в корне репозитория;
+  «Mihomo Interface Checker» из #1127 — как `mihomo-interface-check.sh`;
+  мануал ручного обновления из #815 удалён вместе с deploy.sh — заменён
+  `update-mihomo.sh`.
 
 ## saymer-alt/link-generators
 
@@ -58,21 +64,26 @@
 ## saymer-alt/entware-go
 
 - #801 (2026-05-06, форвард Stas) — сборка beszel-agent:
-  [PR #12](https://github.com/Entware/entware-go/pull/12) (aarch64/mipsel/mips)
-  + [spatiumstas.github.io](https://spatiumstas.github.io).
+  [PR #12](https://github.com/Entware/entware-go/pull/12) (aarch64/mipsel/mips).
+  **Проверено 2026-09-19**: PR смержен 2026-08-29; автор — **spatiumstas**
+  (upstream, не владелец); пакет пришёл в `saymer-alt/entware-go` синком
+  2026-09-07. Каталожное упоминание — про линию форка, не про авторство PR.
 - #817 — «тру автосборщик»: workflow
   [build-mihomo.yml](https://github.com/spatiumstas/entware-go/blob/gh-action-build/.github/workflows/build-mihomo.yml)
-  (fork = источник saymer-alt линии).
+  (fork = источник saymer-alt линии; upstream-репозиторий третьего лица).
 - #46 — установка MagiTrickle из GitHub Releases с фильтром по архитектуре
   (паттерн того же семейства).
 
 ## awg-manager (hoaxisr) и ядерный модуль AWG
 
 - [hoaxisr/awg-manager](https://github.com/hoaxisr/awg-manager) — Source:
-  #1117 (в наборе оффлайн-инсталляторов sw.ext.io).
-- [hoaxisr/amneziawg-linux-kernel-module-keenetic](https://github.com/hoaxisr/amneziawg-linux-kernel-module-keenetic) —
-  Source: #404; эффект на MT7621 (−50% CPU) — #402, #403 (форварды
-  Nightman; Observed авторами форвардов).
+  #1117 (в наборе оффлайн-инсталляторов sw.ext.io); репозиторий активен
+  (проверено 2026-09-19).
+- ~~hoaxisr/amneziawg-linux-kernel-module-keenetic~~ — Source: #404;
+  эффект на MT7621 (−50% CPU) — #402, #403 (форварды Nightman; Observed
+  авторами форвардов). **Broken (проверено 2026-09-19)**: репозиторий
+  больше не резолвится (удалён/переименован владельцем — третьим лицом).
+  См. [OWNER_LINK_AUDIT.md](../OWNER_LINK_AUDIT.md).
 
 ## Прочие следы работы владельца в канале
 

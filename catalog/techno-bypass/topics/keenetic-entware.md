@@ -29,8 +29,12 @@
 - Вариант для 128 МБ RAM (меньшие квоты tmpfs) — Source: #106 (2025-09-17).
 - Правильное размещение: `/opt/etc/init.d/S00ubifs`, права 0755,
   управление `start|stop|status|enable|disable` — Source: #13.
-- **Status: Research** (скрипт не аудировался; логи в tmpfs пропадают при
-  перезагрузке — предупреждение самого канала, #8).
+- **Status: Superseded (проверено 2026-09-19)** — каноническая версия
+  скрипта теперь поставляется файлом `S00ubifs` в корне
+  [`saymer-alt/keenetic-auto-setup`](owner-projects.md) (MIT, шапка
+  ссылается на первоисточник Entware pastebin `6SyQqPHJ`). Ранние
+  предупреждения сохраняются: логи в tmpfs пропадают при перезагрузке
+  (#8); версия в репозитории отдельно не аудировалась.
 
 ## bypass_wa и 020-bypass_wa.sh (ручной вариант)
 
@@ -92,7 +96,7 @@ Xray (1080/1081/1082), с `socks5-udp` и сохранением конфигу�
 | [keenetic/multifast](https://github.com/keenetic/multifast) | Официальный репозиторий Keenetic | #889 |
 | [nikrays/keen_bypass_public](https://github.com/nikrays/keen_bypass_public) | Скрипт установки/настройки фильтрации трафика (загрузка пакетов, автозапуск) | #306 |
 | [invisible25/keenetic-vpn-xor](https://github.com/invisible25/keenetic-vpn-xor) | XOR-обфускация для VPN на Keenetic | #1003 |
-| [hoaxisr/amneziawg-linux-kernel-module-keenetic](https://github.com/hoaxisr/amneziawg-linux-kernel-module-keenetic) | Ядерный модуль AmneziaWG для Keenetic (MT7621: −50% CPU) | #402–#405, #1117 |
+| ~~[hoaxisr/amneziawg-linux-kernel-module-keenetic](https://github.com/hoaxisr/amneziawg-linux-kernel-module-keenetic)~~ — репозиторий недоступен (2026-09-19) | Ядерный модуль AmneziaWG для Keenetic (MT7621: −50% CPU) | #402–#405, #1117 |
 | [ShidlaSGC/keenetic-entware-awg-go](https://gitlab.com/ShidlaSGC/keenetic-entware-awg-go) | AWG-go для Keenetic/Entware (GitLab) | #300 |
 
 ## Темы форума Keenetic

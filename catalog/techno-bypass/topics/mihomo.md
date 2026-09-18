@@ -36,6 +36,9 @@
   параметров health-check — Source: #230.
 - **Mihomo Interface Checker** (Keenetic + Entware) — мини-утилита диагностики
   нескольких провайдеров/интерфейсов — Source: #1127 (2026-08-06).
+  **Current (проверено 2026-09-19)**: поставляется в
+  [`saymer-alt/keenetic-auto-setup`](owner-projects.md) как
+  `mihomo-interface-check.sh` (v1.0.3).
 - Тонкая маршрутизация по VLESS/Trojan-подписке со своей балансировкой
   (Habr, OpenWrt/Keenetic) — см. [articles.md](articles.md) (#1185).
 
