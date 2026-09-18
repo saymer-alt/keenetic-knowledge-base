@@ -29,8 +29,8 @@ url-pass ×2, proxy-uri-credential ×1, private-channel-id ×1; источник
 
 ## Метод 2 — консервативный шаблонный скан
 
-По всем новым файлам и добавленным строкам: приватные `t.me/c|+|joinchat`,
-`tg://proxy…secret=`, `vless/vmess/ss/trojan/…://`, `PSK:`, `Пароль/Логин:`,
+По всем новым файлам и добавленным строкам: приватные пути Telegram (`c/`,
+прокси-ссылки с `secret=`, `vless/vmess/ss/trojan/…://`, `PSK:`, `Пароль/Логин:`,
 `BEGIN PRIVATE KEY`, `user|pass=` в URL, userinfo@, high-entropy-токены
 длиной ≥32 вне публичных URL-контекстов.
 
