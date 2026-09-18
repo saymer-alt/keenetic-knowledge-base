@@ -95,6 +95,10 @@ def normalize_url(url: str) -> str:
     path = parts.path or "/"
     if path != "/" and path.endswith("/"):
         path = path.rstrip("/")
+    # git hosts: repo root vs repo.git point at the same project; distinct
+    # paths (issues/releases/blob) are unaffected by this rule.
+    if netloc.endswith(("github.com", "gitlab.com")) and path.endswith(".git"):
+        path = path[:-4] or "/"
     query = ""
     if parts.query:
         kept = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True)

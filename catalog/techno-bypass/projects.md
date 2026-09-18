@@ -1,6 +1,6 @@
 # Индекс проектов (GitHub / GitLab / Codeberg)
 
-206 уникальных репозиториев, упомянутых каналом. Сначала — ключевые
+204 уникальных репозитория, упомянутых каналом. Сначала — ключевые
 проекты с контекстом (курировано), затем полная таблица (сгенерировано из
 экспорта; колонки: репозиторий | первая ссылка в канале | сообщения |
 всего упоминаний-ссылок).
@@ -138,8 +138,7 @@ keenetic-knowledge-base, entware-go (PR beszel-agent) — отдельная к�
 | [github/begugla0/yandexspeedtestcli](https://github.com/begugla0/yandexspeedtestcli) | 2026-08-03 | 1115 | 1 |
 | [github/bekirovtimur/warp-relay](https://github.com/bekirovtimur/warp-relay) | 2026-02-22 | 487 | 1 |
 | [github/bia-pain-bache/BPB-Warp-Scanner](https://github.com/bia-pain-bache/BPB-Warp-Scanner) | 2026-06-23 | 986 | 1 |
-| [github/bol-van/zapret](https://github.com/bol-van/zapret) | 2026-01-25 | 354, 1022, 1024, 1025, 1026 | 5 |
-| [github/bol-van/zapret.git](https://github.com/bol-van/zapret.git) | 2026-01-25 | 355, 1022 | 2 |
+| [github/bol-van/zapret](https://github.com/bol-van/zapret) | 2026-01-25 | 354, 355, 1022, 1024, 1025, 1026 | 7 |
 | [github/bol-van/zapret2](https://github.com/bol-van/zapret2) | 2025-11-24 | 257, 1022, 1026 | 3 |
 | [github/bulatorr/go-yaynison](https://github.com/bulatorr/go-yaynison) | 2026-05-16 | 833 | 1 |
 | [github/cacggghp/vk-turn-proxy](https://github.com/cacggghp/vk-turn-proxy) | 2026-02-05 | 393, 573, 687 | 3 |

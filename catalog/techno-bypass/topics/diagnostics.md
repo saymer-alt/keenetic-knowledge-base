@@ -32,7 +32,7 @@ AI-извлечение ссылок по теме «DPI, блокировки, 
 
 | Сервис | Назначение | Source |
 |---|---|---|
-| [check-host.net](https://check-host.net) | Много-точечная проверка | #1024+ |
+| [check-host.net](https://check-host.net) | Много-точечная проверка | #423, #534, #609, #1022–#1026 |
 | [dnscheck.tools](https://dnscheck.tools) | Проверка DNS/резолверов | #1024 |
 | [dnsleaktest.com](https://dnsleaktest.com), [ipleak.net](https://ipleak.net), browserleaks.com | Утечки DNS/IP/браузера | #120, #1024 |
 | [badssl.com/dashboard](https://badssl.com/dashboard/) | «Дырявость» браузера по сертификатам | #60, #489 |
