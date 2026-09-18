@@ -22,6 +22,7 @@ Today it contains a mixture of:
 - working or experimental shell scripts;
 - finished or nearly finished subprojects such as the NVR material;
 - copied conversations and AI-generated research;
+- Telegram TechnoBypass exports and material derived from the channel;
 - notes about VPS/Linux/MosTech/virtualization that are only partly related to Keenetic;
 - unrelated historical material that happened to be stored here.
 
@@ -66,7 +67,97 @@ Examples:
 If another repository owns the code, **that code is authoritative**. This repository can
 explain it, index it, compare it, or preserve research behind it.
 
-## 3. Do not destroy the useful junk
+
+## 3. TechnoBypass is a primary source corpus
+
+The owner's Telegram channel **TechnoBypass** is one of the main research inputs for this
+repository.
+
+Treat the channel as an **inbox and discovery stream**, not as an authoritative technical
+source. It may contain:
+
+- links worth preserving;
+- original owner notes;
+- real-world observations;
+- forwarded posts from other people or channels;
+- project announcements;
+- AI-generated text;
+- speculative workarounds;
+- outdated instructions;
+- duplicate references to the same project.
+
+The desired flow is:
+
+```
+TechnoBypass export
+    ↓
+parse messages and links
+    ↓
+preserve provenance
+    ↓
+deduplicate / classify / index
+    ↓
+review and verify
+    ↓
+canonical knowledge or promotion to the owning project
+```
+
+### Telegram import rules
+
+When processing a Telegram export:
+
+1. Preserve useful provenance whenever available:
+   - Telegram message ID;
+   - date/time;
+   - whether the post is original or forwarded;
+   - forwarded author/channel when relevant;
+   - source URL;
+   - enough surrounding text to understand why the resource was saved.
+2. Normalize and deduplicate repeated links conservatively.
+3. Do not collapse distinct GitHub issues, releases, files, branches, documentation pages or
+   distinct Telegram posts merely because they share a domain or repository.
+4. Imported material starts as **Source** or **Research** unless there is independent evidence
+   for a stronger status.
+5. A confident Telegram statement is not sufficient for **Confirmed**.
+6. A forwarded statement proves that the statement appeared in the source corpus; it does not
+   prove that the statement is technically correct.
+7. Preserve useful negative results, operator observations and historical context.
+8. Keep unclassified material instead of forcing a false category.
+
+### Raw export policy
+
+Raw Telegram HTML exports should **normally not be committed** to this public repository.
+
+They may contain:
+
+- private or internal Telegram links;
+- names and attribution from forwarded messages;
+- repeated/generated HTML;
+- credentials or sensitive strings copied into a post;
+- unrelated conversation noise.
+
+Prefer committing normalized Markdown/catalog data derived from the export.
+
+Never publish private keys, tokens, credentials, subscription URLs containing secrets,
+private infrastructure details or sensitive private-channel references discovered during
+import. Record only that sensitive source material was omitted when provenance needs to be
+preserved.
+
+### Catalog versus canonical knowledge
+
+A catalog entry answers:
+
+- what resource was found;
+- what topic it belongs to;
+- where it appeared;
+- why it may be interesting.
+
+A canonical article additionally requires verification.
+
+Do not turn the catalog into thousands of copied Telegram posts. Summarize context, preserve
+links and provenance, and promote only the material that is worth maintaining.
+
+## 4. Do not destroy the useful junk
 
 A large file can be ugly and still contain unique information.
 
@@ -86,7 +177,7 @@ When reorganizing the repository, raw/historical material should normally move t
 or source area while cleaned knowledge is written separately. Git history is useful, but it is
 not a substitute for keeping important provenance understandable in the current tree.
 
-## 4. Classification before cleanup
+## 5. Classification before cleanup
 
 Before a broad cleanup, classify files rather than moving them by filename alone.
 
@@ -103,7 +194,7 @@ Useful classes are:
 Do not call something obsolete simply because it is old. A dated workaround may still explain
 why a current guard, fallback, or architecture exists.
 
-## 5. Knowledge quality rules
+## 6. Knowledge quality rules
 
 This repository must distinguish between four kinds of statements:
 
@@ -125,7 +216,7 @@ or the actual current project code.
 Do not invent citations, test results, device compatibility, version support, or production
 experience.
 
-## 6. Article style
+## 7. Article style
 
 Maintained user-facing knowledge should normally be in Russian. This AGENTS.md is in English
 because it is instructions for coding/research agents.
@@ -149,7 +240,7 @@ knowledge.
 Preserve exact commands, paths, interface names, ports and config keys when they are part of
 the technical contract, but separate examples from universal requirements.
 
-## 7. Scripts and dangerous examples
+## 8. Scripts and dangerous examples
 
 Some files contain executable shell code, firewall rules, routing changes, service units,
 VPN configuration, Docker/networking setup, or router commands.
@@ -174,7 +265,7 @@ network side effects and rollback.
 
 A command copied from a chat is not considered tested code.
 
-## 8. Reuse in the owner's other projects
+## 9. Reuse in the owner's other projects
 
 One of the main purposes of this repository is to salvage useful work for the rest of the
 owner's ecosystem.
@@ -197,7 +288,7 @@ Do not copy the same maintained documentation into several repositories. Prefer:
 This repository can act as an **index and research memory**, but should not create competing
 sources of truth.
 
-## 9. Repository restructuring
+## 10. Repository restructuring
 
 A future structure may include areas such as `docs/`, `reference/`, `scripts/` and
 `archive/raw/`, but the exact layout is not sacred.
@@ -216,7 +307,7 @@ For a large reorganization:
 
 A smaller, understandable series of commits is preferable to one giant "cleanup" commit.
 
-## 10. README policy
+## 11. README policy
 
 README.md should eventually become the real entry point to the knowledge base, not a promise
 about directories that do not exist.
@@ -228,7 +319,7 @@ Until the reorganization is actually implemented:
 - do not rewrite README around a new taxonomy unless the files are created in the same work;
 - when the structure changes, keep README navigation synchronized with the tree.
 
-## 11. Git working rules
+## 12. Git working rules
 
 Before editing:
 
@@ -247,7 +338,7 @@ Before committing:
 
 Do not force-push or rewrite history.
 
-## 12. What "good progress" looks like here
+## 13. What "good progress" looks like here
 
 Good progress is not measured by how many files were reformatted.
 
