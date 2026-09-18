@@ -25,9 +25,10 @@ Today it contains a mixture of:
 - notes about VPS/Linux/MosTech/virtualization that are only partly related to Keenetic;
 - unrelated historical material that happened to be stored here.
 
-Do not pretend that the repository already matches the structure described by README.md.
-For example, README.md refers to paths such as `docs/`, `dpi/` and `links/` that may not
-exist yet. Treat README.md as an old design intention until the repository is reorganized.
+The old README used to describe planned paths such as `docs/`, `dpi/` and `links/`
+that did not exist. README.md has now been rewritten as a truthful entry point to the
+transition state. Keep it synchronized with the real tree: planned structure belongs in
+ROADMAP.md, not in README as if it already existed.
 
 ## 2. Main mission
 
