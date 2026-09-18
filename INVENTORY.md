@@ -24,6 +24,8 @@
 | `README.md` | canonical | Честная точка входа в текущий переходный репозиторий | Поддерживать синхронно с реальным деревом |
 | `ROADMAP.md` | canonical | План переработки архива в KB | Обновлять по мере этапов |
 | `INVENTORY.md` | canonical | Эта карта содержимого | Уточнять после глубокого аудита |
+| `SOURCES.md` | canonical | Журнал provenance, сторонних материалов и текущего статуса лицензирования | Поддерживать при переносе/добавлении внешних материалов |
+| `ARTICLE_TEMPLATE.md` | canonical | Шаблон для будущих проверенных статей | Использовать как ориентир, не как обязательную бюрократию |
 | `proxy.md` | source/raw → candidate | Большое исследование/обсуждение классификации VPN, proxy, L2/L3, transport и смежных технологий | Разделить на несколько тематических статей; факты и классификацию перепроверить по актуальным источникам |
 | `amnezia.md` | source/raw + project candidate | Пошаговая схема маршрутизации Docker/AmneziaWG через Mihomo TUN на VPS, sysctl/ip rule/iptables/systemd | Сравнить с текущим VPS gateway/bootstrap; не применять как production-инструкцию без проверки |
 | `awg.md` | source/raw + project candidate | Ещё одна, более отредактированная версия AmneziaWG → Mihomo routing с обсуждением code review | Сопоставить с `amnezia.md`, `check.md`, `install.sh`; извлечь только подтверждённую архитектуру |
