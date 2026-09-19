@@ -8,8 +8,8 @@
 - Захват RTSP без транскодирования.
 - Нарезка на файлы по 15 минут.
 - Автозапуск после перезагрузки с ожиданием USB-диска (до 60 сек).
-- Watchdog через встроенный таймаут ffmpeg (`-stimeout`). Никаких «умных» проверок файлов.
-- Корректный `stop` через PID-файлы — не трогает чужие процессы.
+- Watchdog через встроенный RTSP socket timeout ffmpeg (`-timeout`, микросекунды).
+- `stop` использует сохранённые PID ffmpeg; ограничения stale PID/PID reuse описаны в [AUDIT.md](AUDIT.md).
 - Кольцевой буфер: автоудаление файлов старше 3 суток.
 
 **Streaming (вещание на ТВ)**
@@ -91,7 +91,7 @@ start_recording() {
             rm -f /tmp/cctv_cam${CAM_ID}.pid
             
             /opt/bin/ffmpeg -hide_banner -loglevel error \
-                -stimeout 15000000 \
+                -timeout 15000000 \
                 -rtsp_transport tcp -i "$URL" \
                 -c copy -f segment -segment_time 900 \
                 -strftime 1 -reset_timestamps 1 \
@@ -187,9 +187,9 @@ nano /opt/etc/crontab
 ### 6. Права и старт
 
 ```sh
-chmod +x /tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh
-chmod +x /tmp/mnt/YOUR_USB_DRIVE/cctv/cleanup_cctv.sh
-chmod +x /opt/etc/init.d/S99cctv
+chmod 700 /tmp/mnt/YOUR_USB_DRIVE/cctv/record_cctv.sh   # содержит RTSP credentials
+chmod 755 /tmp/mnt/YOUR_USB_DRIVE/cctv/cleanup_cctv.sh
+chmod 755 /opt/etc/init.d/S99cctv
 
 /opt/etc/init.d/S99cctv start
 ```
@@ -292,8 +292,8 @@ esac
 ### Запуск
 
 ```sh
-chmod +x /opt/etc/init.d/S99stream
-/opt/etc.init.d/S99stream start
+chmod 700 /opt/etc/init.d/S99stream   # содержит RTSP credentials
+/opt/etc/init.d/S99stream start
 ```
 
 ### URL для плеера
@@ -305,6 +305,13 @@ http://IP_РОУТЕРА:9001/stream302.ts
 ```
 
 ---
+
+## Важные ограничения
+
+- RTSP-логин и пароль хранятся в открытом виде в `record_cctv.sh` и `S99stream`; поэтому файлы с credentials рекомендуется держать с правами `700`.
+- PID-файлы уменьшают риск остановки чужих процессов, но не исключают редкий сценарий stale PID/PID reuse. Текущие скрипты не сверяют `/proc/$PID/cmdline` перед `kill`.
+- Маркер `/tmp/cctv_is_running` — простой lock-файл, а не проверка живости всех ffmpeg-процессов. После аварийного завершения управляющего shell в той же загрузке может потребоваться `stop`/удаление stale marker перед повторным `start`.
+- Технический аудит без запуска на роутере — в [AUDIT.md](AUDIT.md). До повторного реального теста раздел остаётся `candidate`, а не canonical.
 
 ## Лайфхаки и траблшутинг
 
