@@ -119,7 +119,7 @@ Raw Telegram export остаётся входным материалом. В п�
 ### VPN / proxy / routing
 
 - базовая классификация VPN, proxy, tunnel и transport из `proxy.md`;
-- AmneziaWG / Mihomo routing — только после сверки с текущими VPS-проектами;
+- [x] AmneziaWG / Mihomo routing — сверено с текущим `amnezia-mihomo-gateway`; результат: `docs/amnezia-mihomo-gateway-evolution.md`;
 - health-check / recovery patterns — отдельно от одноразовой установки.
 
 ### Research / infrastructure
