@@ -27,11 +27,11 @@
 | `SOURCES.md` | canonical | Журнал provenance, сторонних материалов и текущего статуса лицензирования | Поддерживать при переносе/добавлении внешних материалов |
 | `ARTICLE_TEMPLATE.md` | canonical | Шаблон для будущих проверенных статей | Использовать как ориентир, не как обязательную бюрократию |
 | `proxy.md` | source/raw → candidate | Большое исследование/обсуждение классификации VPN, proxy, L2/L3, transport и смежных технологий | Разделить на несколько тематических статей; факты и классификацию перепроверить по актуальным источникам |
-| `amnezia.md` | source/raw + project candidate | Пошаговая схема маршрутизации Docker/AmneziaWG через Mihomo TUN на VPS, sysctl/ip rule/iptables/systemd | Сравнить с текущим VPS gateway/bootstrap; не применять как production-инструкцию без проверки |
-| `awg.md` | source/raw + project candidate | Ещё одна, более отредактированная версия AmneziaWG → Mihomo routing с обсуждением code review | Сопоставить с `amnezia.md`, `check.md`, `install.sh`; извлечь только подтверждённую архитектуру |
-| `check.md` | source/raw + project candidate | Health-check/self-healing для Mihomo и policy routing через systemd timer | Проверить необходимость и failure modes; вероятно относится к VPS-проекту |
-| `install.sh` | project artifact | Bash-инсталлятор AmneziaWG → Mihomo routing: Docker discovery, sysctl, ip rule/iptables, systemd | Провести отдельный security/network review; сравнить с текущим VPS gateway/bootstrap перед любым переносом |
-| `uninstall.sh` | project artifact | Удаление компонентов, созданных `install.sh`, включая routing cleanup и systemd | Проверять парой с installer; убедиться, что rollback действительно полный |
+| `amnezia.md` | historical / superseded source | Ранняя ручная версия маршрутизации Docker/AmneziaWG через Mihomo TUN | Сохранить как provenance; актуальная реализация — `amnezia-mihomo-gateway`; сравнение: `docs/amnezia-mihomo-gateway-evolution.md` |
+| `awg.md` | historical / superseded source | Ещё одна стадия того же ручного решения AmneziaWG → Mihomo routing | Сохранить как provenance; технические идеи уже promoted в активный проект |
+| `check.md` | historical / concept promoted | Ранняя версия watchdog/self-healing через systemd timer | Концепция уже встроена в `amnezia-mihomo-gateway`; оставить как историю эволюции |
+| `install.sh` | historical project artifact / superseded | Ранний installer AmneziaWG → Mihomo routing | Не запускать из KB; текущий source of truth — `amnezia-mihomo-gateway/install.sh` |
+| `uninstall.sh` | historical duplicate snapshot | Cleanup companion; на 2026-09-19 blob совпадает с активным `amnezia-mihomo-gateway/uninstall.sh` | Не считать canonical copy; rollback неполный, детали в `docs/amnezia-mihomo-gateway-evolution.md` |
 | `moshub.md` | source/raw → candidate | Очень крупное исследование Mos.Hub/GitLab как площадки для артефактов, IPK/OPKG feed и зеркалирования | Высокий приоритет на тематическое извлечение; текущие возможности/квоты/URL перепроверить; возможные выводы сравнить с `entware-go` |
 | `moshubrd.md` | source/raw / historical | Сохранённый/сгенерированный Mos.Hub README и связанные заметки | Не считать документацией проекта; сохранить как provenance до разбора `moshub.md` |
 | `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
@@ -79,8 +79,10 @@
 Это выглядит не как пять независимых материалов, а как эволюция одного решения:
 Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-check → installer.
 
-**Следующий шаг:** сравнить весь кластер с текущим VPS gateway/bootstrap проектом. Старые
-Markdown-ответы не должны управлять production-кодом.
+**Аудит выполнен 2026-09-19:** кластер сопоставлен с текущим
+`amnezia-mihomo-gateway`. Результат —
+[`docs/amnezia-mihomo-gateway-evolution.md`](docs/amnezia-mihomo-gateway-evolution.md).
+Старые Markdown-ответы и корневые скрипты остаются provenance и не должны управлять production-кодом.
 
 ### 2. Network concepts / proxy taxonomy
 
@@ -154,9 +156,9 @@ Markdown-ответы не должны управлять production-кодом
 ## Immediate priorities
 
 1. **Не перемещать файлы массово.**
-2. Глубоко разобрать VPS-кластер и сравнить его с текущим VPS-проектом.
-3. Аудировать NVR как самостоятельный мини-проект.
-4. Разделить `proxy.md` на карту будущих статей.
+2. ~~Глубоко разобрать VPS-кластер и сравнить его с текущим VPS-проектом.~~ Выполнено 2026-09-19.
+3. **Следующий приоритет:** аудировать NVR как самостоятельный мини-проект.
+4. Разделить `proxy.md` на карту будущих статей (базовая терминология уже извлечена в `docs/vpn-proxy-terminology.md`).
 5. Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.
 6. Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.
 7. Только после этого выбрать окончательную структуру каталогов.
