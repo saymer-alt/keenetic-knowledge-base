@@ -51,11 +51,11 @@
 
 | Path | First-pass status | Что там сейчас | Возможное действие |
 |---|---|---|---|
-| `NVR/README.md` | candidate, near-canonical | Оформленная инструкция Keenetic + Entware + ffmpeg: NVR, сегментация, streaming | Провести технический аудит против фактических скриптов и актуального ffmpeg/Entware; после этого может стать canonical |
-| `NVR/record_cctv.sh` | project artifact | RTSP recording loop, segment files, PID files | Проверить shell compatibility, credentials handling, failure/restart behavior |
-| `NVR/cleanup_cctv.sh` | project artifact | Малый cleanup-скрипт для архива | Проверить retention semantics и безопасное удаление |
-| `NVR/S99cctv` | project artifact | Entware init script для записи CCTV | Проверить graceful stop, PID lifecycle и совместимость с Entware init conventions |
-| `NVR/S99stream` | project artifact | Entware init/streaming logic для HTTP MPEG-TS | Проверить порт, lifecycle, ffmpeg restart и ресурсы |
+| `NVR/README.md` | candidate, reviewed | Оформленная инструкция Keenetic + Entware + ffmpeg: NVR, сегментация, streaming | Технический аудит выполнен 2026-09-19 (`NVR/AUDIT.md`); исправлена совместимость с текущим FFmpeg, до canonical нужен повторный live-test |
+| `NVR/record_cctv.sh` | project artifact, reviewed | RTSP recording loop, segment files, PID files | `-timeout` обновлён для FFmpeg 6.x; live-test и graceful-stop/PID hardening остаются открыты |
+| `NVR/cleanup_cctv.sh` | project artifact, reviewed | Малый cleanup-скрипт для архива | Сохранить текущую `find -mtime +3` semantics; проверить фактический retention на устройстве при live-test |
+| `NVR/S99cctv` | project artifact, reviewed | Entware init script для записи CCTV | Аудит выявил stale-PID/PID-reuse и SIGKILL caveats; менять lifecycle только после live-test |
+| `NVR/S99stream` | project artifact, reviewed | Entware init/streaming logic для HTTP MPEG-TS | Проверены структура и stop lifecycle; credentials должны оставаться с ограниченными правами; нужен live reconnect/load test |
 | `NVR/WL.md` | source/raw → candidate, **misplaced** | Обсуждение архитектуры Mihomo, DIRECT vs proxy и обхода ограничений/белых списков | Вынести из NVR при реорганизации; сверить с `keenetic-auto-setup` и текущей архитектурой whitelist mode |
 
 ## scripts/
@@ -157,8 +157,8 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 1. **Не перемещать файлы массово.**
 2. ~~Глубоко разобрать VPS-кластер и сравнить его с текущим VPS-проектом.~~ Выполнено 2026-09-19.
-3. **Следующий приоритет:** аудировать NVR как самостоятельный мини-проект.
-4. Разделить `proxy.md` на карту будущих статей (базовая терминология уже извлечена в `docs/vpn-proxy-terminology.md`).
+3. ~~Аудировать NVR как самостоятельный мини-проект.~~ Выполнено 2026-09-19; результат — `NVR/AUDIT.md`, до canonical нужен live-test.
+4. **Следующий приоритет:** разобрать `proxy.md` на карту оставшегося уникального знания (базовая терминология уже извлечена в `docs/vpn-proxy-terminology.md`).
 5. Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.
 6. Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.
 7. Только после этого выбрать окончательную структуру каталогов.
