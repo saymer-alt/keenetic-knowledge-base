@@ -35,7 +35,7 @@ start_recording() {
             rm -f /tmp/cctv_cam${CAM_ID}.pid
             
             /opt/bin/ffmpeg -hide_banner -loglevel error \
-                -stimeout 15000000 \
+                -timeout 15000000 \
                 -rtsp_transport tcp -i "$URL" \
                 -c copy -f segment -segment_time 900 \
                 -strftime 1 -reset_timestamps 1 \
