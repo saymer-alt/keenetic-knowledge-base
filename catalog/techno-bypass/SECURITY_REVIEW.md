@@ -31,7 +31,7 @@ url-pass ×2, proxy-uri-credential ×1, private-channel-id ×1; источник
 
 По всем новым файлам и добавленным строкам: приватные пути Telegram (`c/`,
 прокси-ссылки с `secret=`, `vless/vmess/ss/trojan/…://`, `PSK:`, `Пароль/Логин:`,
-`BEGIN PRIVATE KEY`, `user|pass=` в URL, userinfo@, high-entropy-токены
+блоки приватных ключей SSH/OpenSSL, `user|pass=` в URL, userinfo@, high-entropy-токены
 длиной ≥32 вне публичных URL-контекстов.
 
 **Результат: 0 находок**, кроме двух намеренных документационных
