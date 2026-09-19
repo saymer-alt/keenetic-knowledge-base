@@ -42,7 +42,7 @@
 | `MosTech_cifrovoj.md` | historical / source/raw / unrelated | Творческий/описательный материал про опыт MosTech, KVM, VirtIO и рабочие эксперименты | Перед архивированием извлечь уникальные реальные наблюдения, если они там есть |
 | `cloudmos.md` | unrelated / historical | Сатирический текст/анкета про корпоративную MosTech-среду | Архивировать отдельно от технической KB |
 | `class.md` | unrelated | Астрологическая классификация в IT-метафорах | Не относится к Keenetic/networking; безопасный кандидат на отдельный архив |
-| `catalog/` | canonical | Каталог TechnoBypass (TB-01..TB-04): темы, проекты, верификация, аудиты | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
+| `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
 | `docs/` | candidate | Первые извлечённые статьи (TB-05): 7 тем по ARTICLE_TEMPLATE со разведёнными статусами | Повышать до canonical по мере проверки; расширять из catalog-тем |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |

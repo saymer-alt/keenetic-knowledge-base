@@ -157,6 +157,14 @@ A canonical article additionally requires verification.
 Do not turn the catalog into thousands of copied Telegram posts. Summarize context, preserve
 links and provenance, and promote only the material that is worth maintaining.
 
+Where the current artifacts live:
+
+- curated catalog: `catalog/techno-bypass/` (status model and provenance rules are
+  documented in its README; audits live next to it as REVIEW.md, SECURITY_REVIEW.md,
+  OWNER_LINK_AUDIT.md, VERIFIED_RESOURCES.md);
+- parser: `tools/parse_telegram_export.py`;
+- maintained extracted articles: `docs/`.
+
 ## 4. Do not destroy the useful junk
 
 A large file can be ugly and still contain unique information.

@@ -50,6 +50,10 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 - [ROADMAP.md](ROADMAP.md) — план превращения накопленных материалов в настоящую базу знаний.
 - [SOURCES.md](SOURCES.md) — происхождение сторонних и raw-материалов, а также текущий статус лицензирования.
 - [ARTICLE_TEMPLATE.md](ARTICLE_TEMPLATE.md) — шаблон для будущих проверенных статей.
+- [catalog/techno-bypass/README.md](catalog/techno-bypass/README.md) — каталог экспорта
+  TechnoBypass (темы, проекты, статьи, provenance, аудиты и верификация).
+- [docs/](docs/) — первые извлечённые проверяемые статьи из материалов канала
+  (Keenetic/Entware, маршрутизация Mihomo, белые списки, DPI, терминология, APN).
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
