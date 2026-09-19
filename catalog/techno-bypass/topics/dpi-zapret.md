@@ -6,6 +6,10 @@
 
 ## zapret (bol-van)
 
+Верификация TB-04 (2026-09-19): zapret, zapret2, Flowseal/zapret-discord-youtube,
+nfqws2-keenetic (+web), ZapretControl, youtubeUnblock — все активны
+(см. [VERIFIED_RESOURCES.md](../VERIFIED_RESOURCES.md)).
+
 - [bol-van/zapret](https://github.com/bol-van/zapret) — Source: #354, #1022
   и др.; [zapret2](https://github.com/bol-van/zapret2) — #257.
 - **Полный лог установки zapret на VPS** (Debian, install_easy.sh, выбор

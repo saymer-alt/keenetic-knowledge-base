@@ -9,6 +9,8 @@
 - **Официальная документация** — <https://magitrickle.dev/docs/welcome/> —
   Source: #28; гайд по Keenetic —
   <https://magitrickle.dev/docs/getting-started/keenetic/> — Source: #29.
+  Верефицировано TB-04 (2026-09-19): docs живые; страница гайда по Keenetic
+  резолвится, но контент отдаётся только браузером (клиентский рендер).
 - **Репозиторий пакетов**: `wget -qO- http://bin.magitrickle.dev/packages/add_repo.sh | sh`
   → `opkg update && opkg install magitrickle` → `S99magitrickle start` —
   Source: #31, #32, #36, #48 (bin.magitrickle.dev).
@@ -16,7 +18,8 @@
   `opkg print-architecture`) — Source: #46.
 - **Ручная установка .ipk** (`opkg install --force-reinstall /opt/tmp/…`) —
   Source: #895 (вложение `magitrickle_0.7.1git.ipk`).
-- GitLab-зеркало — <https://gitlab.com/magitrickle/magitrickle> —
+- GitLab — <https://gitlab.com/magitrickle/magitrickle> — **канонический**
+  репозиторий (TB-04, 2026-09-19: активен, 18 релизов; GitHub — зеркало).
   Source: #1117.
 
 ## Конфигурация

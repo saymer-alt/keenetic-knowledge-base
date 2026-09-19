@@ -8,6 +8,9 @@
 
 - **byewhitelists.ru — бесплатный гайд по обходу шатдаунов** —
   Source: #251 (форвард «Обход белых списков», 2025-11-23).
+  **Dead (проверено 2026-09-19, TB-04)**: соединение отвергается
+  (ECONNREFUSED) — гайд временно/полностью недоступен; смотреть web.archive.
+  См. [VERIFIED_RESOURCES.md](../VERIFIED_RESOURCES.md).
 - **Обход белых списков на мобильном интернете** (telegra.ph) и
   продолжение (teletype.in/@derryt) — Source: #201.
 - Гайд на вылавливание IP TimeWeb (все операторы, PDF) — Source: #1219
@@ -38,6 +41,7 @@
 | [gbwltg/ConfuseRKN](https://github.com/gbwltg/ConfuseRKN) | Скрипт своей подписки (GoodbyeWL-экосистема) | #535 |
 | GoodbyeWL | Подписки/активация через Happ/Karing | #293 |
 | [openlibrecommunity/twl](https://github.com/openlibrecommunity/twl) | Верифицированный список (verified.txt) | #961 |
+|      | **Archived (TB-04, 2026-09-19)** — репозиторий заархивирован; данные остаются доступными | — |
 | remnacracker (Ponywka) | Конвертер подписок с HWID для клиентов без HWID + self-host на CF Workers | #1204, #1205 |
 | Утёкшая подписка DUREV | **Не воспроизводим**: доступ к платной подписке получен утечкой | #1214 |
 

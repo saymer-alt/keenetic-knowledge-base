@@ -17,11 +17,14 @@
 - **Ядерный модуль AWG для Keenetic** (hoaxisr; MT7621: −50% CPU против
   awg-go; scp .ko на роутер) — Source: #402–#405. Связано с
   [awg-manager](owner-projects.md).
-- **amneziawg-tools** (коммит про совместимость) — Source: #1038.
+- **amneziawg-tools** — [amnezia-vpn/amneziawg-tools](https://github.com/amnezia-vpn/amneziawg-tools)
+  (✓ TB-04: активен) — Source: #1038. Upstream-реализация протокола:
+  [MetaCubeX/amneziawg-go](https://github.com/MetaCubeX/amneziawg-go) (найден
+  при верификации TB-04).
 - **AWG-Easy** (панель): [gennadykataev/awg-easy](https://github.com/gennadykataev/awg-easy)
   (#149), AWG-Easy 3 (Habr, #1169),
   [w0rng/amnezia-wg-easy](https://github.com/w0rng/amnezia-wg-easy) в
-  docker-compose (#1092),
+  docker-compose (#1092; **Low activity, TB-04**: без push с 2024-09),
   [PRVTPRO/Amnezia-Web-Panel](https://github.com/PRVTPRO/Amnezia-Web-Panel)
   (#1168),
   [Vadim-Khristenko/AmneziaWG-Architect](https://github.com/Vadim-Khristenko/AmneziaWG-Architect)
@@ -58,7 +61,8 @@
 - WireGuard: ping-check профили на Keenetic — #315, #1210;
   извлечение приватного ключа из памяти роутера (вопрос без ответа) — #864.
 - [wiresock.net — WireSock Secure Connect](https://www.wiresock.net/wiresock-secure-connect/download) —
-  split tunnel + AWG2 для Windows — Source: #504, #438; habr-гайд — #1077;
+  split tunnel + AWG2 для Windows (✓ TB-04: v3.6.1.1 stable) — Source: #504,
+  #438; habr-гайд — #1077;
   [wiresock/amneziawg-install](https://github.com/wiresock/amneziawg-install) —
   #1167; [wiresock/proxifyre](https://github.com/wiresock/proxifyre) — #239.
 - Android: [WireGuard Auto-Tunnel](https://play.google.com/store/apps/details?id=com.zaneschepke.wireguardautotunnel)

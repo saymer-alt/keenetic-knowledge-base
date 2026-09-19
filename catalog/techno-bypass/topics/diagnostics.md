@@ -9,11 +9,11 @@
 |---|---|---|
 | [hyperion-cs/dpi-checkers](https://hyperion-cs.github.io/dpi-checkers/ru/tcp-16-20/) | Тест ТСПУ на блокировку популярных хостингов; ipv4-whitelisted-subnets; dwc-ветка на Python | #87, #241, #488, #491, #1024 |
 | [Runnin4ik/dpi-detector](https://github.com/Runnin4ik/dpi-detector) | Анализ TLS, проверка сайтов/CDN/хостингов у РФ-провайдеров; Docker-образ, win10-сборка | #465, #601, #606, #1192 |
-| [cheburcheck.ru](https://cheburcheck.ru/) | Чекер «чебурнета» + база белых списков | #321, #492, #1024 |
+| [cheburcheck.ru](https://cheburcheck.ru/) | Чекер «чебурнета» + база белых списков (✓ TB-04) | #321, #492, #1024 |
 | [vernette/censorcheck](https://github.com/vernette/censorcheck) | Скрипт проверки цензуры | #663, #1022 |
 | [MayersScott/rkn-block-checker](https://github.com/MayersScott/rkn-block-checker) | «Проблема сети или РКН» | #809, #1022 |
 | [Viktor45/as-tspu](https://github.com/Viktor45/as-tspu) | Проверка по ASN/ТСПУ | #1002, #1024 |
-| [LL33ch/dpi-rip](https://github.com/LL33ch/dpi-rip) | dpi.rip — проверка DPI | #881, #1028 |
+| [LL33ch/dpi-checker](https://github.com/LL33ch/dpi-checker) | проверка DPI; **Moved (TB-04, 2026-09-19)**: репо переименован из dpi-rip, сайт dpi.rip жив (JS-only) | #881, #1028 |
 | [Nintoryan/all-dpi-bypass-travel](https://github.com/Nintoryan/all-dpi-bypass-travel) | — | #1008, #1022 |
 | [cherepavel/VPN-Detector](https://github.com/cherepavel/VPN-Detector) | Детект VPN | #722, #733 |
 | [dimon27254/antiscan](https://github.com/dimon27254/antiscan) + тема форума #21009 | Выявление сканирования роутера | #449, #484, #1026 |

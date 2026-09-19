@@ -24,6 +24,10 @@
 
 ## Апстрим Xray-core
 
+TB-04 (2026-09-19): Xray-core активен (ежедневно); Xray-install, RealiTLScanner
+и chika0801/Xray-examples показывают низкую активность (последние push
+2026-01, 2026-05, 2025-12 соответственно) — факт активности, не оценка.
+
 - [XTLS/Xray-core, issue #5332](https://github.com/XTLS/Xray-core/issues/5332)
   — подобранные и проверенные настройки при проблемах VLESS — Source: #256.
 - [XTLS/Xray-install](https://github.com/XTLS/Xray-install) — официальный

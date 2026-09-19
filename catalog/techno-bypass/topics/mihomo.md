@@ -24,7 +24,9 @@
 | [spatiumstas/web4static](https://github.com/spatiumstas/web4static) | Панель редактирования конфига Mihomo (порт 99) | #1091 |
 | [Zephyruso/zashboard](https://github.com/Zephyruso/zashboard) | Дашборд | #263 |
 | MetaCubeXD (metacubex) | Дашборд (в тестах канала) | #90 |
-| [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat) | geosite-списки (пример: google-gemini.json) | #54 |
+| [MetaCubeX/mihomo](https://github.com/MetaCubeX/mihomo) | Ядро Mihomo (Clash.Meta). **TB-04 (2026-09-19)**: канонический репозиторий активен (обновляется ежедневно); поле description репозитория в данный момент показывает чужой текст (исторический артефакт нейминга) — проект не переезжал | (upstream всего раздела) |
+| [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat) | geosite-списки (пример: google-gemini.json); активен | #54 |
+| [MetaCubeX/mipstack](https://github.com/MetaCubeX/mipstack) | «mihomo IP stack (MIPS)», pure-Go userspace-стек — upstream значения `stack: mips` (найден при верификации TB-04) | — |
 | [123jjck/mihomo-configurator](https://123jjck.github.io/mihomo-configurator/) | Онлайн-генератор конфигов Mihomo (скорее под OpenWrt) | #655 |
 
 ## Отказоустойчивость и маршрутизация
