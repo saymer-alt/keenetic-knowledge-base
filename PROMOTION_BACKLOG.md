@@ -68,7 +68,7 @@ install.sh/uninstall.sh/install.md/scripts/systemd.
 | # | Источник | Идея | Текущее состояние | Проверка | Действие |
 |---|---|---|---|---|---|
 | A1 | #1079, #1088–#1090 | AWG(Docker)→Mihomo TUN→WARP с watchdog и автоопределением | **уже реализовано** — репозиторий этим и является (README: policy routing, скрытие IP, WARP-выход, watchdog, cleanup) | gh API README/дерево | no action |
-| A2 | Кластер этого KB: `amnezia.md`, `awg.md`, `check.md`, `install.sh`, `uninstall.sh` (+ #1088) | Сверка сырых наблюдений с текущей реализацией: что уже покрыто, какие failure-cases стоит перенести | сверки не было (Phase-1 кластер в ROADMAP) | — | **further research (приоритетная будущая задача)**: разбор кластера KB против репо; переносить только подтверждённое, минимально, в стиле целевого проекта |
+| A2 | Кластер этого KB: `amnezia.md`, `awg.md`, `check.md`, `install.sh`, `uninstall.sh` (+ #1088) | Сверка сырых наблюдений с текущей реализацией | **выполнено 2026-09-19**: кластер оказался исторической эволюцией текущего проекта; уникального feature-gap не найдено, выявлены документальные/rollback caveats | `docs/amnezia-mihomo-gateway-evolution.md` + текущие `AGENTS.md`/`install.sh` целевого репо | **no code promotion**; target docs приведены в соответствие с фактическим installer/uninstaller |
 | A3 | #1133 | Скрипты проверки серверов | в репо свои health-checks (watchdog) | README | no action |
 
 ## keenetic-knowledge-base (сам репозиторий)
@@ -97,9 +97,6 @@ install.sh/uninstall.sh/install.md/scripts/systemd.
    (блокирует публикацию всего каталога и статей) — см. отчёт TASK-TB-01P.
 2. **Оператор**: правка закреплённого поста #14 (текст замены готов в
    `catalog/techno-bypass/OWNER_LINK_AUDIT.md`).
-3. **Будущая задача**: разбор VPS-кластера KB против amnezia-mihomo-gateway
-   (A2) — старейший нетронутый кластер репозитория.
-4. **Будущая задача (после reconciliation)**: doc-sync ROADMAP/README/AGENTS
-   этого KB (S2) + INVENTORY уже закрыт здесь (S1).
-5. **Вопрос владельцу**: sing-box в entware-go (E3) и границы скоупа
-   keenetic-auto-setup по ping-check профилям (K7).
+3. ~~Разбор VPS-кластера KB против amnezia-mihomo-gateway (A2).~~ Выполнено 2026-09-19; code promotion не требуется.
+4. **Следующая внутренняя задача KB:** технический аудит NVR-кластера как самостоятельного мини-проекта.
+5. **Отдельные решения владельца:** sing-box в entware-go (E3), Proton-конвертер в link-generators (L5) и границы скоупа keenetic-auto-setup по ping-check профилям (K7).
