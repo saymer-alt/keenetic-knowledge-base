@@ -111,7 +111,7 @@ Raw Telegram export остаётся входным материалом. В п�
 
 ### Keenetic / Entware
 
-- NVR и streaming через ffmpeg;
+- [x] NVR и streaming через ffmpeg — технический аудит выполнен (`NVR/AUDIT.md`), совместимость FFmpeg исправлена; canonical статус ждёт live-test;
 - Entware service helper — после проверки происхождения, лицензии и совместимости;
 - архитектурные объяснения Mihomo / DIRECT / policy routing;
 - реальные failure cases Keenetic/Entware, если они обнаружатся в сырье.
