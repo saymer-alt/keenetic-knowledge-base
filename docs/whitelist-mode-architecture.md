@@ -72,6 +72,7 @@
 
 ## Связанные материалы
 
+- [Политика, сегмент, SSID и маршрут: не называйте всё WL](keenetic-policy-segment-ssid-naming.md)
 - [docs/mobile-apn-methodology.md](mobile-apn-methodology.md)
 - [docs/dpi-diagnostics-map.md](dpi-diagnostics-map.md)
 - [docs/zapret-ecosystem.md](zapret-ecosystem.md)
