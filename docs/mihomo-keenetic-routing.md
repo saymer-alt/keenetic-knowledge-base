@@ -93,6 +93,7 @@ routing Keenetic. Подбор правильного `interface-name` упро�
 
 ## Связанные материалы
 
+- [Политика, сегмент, SSID и маршрут: не называйте всё WL](keenetic-policy-segment-ssid-naming.md)
 - [docs/keenetic-entware-base.md](keenetic-entware-base.md)
 - [docs/vpn-proxy-terminology.md](vpn-proxy-terminology.md)
 - `NVR/WL.md` этого репозитория (raw-предыстория темы DIRECT vs proxy)
