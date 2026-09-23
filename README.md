@@ -54,6 +54,8 @@ TechnoBypass / старые заметки / upstream / реальные тес�
   TechnoBypass (темы, проекты, статьи, provenance, аудиты и верификация).
 - [docs/](docs/) — первые извлечённые проверяемые статьи из материалов канала
   (Keenetic/Entware, маршрутизация Mihomo, белые списки, DPI, терминология, APN).
+- [docs/keenetic-policy-segment-ssid-naming.md](docs/keenetic-policy-segment-ssid-naming.md) —
+  почему политика доступа, локальный сегмент, SSID, MagiTrickle/Mihomo и операторский WL — разные слои, и как именовать их без путаницы.
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
