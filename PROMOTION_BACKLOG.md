@@ -48,6 +48,7 @@ historical note / further research.
 | E1 | #801 | Пакет beszel-agent | **уже реализовано**: пакет в дереве; PR #12 upstream MERGED 2026-08-29 | дерево + gh API | no action |
 | E2 | #817 | Автосборка mihomo (workflow) | **уже реализовано**: build-mihomo.yml | дерево | no action |
 | E3 | #16, #49, #63, #72, #173, #244 | Пакет sing-box в фиде entware-go | **genuinely missing**: канал многократно ставит sing-box на Keenetic c чужих фидов (qp-io/sw.ext.io) | проверено: sing-box в дереве entware-go отсутствует | **feature (будущая задача)**: решение владельца + проверка go.mod против SDK-тулчейна (правило Go-совместимости) + правила CI |
+| E4 | Кластер KB: `moshub.md`/`moshubrd.md` + `docs/moshub-entware-mirror.md` (аудит TASK-KB-09, 2026-09-24) | Mos.Hub (hub.mos.ru) как вторичное RF-независимое зеркало .ipk-артефактов `latest`-релиза | **не реализовано**; анонимная загрузка raw/archive подтверждена публично, Pages-шаблоны официально есть; квоты/retention/внешняя автоматизация не доказаны; на Mos.Hub не найдено ни одного проекта с Releases/Packages | резервный канал раздачи для потребителей из РФ при деградации GitHub (Historical-мотивация 2026) | решение по пилоту = **B** («пилот оправдан, не доказан»); план максимального объёма — в статье | платформа без публичных квот; новая авторизация; неизвестное долгосрочное поведение | **future pilot** (оператор): до независимого доказательства зеркала — никаких production-workflow изменений в entware-go |
 
 ## saymer-alt/vps-gateway-bootstrap
 
