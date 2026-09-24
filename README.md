@@ -111,7 +111,6 @@ docs/       поддерживаемые статьи знаний
 catalog/    исследовательский каталог TechnoBypass
 NVR/        проверенный NVR/streaming мини-проект
 tools/      детерминированные инструменты импорта
-scripts/    сохранённые утилиты/reference-скрипты
 archive/    provenance: raw-исследования и исторические файлы
 ```
 
@@ -183,9 +182,8 @@ SOURCES, ARTICLE_TEMPLATE, PROMOTION_BACKLOG, Каталог_ссылок_Techno
 - promotion-решения владельца из [PROMOTION_BACKLOG.md](PROMOTION_BACKLOG.md)
   (sing-box в entware-go, Proton-конвертер и др.);
 - будущие импорты TechnoBypass через `tools/parse_telegram_export.py`;
-- статус `scripts/service` после аудита (TASK-KB-13):
-  [`scripts/SERVICE-AUDIT.md`](scripts/SERVICE-AUDIT.md) — REMOVE-FROM-HEAD
-  RECOMMENDED, фактическое удаление за владельцем;
+- (решено 2026-09-24) сторонний `scripts/service` удалён из HEAD после аудита
+  TASK-KB-13/14 — см. `archive/historical/entware-service-helper-audit.md`;
 - сопровождение статусов статей (Research → Confirmed по мере проверок).
 
 Подробности и текущие статусы — в [ROADMAP.md](ROADMAP.md) и [INVENTORY.md](INVENTORY.md).

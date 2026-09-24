@@ -70,9 +70,12 @@
 
 ## scripts/
 
-| Path | First-pass status | Что там сейчас | Возможное действие |
-|---|---|---|---|
-| `scripts/service` | third-party / **unlicensed, origin unestablished** | Сторонний helper управления Entware-сервисами (автор по заголовку: Pavel P. / @pnpzx); байт-в-байт не менялся | Аудит выполнен 2026-09-24 ([`scripts/SERVICE-AUDIT.md`](scripts/SERVICE-AUDIT.md)): происхождение не найдено (класс C), static review — 0 High / 6 Medium / кластер Low, решение **REMOVE-FROM-HEAD RECOMMENDED** (удаление — решение владельца, история Git сохраняется) |
+Активных скриптов в репозитории больше нет: сторонний `scripts/service` удалён из
+текущего HEAD 2026-09-24 (TASK-KB-14) по решению аудита TASK-KB-13
+([`archive/historical/entware-service-helper-audit.md`](archive/historical/entware-service-helper-audit.md);
+происхождение/лицензия не установлены — класс C; история Git не переписывалась,
+оригинальный blob остаётся в исторических коммитах). Каталог `scripts/` исчез за
+пустотой.
 
 ## Candidate knowledge clusters
 
@@ -173,4 +176,4 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 6. ~~Сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.~~ Выполнено 2026-09-24 (TASK-KB-10): методология облачных зависимостей камер/IoT извлечена в `docs/iot-cloud-routing-methodology.md`; файл помечен extracted/misplaced, физическое перемещение — позже.
 7. ~~Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.~~ Выполнено 2026-09-24 (TASK-KB-11): `docs/kvm-windows-virtiofs.md` + аудит `setup-kvm-motech.sh`; творческие файлы классифицированы; физическое перемещение в архив — следующий этап.
 8. ~~Планирование реорганизации архива.~~ Выполнено 2026-09-24 (TASK-KB-12): `archive/raw/` + `archive/historical/` созданы, 17 файлов перемещены `git mv`, ссылки отремонтированы.
-9. **Следующий приоритет:** сопровождение (live-валидации DNS/NVR, пилот Mos.Hub, promotion-решения владельца, решение владельца по `scripts/service` после аудита TASK-KB-13) — не структурные задачи.
+9. **Следующий приоритет:** сопровождение (live-валидации DNS/NVR, пилот Mos.Hub, promotion-решения владельца, сопровождение архива (например, судьба `archive/historical/entware-service-helper-audit.md`)) — не структурные задачи.

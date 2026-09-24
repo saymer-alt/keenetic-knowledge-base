@@ -33,6 +33,7 @@
 | [`historical/moshubrd.md`](historical/moshubrd.md) | [`docs/moshub-entware-mirror.md`](../docs/moshub-entware-mirror.md) (README реального проекта владельца на Mos.Hub; namespace для возможного пилота) |
 | [`historical/setup-kvm-motech.sh`](historical/setup-kvm-motech.sh) | аудит — в [`docs/kvm-windows-virtiofs.md`](../docs/kvm-windows-virtiofs.md) §«Аудит»; **исторический артефакт; не утверждён к выполнению** |
 | [`historical/MosTech.md`](historical/MosTech.md), [`historical/cloudmos.md`](historical/cloudmos.md), [`historical/class.md`](historical/class.md) | творческий/несвязанный исторический материал; поддерживаемой технической замены нет |
+| [`historical/entware-service-helper-audit.md`](historical/entware-service-helper-audit.md) | аудит/provenance стороннего Entware-хелпера, удалённого из текущего HEAD 2026-09-24 (TASK-KB-14) после того, как публичное происхождение и права на распространение установить не удалось; сам файл существует только в истории Git — под `archive/` он намеренно не копировался |
 
 Физическое перемещение выполнено 2026-09-24 (TASK-KB-12) после завершения кампании
 содержательного аудита (TASK-KB-08..11); исходные пути в корне репозитория больше не
