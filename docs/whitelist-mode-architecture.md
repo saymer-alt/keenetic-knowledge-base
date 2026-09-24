@@ -72,6 +72,8 @@
 
 ## Связанные материалы
 
+- [DNS Keenetic через Mihomo: штатный путь через ProxyN](keenetic-dns-via-mihomo.md) —
+  возможный ответ на «DNS не должен уходить через провайдера» (Research до live-теста).
 - [Политика, сегмент, SSID и маршрут: не называйте всё WL](keenetic-policy-segment-ssid-naming.md)
 - [docs/mobile-apn-methodology.md](mobile-apn-methodology.md)
 - [docs/dpi-diagnostics-map.md](dpi-diagnostics-map.md)

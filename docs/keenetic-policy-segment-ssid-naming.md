@@ -643,6 +643,7 @@ PX-Secondary
 - [saymer-alt/keenetic-auto-setup — ARCHITECTURE.md](https://github.com/saymer-alt/keenetic-auto-setup/blob/main/ARCHITECTURE.md) — актуальная модель KeeneticOS → MagiTrickle → ProxyN/`mitun0` → Mihomo.
 - [Mihomo на Keenetic: где он в архитектуре маршрутизации](mihomo-keenetic-routing.md).
 - [Режим белых списков: как это устроено и что работает](whitelist-mode-architecture.md).
+- [DNS Keenetic через Mihomo: штатный путь через ProxyN](keenetic-dns-via-mihomo.md).
 - Raw/provenance: [NVR/WL.md](../NVR/WL.md) — исторический диалог/исследование, не источник истины сам по себе.
 
 ---

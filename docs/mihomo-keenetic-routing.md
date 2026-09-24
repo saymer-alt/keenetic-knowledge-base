@@ -93,6 +93,8 @@ routing Keenetic. Подбор правильного `interface-name` упро�
 
 ## Связанные материалы
 
+- [DNS Keenetic через Mihomo: штатный путь через ProxyN](keenetic-dns-via-mihomo.md) —
+  куда идёт upstream DNS самого Keenetic и почему через ProxyN, а не `mitun0`.
 - [Политика, сегмент, SSID и маршрут: не называйте всё WL](keenetic-policy-segment-ssid-naming.md)
 - [docs/keenetic-entware-base.md](keenetic-entware-base.md)
 - [docs/vpn-proxy-terminology.md](vpn-proxy-terminology.md)
