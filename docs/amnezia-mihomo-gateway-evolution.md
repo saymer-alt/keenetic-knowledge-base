@@ -7,18 +7,18 @@
 
 ## Зачем этот документ
 
-В корне knowledge base остался старый кластер:
+Старый кластер (с 2026-09-24 физически в `archive/historical/`):
 
-- `amnezia.md`
-- `awg.md`
-- `check.md`
-- `install.sh`
-- `uninstall.sh`
+- [`archive/historical/amnezia.md`](../archive/historical/amnezia.md)
+- [`archive/historical/awg.md`](../archive/historical/awg.md)
+- [`archive/historical/check.md`](../archive/historical/check.md)
+- [`archive/historical/install.sh`](../archive/historical/install.sh)
+- [`archive/historical/uninstall.sh`](../archive/historical/uninstall.sh)
 
 Это не пять независимых решений. Они фиксируют эволюцию одного проекта, который позже
 стал отдельным репозиторием `saymer-alt/amnezia-mihomo-gateway`.
 
-**Использовать корневые файлы этого KB как актуальную инструкцию не следует.**
+**Использовать архивные файлы этого KB как актуальную инструкцию не следует.**
 Текущее поведение определяется кодом активного проекта, прежде всего его `install.sh`.
 
 ## Что из старого решения сохранилось

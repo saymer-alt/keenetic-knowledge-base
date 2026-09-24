@@ -11,7 +11,7 @@ ARCHITECTURE.md keenetic-auto-setup @ main
 **Последняя проверка:** 2026-09-24  
 **Source of truth:** Linux kernel Documentation/networking/tuntap; официальные доки
 проектов; для архитектуры владельца — код keenetic-auto-setup  
-**Provenance:** raw-исследование [`proxy.md`](../proxy.md) (словарь базовых терминов —
+**Provenance:** raw-исследование [`proxy.md`](../archive/raw/proxy.md) (словарь базовых терминов —
 в [vpn-proxy-terminology.md](vpn-proxy-terminology.md); эта статья — карта уровней и
 встраивания)
 
@@ -184,7 +184,7 @@ Mihomo — прокси-движок, а его **входы и выходы н�
 - docs.amnezia.org — AmneziaWG (крипто-ядро, Jc/Jmin/Jmax), проверено 2026-09-24.
 - `saymer-alt/keenetic-auto-setup` → ARCHITECTURE.md (ProxyN/mitun0, policy routing,
   mixed-порт).
-- Raw-материал: [`proxy.md`](../proxy.md) — исследовательский диалог, из которого
+- Raw-материал: [`proxy.md`](../archive/raw/proxy.md) — исследовательский диалог, из которого
   извлечена карта уровней; сам по себе не доказательство.
 
 ## Связанные материалы

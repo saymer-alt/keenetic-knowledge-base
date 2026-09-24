@@ -13,7 +13,7 @@ upstream`, `ip name-server`, `ip route`, `dns-proxy intercept enable`), код
 **Последняя проверка:** 2026-09-24  
 **Source of truth:** CLI-справочник Keenetic; `keenetic-auto-setup/install.sh` (контракт
 ProxyN); [wiki.metacubex.one/config/dns](https://wiki.metacubex.one/en/config/dns/)  
-**Provenance:** research-диалог [`mihomo-dns.md`](../mihomo-dns.md) (снимок 2026-09-22);
+**Provenance:** research-диалог [`mihomo-dns.md`](../archive/raw/mihomo-dns.md) (снимок 2026-09-22);
 форум Keenetic — как поддерживающее свидетельство, не как истина
 
 ## Что решаем
@@ -389,7 +389,7 @@ ndmc -c 'show dns-proxy'                          # убедиться, что �
 - Форум Keenetic (поддерживающие свидетельства): «DNS через прокси-клиент» (тема
   19957), «туннелирование UDP через socks5 proxy» (тема 19036), «Настройка Proxy
   только для определённых сайтов» (тема 17351, /32 через Proxy-интерфейс).
-- Raw/provenance: [`mihomo-dns.md`](../mihomo-dns.md) — research-диалог 2026-09-22, из
+- Raw/provenance: [`mihomo-dns.md`](../archive/raw/mihomo-dns.md) — research-диалог 2026-09-22, из
   которого извлечена эта статья; его команды не проверялись как production-процедура.
 
 ## Связанные материалы

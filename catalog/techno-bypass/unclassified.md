@@ -53,9 +53,9 @@
 - [vladDotH/mail2tg](https://github.com/vladDotH/mail2tg) — почта→TG — #92.
 - [mi6e4aka/openstore](https://codeberg.org/mi6e4ka/openstore) — клиент
   RuStore (Codeberg) — #270.
-- Астрология в IT-метафорах (шутка, родственна `class.md` этого
+- Астрология в IT-метафорах (шутка, родственна `archive/historical/class.md` этого
   репозитория) — Source: #379–#385, #387 (PHP-бот «тест на адекватность»),
-  #1074 (структура MosTech-текста; сам текст — `MosTech.md`).
+  #1074 (структура MosTech-текста; сам текст — `archive/historical/MosTech.md`).
 
 ## Сервисы и утилиты без темы
 

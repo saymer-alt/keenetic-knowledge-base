@@ -1,7 +1,7 @@
 # VPS / серверная практика
 
 Hardening, бенчмарки, выбор хостинга, Docker, мониторинг. Пересекается с
-VPS-кластером этого репозитория (`amnezia.md`, `awg.md`, `check.md`,
+VPS-кластером этого репозитория (теперь `archive/historical/amnezia.md`, `awg.md`, `check.md`,
 `install.sh`) и [owner-projects.md](owner-projects.md).
 
 ## Hardening и первичная настройка

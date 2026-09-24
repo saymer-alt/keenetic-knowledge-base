@@ -10,7 +10,7 @@ docs.amnezia.org (2026-09-24), wiki.metacubex.one (2026-09-24)
 **Последняя проверка:** 2026-09-24  
 **Source of truth:** официальная документация Xray (транспорт/безопасность), IETF RFC
 (MASQUE), docs.amnezia.org  
-**Provenance:** raw-исследование [`proxy.md`](../proxy.md); базовые определения — в
+**Provenance:** raw-исследование [`proxy.md`](../archive/raw/proxy.md); базовые определения — в
 [vpn-proxy-terminology.md](vpn-proxy-terminology.md), карта встраивания в ОС — в
 [network-layer-tunnel-map.md](network-layer-tunnel-map.md)
 
@@ -206,7 +206,7 @@ VLESS+WS+TLS, «selective REALITY» и т. п.
   (CONNECT-IP).
 - docs.amnezia.org → AmneziaWG (2026-09-24).
 - `saymer-alt/amnezia-mihomo-gateway` — измеренные MTU/MSS-базлайны.
-- Raw-материал: [`proxy.md`](../proxy.md) — исследовательский диалог (таксономия
+- Raw-материал: [`proxy.md`](../archive/raw/proxy.md) — исследовательский диалог (таксономия
   протоколов, цепочки, модель графа/зума); сам по себе не доказательство.
 
 ## Связанные материалы

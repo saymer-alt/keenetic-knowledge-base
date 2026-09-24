@@ -5,7 +5,7 @@
 **Область применения:** чтение конфигураций Mihomo/Xray/Amnezia и
 материалов канала без подмены понятий
 **Source of truth:** терминология ролей — ARCHITECTURE.md
-`saymer-alt/keenetic-auto-setup`; классификации — raw-материал `proxy.md`
+`saymer-alt/keenetic-auto-setup`; классификации — raw-материал `archive/raw/proxy.md`
 этого репозитория
 **Provenance:** канал TechnoBypass —
 [каталог: vpn-protocols](../catalog/techno-bypass/topics/vpn-protocols.md);
@@ -61,7 +61,7 @@ Mihomo (документация MetaCubeX).
 
 ## Источники и provenance
 
-- `proxy.md` этого репозитория (raw-исследование; анонс в канале — #1147).
+- `archive/raw/proxy.md` этого репозитория (raw-исследование; анонс в канале — #1147).
 - `saymer-alt/keenetic-auto-setup` → ARCHITECTURE.md (терминология ролей).
 - Канал: каталог-тема vpn-protocols.
 

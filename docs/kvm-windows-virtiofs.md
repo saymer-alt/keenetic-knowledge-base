@@ -15,9 +15,9 @@ raw-файлов, не совпавшие с текущими источника
 **Source of truth:** документация libvirt; код virtio-win и WinFSP; для среды
 MosTech — только наблюдения владельца  
 **Provenance:** raw-файлы этого репозитория
-[`VirtIO-FS.md`](../VirtIO-FS.md), [`virtiofsd.md`](../virtiofsd.md),
-[`MosTech_cifrovoj.md`](../MosTech_cifrovoj.md); аудит
-[`setup-kvm-motech.sh`](../setup-kvm-motech.sh) — раздел ниже
+[`VirtIO-FS.md`](../archive/raw/VirtIO-FS.md), [`virtiofsd.md`](../archive/raw/virtiofsd.md),
+[`MosTech_cifrovoj.md`](../archive/raw/MosTech_cifrovoj.md); аудит
+[`setup-kvm-motech.sh`](../archive/historical/setup-kvm-motech.sh) — раздел ниже
 
 ## Что решаем
 
@@ -236,9 +236,9 @@ Samba на хосте — работоспособная альтернатив�
 - Пакетные индексы: [packages.altlinux.org → virtiofsd](https://packages.altlinux.org/en/sisyphus/srpms/virtiofsd/),
   [packages.debian.org → virtiofsd](https://packages.debian.org/sid/virtiofsd),
   [src.fedoraproject.org/rpms/virtiofsd](https://src.fedoraproject.org/rpms/virtiofsd).
-- Raw: [`VirtIO-FS.md`](../VirtIO-FS.md), [`virtiofsd.md`](../virtiofsd.md),
-  [`MosTech_cifrovoj.md`](../MosTech_cifrovoj.md),
-  [`setup-kvm-motech.sh`](../setup-kvm-motech.sh) — исторические/raw-материалы.
+- Raw: [`VirtIO-FS.md`](../archive/raw/VirtIO-FS.md), [`virtiofsd.md`](../archive/raw/virtiofsd.md),
+  [`MosTech_cifrovoj.md`](../archive/raw/MosTech_cifrovoj.md),
+  [`setup-kvm-motech.sh`](../archive/historical/setup-kvm-motech.sh) — исторические/raw-материалы.
 
 ## Связанные материалы
 

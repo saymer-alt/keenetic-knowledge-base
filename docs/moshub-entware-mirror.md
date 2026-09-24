@@ -12,9 +12,9 @@
 **Source of truth:** живое поведение hub.mos.ru на дату проверки; код/workflow-ы
 `entware-go`; upstream-документация GitLab — только как «возможность GitLab» без
 переноса на Mos.Hub  
-**Provenance:** raw-исследования [`moshub.md`](../moshub.md) (несколько
+**Provenance:** raw-исследования [`moshub.md`](../archive/raw/moshub.md) (несколько
 последовательных AI-разведок с противоречивыми выводами) и
-[`moshubrd.md`](../moshubrd.md) (сохранённый README реального проекта владельца на
+[`moshubrd.md`](../archive/historical/moshubrd.md) (сохранённый README реального проекта владельца на
 Mos.Hub)
 
 ## Что решаем
@@ -214,8 +214,8 @@ Fastly (через него раздаются релизные файлы), п�
   группы `project-templates`/`mos/pkgs`/`pkgstore`, проект `sayone/saymer`).
 - `saymer-alt/entware-go` @ `gh-action-build`: README, `.github/workflows/build-mihomo.yml`,
   `build-beszel.yml`, `build-warpscout.yml` (read-only).
-- Raw: [`moshub.md`](../moshub.md) (компиляция AI-разведок, выводы противоречивы —
-  см. заголовок файла), [`moshubrd.md`](../moshubrd.md) (README реального проекта
+- Raw: [`moshub.md`](../archive/raw/moshub.md) (компиляция AI-разведок, выводы противоречивы —
+  см. заголовок файла), [`moshubrd.md`](../archive/historical/moshubrd.md) (README реального проекта
   владельца на Mos.Hub).
 - Документация GitLab — только как upstream-справка «возможностей GitLab», не как
   доказательство для Mos.Hub.

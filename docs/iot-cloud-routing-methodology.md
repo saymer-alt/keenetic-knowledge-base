@@ -13,7 +13,7 @@ TP-Link Community (все 2026-09-24); архитектура владельца
 **Последняя проверка:** 2026-09-24  
 **Source of truth:** официальная документация вендоров; живое наблюдение конкретного
 устройства; для архитектуры — код владельца  
-**Provenance:** raw-диалог [`NVR/WL.md`](../NVR/WL.md) (раздел про камеры; остальное
+**Provenance:** raw-диалог [`NVR/WL.md`](../archive/raw/NVR-WL.md) (раздел про камеры; остальное
 диалога уже извлечено в статьи об именовании/маршрутизации/белых списках)
 
 ## Что решаем
@@ -273,7 +273,7 @@ XMEye).
 - [TP-Link Community: Tapo camera DNS allowlist topic](https://community.tp-link.com/en/home/forum/topic/517420)
   (tplink.com/tplinkcloud.com/tplinknbu.com; подтверждение обычного DNS; проверено 2026-09-24).
 - SEC Consult, исследование XMEye P2P-облака — Historical (в raw-файле).
-- Raw: [`NVR/WL.md`](../NVR/WL.md) — диалог, из которого извлечена методология;
+- Raw: [`NVR/WL.md`](../archive/raw/NVR-WL.md) — диалог, из которого извлечена методология;
   терминологические части диалога уже извлечены в другие статьи.
 - Архитектура: `saymer-alt/keenetic-auto-setup` → ARCHITECTURE.md.
 

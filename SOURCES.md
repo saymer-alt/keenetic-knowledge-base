@@ -60,18 +60,18 @@
 Следующие файлы содержат или явно выглядят как материалы, сформированные из диалогов,
 AI-ответов, research-сессий или их переработок:
 
-- `amnezia.md`
-- `awg.md`
-- `check.md`
-- `mihomo-dns.md` — research-диалог о DNS через ProxyN→Mihomo (2026-09-22);
+- `archive/historical/amnezia.md`
+- `archive/historical/awg.md`
+- `archive/historical/check.md`
+- `archive/raw/mihomo-dns.md` — research-диалог о DNS через ProxyN→Mihomo (2026-09-22);
   проверенные выводы извлечены в `docs/keenetic-dns-via-mihomo.md` (сверка с
   официальным CLI-справочником Keenetic, кодом `keenetic-auto-setup` и документацией
   Mihomo, 2026-09-24)
-- `proxy.md`
-- `moshub.md`
-- `VirtIO-FS.md`
-- `virtiofsd.md`
-- `NVR/WL.md`
+- `archive/raw/proxy.md`
+- `archive/raw/moshub.md`
+- `archive/raw/VirtIO-FS.md`
+- `archive/raw/virtiofsd.md`
+- `archive/raw/NVR-WL.md`
 - части MosTech-related материалов
 
 Такие файлы являются **research sources**, а не доказательством технической корректности.

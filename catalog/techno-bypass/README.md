@@ -72,7 +72,7 @@
 
 Канал частично предшествует и параллелен материалам этого репозитория:
 в нём анонсировались `MosTech.md`, `virtiofsd.md`, `VirtIO-FS.md`,
-`NVR/README.md`, `proxy.md`, `install.sh`/`uninstall.sh` — см.
+`NVR/README.md`, `proxy.md`, `install.sh`/`uninstall.sh` (перечисленные файлы KB с 2026-09-24 в `archive/`) — см.
 [topics/owner-projects.md](topics/owner-projects.md) для карты соответствий
 «сообщение канала → файл репозитория».
 

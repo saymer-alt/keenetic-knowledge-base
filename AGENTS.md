@@ -185,6 +185,12 @@ When reorganizing the repository, raw/historical material should normally move t
 or source area while cleaned knowledge is written separately. Git history is useful, but it is
 not a substitute for keeping important provenance understandable in the current tree.
 
+Since 2026-09-24 that archive is `archive/` (`archive/raw/` for extracted research
+snapshots, `archive/historical/` for superseded artifacts and historical/creative
+material; the mapping to maintained articles is in `archive/README.md`).
+`archive/` is provenance/history: do not promote claims from it without re-verification
+against current sources.
+
 ## 5. Classification before cleanup
 
 Before a broad cleanup, classify files rather than moving them by filename alone.

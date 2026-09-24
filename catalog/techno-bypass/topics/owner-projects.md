@@ -45,7 +45,7 @@
   `tun-mihomo`, `Restart=always`).
 - #1089 — «работает на четырёх моих серверах» (Observed).
 - #1088 также ссылается на `uninstall.sh` этого репозитория (KB).
-- Родня: VPS-кластер KB (`amnezia.md`/`awg.md`/`check.md`/`install.sh`) и
+- Родня: VPS-кластер KB (теперь `archive/historical/amnezia.md`/`awg.md`/`check.md`/`install.sh`) и
   [#1079 warp-docker-routing](../topics/vps-server.md).
 
 ## saymer-alt/keenetic-knowledge-base (этот репозиторий)
