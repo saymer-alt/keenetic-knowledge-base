@@ -26,27 +26,37 @@
 | `INVENTORY.md` | canonical | Эта карта содержимого | Уточнять после глубокого аудита |
 | `SOURCES.md` | canonical | Журнал provenance, сторонних материалов и текущего статуса лицензирования | Поддерживать при переносе/добавлении внешних материалов |
 | `ARTICLE_TEMPLATE.md` | canonical | Шаблон для будущих проверенных статей | Использовать как ориентир, не как обязательную бюрократию |
-| `proxy.md` | source/raw → extracted | Исследовательский диалог: классификация VPN/proxy/L2-L3/transport, цепочки туннелей, модель слоёв абстракции; с header-указателем на извлечённые статьи | Полезное знание извлечено в `docs/vpn-proxy-terminology.md`, `docs/network-layer-tunnel-map.md`, `docs/proxy-tunnel-protocol-stack.md`; хранить как provenance |
-| `amnezia.md` | historical / superseded source | Ранняя ручная версия маршрутизации Docker/AmneziaWG через Mihomo TUN | Сохранить как provenance; актуальная реализация — `amnezia-mihomo-gateway`; сравнение: `docs/amnezia-mihomo-gateway-evolution.md` |
-| `awg.md` | historical / superseded source | Ещё одна стадия того же ручного решения AmneziaWG → Mihomo routing | Сохранить как provenance; технические идеи уже promoted в активный проект |
-| `check.md` | historical / concept promoted | Ранняя версия watchdog/self-healing через systemd timer | Концепция уже встроена в `amnezia-mihomo-gateway`; оставить как историю эволюции |
-| `install.sh` | historical project artifact / superseded | Ранний installer AmneziaWG → Mihomo routing | Не запускать из KB; текущий source of truth — `amnezia-mihomo-gateway/install.sh` |
-| `uninstall.sh` | historical duplicate snapshot | Cleanup companion; на 2026-09-19 blob совпадает с активным `amnezia-mihomo-gateway/uninstall.sh` | Не считать canonical copy; rollback неполный, детали в `docs/amnezia-mihomo-gateway-evolution.md` |
-| `moshub.md` | source/raw → extracted | Компиляция AI-разведок о Mos.Hub/GitLab/GitHub для IPK-дистрибуции; выводы противоречивы; с header-указателем | Проверенные выводы — в `docs/moshub-entware-mirror.md` (аудит 2026-09-24, решение по пилоту B); хранить как provenance |
-| `moshubrd.md` | historical / provenance artifact | Нетронутый шаблонный README реального проекта владельца на Mos.Hub (`sayone/saymer`, 2026-05-09); с header-указателем | Уникального знания нет; доказывает существование namespace для пилота; не удалять до решения по зеркалу |
-| `mihomo-dns.md` | source/raw → extracted | Research-диалог (2026-09-22) о DNS Keenetic через ProxyN→Mihomo; с header-указателем на извлечённую статью | Provenance для `docs/keenetic-dns-via-mihomo.md`; как production-процедуру не использовать |
-| `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
-| `VirtIO-FS.md` | source/raw → extracted | Исторический диалог: буква диска/реестр VirtIO-FS в Windows; с header-указателем | Заявки проверены по исходникам virtio-win/WinFSP в `docs/kvm-windows-virtiofs.md`; часть опровергнута (дефолт `*`, перебор Z→D); хранить как provenance |
-| `virtiofsd.md` | source/raw → extracted | Историческое сравнение VirtIO-FS / QEMU-SMB / Samba с рабочим путём VirtIO-FS; с header-указателем | Рабочий путь извлечён в `docs/kvm-windows-virtiofs.md`; Samba-советы (`chmod 777`, guest ok) в статью сознательно не перенесены |
-| `setup-kvm-motech.sh` | historical project artifact / **не утверждён к выполнению** | Скрипт провижининга KVM+virt-manager (root; dnf; группа libvirt; polkit-правило) | Static-аудит выполнен 2026-09-24 (`docs/kvm-windows-virtiofs.md` §«Аудит»): 1 High (безусловное polkit-YES на org.libvirt.unix.manage всей группе), 2 Medium, 1 Low-кластер; не правился, не выполнялся |
-| `MosTech.md` | historical / creative (unrelated) | Сатирический текст про MosTech | Классифицирован header'ом (2026-09-24): проверяемых техфактов нет; кандидат на archive/historical |
-| `MosTech_cifrovoj.md` | historical narrative / extracted | Нарратив с реальными наблюдениями: связка воспроизведена на 3 машинах; с header-указателем | Наблюдения учтены как Observed в `docs/kvm-windows-virtiofs.md`; QXL/secboot/порядок — не универсализированы |
-| `cloudmos.md` | historical / creative (unrelated) | Сатирическая анкета про корпоративную среду | Классифицирован header'ом (2026-09-24); технического содержания нет |
-| `class.md` | unrelated creative | Астрологические знаки как IT-метафоры | Классифицирован header'ом (2026-09-24); к сетевой тематике отношения не имеет |
+| `archive/` | canonical (provenance/history) | Прованс и история: `archive/raw/` (исследовательские снимки после извлечения знания) и `archive/historical/` (заменённые артефакты, исторические/творческие файлы); карта замен — `archive/README.md` | Не источник актуальных инструкций; утверждения не продвигать без перепроверки |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
 | `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала + методология облачных зависимостей IoT + KVM/Windows/VirtIO-FS из MosTech-кластера (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
+
+
+## archive/ (физически перемещено из корня 2026-09-24, TASK-KB-12)
+
+Статусы аудита сохранены; физическое перемещение выполнено `git mv` без изменения содержимого.
+
+| Path | Статус | Что там | Действие/замена |
+|---|---|---|---|
+| `archive/raw/proxy.md` | source/raw → extracted | Исследовательский диалог: классификация VPN/proxy/L2-L3/transport, цепочки туннелей, модель слоёв абстракции; с header-указателем на извлечённые статьи | Полезное знание извлечено в `docs/vpn-proxy-terminology.md`, `docs/network-layer-tunnel-map.md`, `docs/proxy-tunnel-protocol-stack.md`; хранить как provenance |
+| `archive/historical/amnezia.md` | historical / superseded source | Ранняя ручная версия маршрутизации Docker/AmneziaWG через Mihomo TUN | Сохранить как provenance; актуальная реализация — `amnezia-mihomo-gateway`; сравнение: `docs/amnezia-mihomo-gateway-evolution.md` |
+| `archive/historical/awg.md` | historical / superseded source | Ещё одна стадия того же ручного решения AmneziaWG → Mihomo routing | Сохранить как provenance; технические идеи уже promoted в активный проект |
+| `archive/historical/check.md` | historical / concept promoted | Ранняя версия watchdog/self-healing через systemd timer | Концепция уже встроена в `amnezia-mihomo-gateway`; оставить как историю эволюции |
+| `archive/historical/install.sh` | historical project artifact / superseded | Ранний installer AmneziaWG → Mihomo routing | Не запускать из KB; текущий source of truth — `amnezia-mihomo-gateway/install.sh` |
+| `archive/historical/uninstall.sh` | historical duplicate snapshot | Cleanup companion; на 2026-09-19 blob совпадает с активным `amnezia-mihomo-gateway/uninstall.sh` | Не считать canonical copy; rollback неполный, детали в `docs/amnezia-mihomo-gateway-evolution.md` |
+| `archive/raw/moshub.md` | source/raw → extracted | Компиляция AI-разведок о Mos.Hub/GitLab/GitHub для IPK-дистрибуции; выводы противоречивы; с header-указателем | Проверенные выводы — в `docs/moshub-entware-mirror.md` (аудит 2026-09-24, решение по пилоту B); хранить как provenance |
+| `archive/historical/moshubrd.md` | historical / provenance artifact | Нетронутый шаблонный README реального проекта владельца на Mos.Hub (`sayone/saymer`, 2026-05-09); с header-указателем | Уникального знания нет; доказывает существование namespace для пилота; не удалять до решения по зеркалу |
+| `archive/raw/mihomo-dns.md` | source/raw → extracted | Research-диалог (2026-09-22) о DNS Keenetic через ProxyN→Mihomo; с header-указателем на извлечённую статью | Provenance для `docs/keenetic-dns-via-mihomo.md`; как production-процедуру не использовать |
+| `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
+| `archive/raw/VirtIO-FS.md` | source/raw → extracted | Исторический диалог: буква диска/реестр VirtIO-FS в Windows; с header-указателем | Заявки проверены по исходникам virtio-win/WinFSP в `docs/kvm-windows-virtiofs.md`; часть опровергнута (дефолт `*`, перебор Z→D); хранить как provenance |
+| `archive/raw/virtiofsd.md` | source/raw → extracted | Историческое сравнение VirtIO-FS / QEMU-SMB / Samba с рабочим путём VirtIO-FS; с header-указателем | Рабочий путь извлечён в `docs/kvm-windows-virtiofs.md`; Samba-советы (`chmod 777`, guest ok) в статью сознательно не перенесены |
+| `archive/historical/setup-kvm-motech.sh` | historical project artifact / **не утверждён к выполнению** | Скрипт провижининга KVM+virt-manager (root; dnf; группа libvirt; polkit-правило) | Static-аудит выполнен 2026-09-24 (`docs/kvm-windows-virtiofs.md` §«Аудит»): 1 High (безусловное polkit-YES на org.libvirt.unix.manage всей группе), 2 Medium, 1 Low-кластер; не правился, не выполнялся |
+| `archive/historical/MosTech.md` | historical / creative (unrelated) | Сатирический текст про MosTech | Классифицирован header'ом (2026-09-24): проверяемых техфактов нет; перемещён в archive/historical 2026-09-24 |
+| `archive/raw/MosTech_cifrovoj.md` | historical narrative / extracted | Нарратив с реальными наблюдениями: связка воспроизведена на 3 машинах; с header-указателем | Наблюдения учтены как Observed в `docs/kvm-windows-virtiofs.md`; QXL/secboot/порядок — не универсализированы |
+| `archive/historical/cloudmos.md` | historical / creative (unrelated) | Сатирическая анкета про корпоративную среду | Классифицирован header'ом (2026-09-24); технического содержания нет |
+| `archive/historical/class.md` | unrelated creative | Астрологические знаки как IT-метафоры | Классифицирован header'ом (2026-09-24); к сетевой тематике отношения не имеет |
+| `archive/raw/NVR-WL.md` (бывший `NVR/WL.md`) | source/raw → extracted | Исторический диалог: уровни Mihomo/правила/политики + облачные зависимости камер | Знание извлечено в статьи именования/маршрутизации/whitelist и `docs/iot-cloud-routing-methodology.md`; перемещён из NVR/ 2026-09-24 |
 
 ## NVR/
 
@@ -57,7 +67,6 @@
 | `NVR/cleanup_cctv.sh` | project artifact, reviewed | Малый cleanup-скрипт для архива | Сохранить текущую `find -mtime +3` semantics; проверить фактический retention на устройстве при live-test |
 | `NVR/S99cctv` | project artifact, reviewed | Entware init script для записи CCTV | Аудит выявил stale-PID/PID-reuse и SIGKILL caveats; менять lifecycle только после live-test |
 | `NVR/S99stream` | project artifact, reviewed | Entware init/streaming logic для HTTP MPEG-TS | Проверены структура и stop lifecycle; credentials должны оставаться с ограниченными правами; нужен live reconnect/load test |
-| `NVR/WL.md` | source/raw → extracted, **misplaced** | Исторический диалог: уровни Mihomo/правила/политики + облачные зависимости камер; с header-указателем | Знание извлечено: терминология — в статьи именования/маршрутизации/whitelist; методология камер/IoT — в `docs/iot-cloud-routing-methodology.md` (2026-09-24); физическое перемещение в архив — отдельная задача |
 
 ## scripts/
 
@@ -71,11 +80,11 @@
 
 Связанные файлы:
 
-- `amnezia.md`
-- `awg.md`
-- `check.md`
-- `install.sh`
-- `uninstall.sh`
+- `archive/historical/amnezia.md`
+- `archive/historical/awg.md`
+- `archive/historical/check.md`
+- `archive/historical/install.sh`
+- `archive/historical/uninstall.sh`
 
 Это выглядит не как пять независимых материалов, а как эволюция одного решения:
 Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-check → installer.
@@ -89,7 +98,7 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 Основной источник:
 
-- `proxy.md`
+- `archive/raw/proxy.md`
 
 Возможные будущие статьи:
 
@@ -114,9 +123,7 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 ### 4. Whitelist / Mihomo routing model
 
-Источник:
-
-- `NVR/WL.md`
+Источник (с 2026-09-24 в `archive/raw/NVR-WL.md`):
 
 Несмотря на расположение, это материал про различие между:
 
@@ -138,8 +145,8 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 Источники:
 
-- `moshub.md`
-- `moshubrd.md`
+- `archive/raw/moshub.md`
+- `archive/historical/moshubrd.md`
 - частично `Каталог_ссылок_TechnoBypass.md`
 
 Может дать полезные идеи для резервного размещения Entware/IPK артефактов, но любые
@@ -149,12 +156,12 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 Источники:
 
-- `VirtIO-FS.md`
-- `virtiofsd.md`
-- `setup-kvm-motech.sh`
-- `MosTech.md`
-- `MosTech_cifrovoj.md`
-- `cloudmos.md`
+- `archive/raw/VirtIO-FS.md`
+- `archive/raw/virtiofsd.md`
+- `archive/historical/setup-kvm-motech.sh`
+- `archive/historical/MosTech.md`
+- `archive/raw/MosTech_cifrovoj.md`
+- `archive/historical/cloudmos.md`
 
 Это отдельная тема, не ядро Keenetic Knowledge Base. В ней смешаны реальные технические
 наблюдения, автоматизация и творческие тексты. Перед перемещением нужно извлечь фактические
@@ -169,4 +176,5 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 5. ~~Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.~~ Выполнено 2026-09-24 (TASK-KB-09): результат — `docs/moshub-entware-mirror.md`, решение по пилоту B; реальный пилот — за оператором.
 6. ~~Сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.~~ Выполнено 2026-09-24 (TASK-KB-10): методология облачных зависимостей камер/IoT извлечена в `docs/iot-cloud-routing-methodology.md`; файл помечен extracted/misplaced, физическое перемещение — позже.
 7. ~~Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.~~ Выполнено 2026-09-24 (TASK-KB-11): `docs/kvm-windows-virtiofs.md` + аудит `setup-kvm-motech.sh`; творческие файлы классифицированы; физическое перемещение в архив — следующий этап.
-8. **Следующий приоритет:** планирование реорганизации архива (archive/restructure): физическое перемещение извлечённых raw-файлов (`proxy.md`, `moshub*`, `NVR/WL.md`, MosTech-кластер) в `archive/` без потери provenance.
+8. ~~Планирование реорганизации архива.~~ Выполнено 2026-09-24 (TASK-KB-12): `archive/raw/` + `archive/historical/` созданы, 17 файлов перемещены `git mv`, ссылки отремонтированы.
+9. **Следующий приоритет:** сопровождение (live-валидации DNS/NVR, пилот Mos.Hub, promotion-решения владельца, лицензия `scripts/service`) — не структурные задачи.
