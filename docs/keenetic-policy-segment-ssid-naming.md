@@ -644,6 +644,7 @@ PX-Secondary
 - [Mihomo на Keenetic: где он в архитектуре маршрутизации](mihomo-keenetic-routing.md).
 - [Режим белых списков: как это устроено и что работает](whitelist-mode-architecture.md).
 - [DNS Keenetic через Mihomo: штатный путь через ProxyN](keenetic-dns-via-mihomo.md).
+- [Методология облачных зависимостей камер/IoT](iot-cloud-routing-methodology.md) — практическое развитие §6 (что маршрутизировать: устройство или его зависимости).
 - Raw/provenance: [NVR/WL.md](../NVR/WL.md) — исторический диалог/исследование, не источник истины сам по себе.
 
 ---

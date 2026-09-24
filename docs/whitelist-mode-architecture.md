@@ -72,6 +72,8 @@
 
 ## Связанные материалы
 
+- [Методология облачных зависимостей камер/IoT](iot-cloud-routing-methodology.md) —
+  что делать с устройствами, которым при БС нужен только их облачный трафик.
 - [DNS Keenetic через Mihomo: штатный путь через ProxyN](keenetic-dns-via-mihomo.md) —
   возможный ответ на «DNS не должен уходить через провайдера» (Research до live-теста).
 - [Политика, сегмент, SSID и маршрут: не называйте всё WL](keenetic-policy-segment-ssid-naming.md)

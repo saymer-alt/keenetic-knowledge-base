@@ -93,6 +93,8 @@ routing Keenetic. Подбор правильного `interface-name` упро�
 
 ## Связанные материалы
 
+- [Методология облачных зависимостей камер/IoT](iot-cloud-routing-methodology.md) —
+  как выяснить, какой трафик устройства направлять в Mihomo.
 - [DNS Keenetic через Mihomo: штатный путь через ProxyN](keenetic-dns-via-mihomo.md) —
   куда идёт upstream DNS самого Keenetic и почему через ProxyN, а не `mitun0`.
 - [Карта встраивания: L2/L3, TUN/TAP, bridge/route](network-layer-tunnel-map.md) —
