@@ -60,6 +60,10 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 - [docs/keenetic-dns-via-mihomo.md](docs/keenetic-dns-via-mihomo.md) —
   upstream DNS самого Keenetic через ProxyN → Mihomo (DoT/DoH `on ProxyN`):
   подтверждённые примитивы, безопасный тест-план и что ещё требует live-проверки.
+- [docs/network-layer-tunnel-map.md](docs/network-layer-tunnel-map.md) и
+  [docs/proxy-tunnel-protocol-stack.md](docs/proxy-tunnel-protocol-stack.md) —
+  слоёные модели туннелей/прокси: уровни L2/L3, TUN/TAP и встраивание в ОС;
+  стек протокол/транспорт/маскировка и чтение цепочек (извлечено из `proxy.md`).
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
@@ -165,8 +169,9 @@ TechnoBypass — важный источник того, **что стоит и�
 
 Следующие содержательные кандидаты:
 
-1. определить, что уникального ещё осталось в большом `proxy.md` после уже созданной
-   статьи `docs/vpn-proxy-terminology.md`;
+1. ~~определить, что уникального ещё осталось в большом `proxy.md`~~ — выполнено
+   2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и
+   `docs/proxy-tunnel-protocol-stack.md`, сам файл помечен как provenance-снимок;
 2. разобрать `moshub.md` и проверить, остались ли там актуальные идеи для `entware-go`;
 3. сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist и оставить только
    уникальный provenance;

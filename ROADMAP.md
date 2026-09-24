@@ -98,7 +98,7 @@ Raw Telegram export остаётся входным материалом. В п�
 Особое внимание:
 
 - `moshub.md` — очень крупный исследовательский файл;
-- `proxy.md` — большой материал, который разумнее разделить на несколько тем;
+- `proxy.md` — знание извлечено 2026-09-24 (см. Phase 4); будущее перемещение файла в архив — отдельное решение владельца;
 - `NVR/WL.md` — пример файла, лежащего не в своей тематической области;
 - MosTech/VirtIO-FS материалы — отделить полезные технические наблюдения от творческого текста.
 
@@ -125,7 +125,11 @@ Raw Telegram export остаётся входным материалом. В п�
 
 ### VPN / proxy / routing
 
-- базовая классификация VPN, proxy, tunnel и transport из `proxy.md`;
+- [x] базовая классификация VPN, proxy, tunnel и transport из `proxy.md` — извлечена и
+  проверена 2026-09-24 (TASK-KB-08): словарь `docs/vpn-proxy-terminology.md` + карта
+  уровней/встраивания `docs/network-layer-tunnel-map.md` + слоёная модель
+  протокол/транспорт/маскировка `docs/proxy-tunnel-protocol-stack.md`; сам `proxy.md`
+  помечен как provenance-снимок;
 - [x] AmneziaWG / Mihomo routing — сверено с текущим `amnezia-mihomo-gateway`; результат: `docs/amnezia-mihomo-gateway-evolution.md`;
 - health-check / recovery patterns — отдельно от одноразовой установки.
 

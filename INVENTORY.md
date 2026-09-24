@@ -26,7 +26,7 @@
 | `INVENTORY.md` | canonical | Эта карта содержимого | Уточнять после глубокого аудита |
 | `SOURCES.md` | canonical | Журнал provenance, сторонних материалов и текущего статуса лицензирования | Поддерживать при переносе/добавлении внешних материалов |
 | `ARTICLE_TEMPLATE.md` | canonical | Шаблон для будущих проверенных статей | Использовать как ориентир, не как обязательную бюрократию |
-| `proxy.md` | source/raw → candidate | Большое исследование/обсуждение классификации VPN, proxy, L2/L3, transport и смежных технологий | Разделить на несколько тематических статей; факты и классификацию перепроверить по актуальным источникам |
+| `proxy.md` | source/raw → extracted | Исследовательский диалог: классификация VPN/proxy/L2-L3/transport, цепочки туннелей, модель слоёв абстракции; с header-указателем на извлечённые статьи | Полезное знание извлечено в `docs/vpn-proxy-terminology.md`, `docs/network-layer-tunnel-map.md`, `docs/proxy-tunnel-protocol-stack.md`; хранить как provenance |
 | `amnezia.md` | historical / superseded source | Ранняя ручная версия маршрутизации Docker/AmneziaWG через Mihomo TUN | Сохранить как provenance; актуальная реализация — `amnezia-mihomo-gateway`; сравнение: `docs/amnezia-mihomo-gateway-evolution.md` |
 | `awg.md` | historical / superseded source | Ещё одна стадия того же ручного решения AmneziaWG → Mihomo routing | Сохранить как provenance; технические идеи уже promoted в активный проект |
 | `check.md` | historical / concept promoted | Ранняя версия watchdog/self-healing через systemd timer | Концепция уже встроена в `amnezia-mihomo-gateway`; оставить как историю эволюции |
@@ -45,7 +45,7 @@
 | `class.md` | unrelated | Астрологическая классификация в IT-метафорах | Не относится к Keenetic/networking; безопасный кандидат на отдельный архив |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
-| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
+| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
 
 ## NVR/
@@ -159,7 +159,7 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 1. **Не перемещать файлы массово.**
 2. ~~Глубоко разобрать VPS-кластер и сравнить его с текущим VPS-проектом.~~ Выполнено 2026-09-19.
 3. ~~Аудировать NVR как самостоятельный мини-проект.~~ Выполнено 2026-09-19; результат — `NVR/AUDIT.md`, до canonical нужен live-test.
-4. **Следующий приоритет:** разобрать `proxy.md` на карту оставшегося уникального знания (базовая терминология уже извлечена в `docs/vpn-proxy-terminology.md`).
-5. Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.
+4. ~~Разобрать `proxy.md` на карту оставшегося уникального знания.~~ Выполнено 2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и `docs/proxy-tunnel-protocol-stack.md`; файл помечен как provenance.
+5. **Следующий приоритет:** разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.
 6. Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.
 7. Только после этого выбрать окончательную структуру каталогов.
