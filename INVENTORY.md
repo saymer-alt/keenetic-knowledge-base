@@ -34,6 +34,7 @@
 | `uninstall.sh` | historical duplicate snapshot | Cleanup companion; на 2026-09-19 blob совпадает с активным `amnezia-mihomo-gateway/uninstall.sh` | Не считать canonical copy; rollback неполный, детали в `docs/amnezia-mihomo-gateway-evolution.md` |
 | `moshub.md` | source/raw → candidate | Очень крупное исследование Mos.Hub/GitLab как площадки для артефактов, IPK/OPKG feed и зеркалирования | Высокий приоритет на тематическое извлечение; текущие возможности/квоты/URL перепроверить; возможные выводы сравнить с `entware-go` |
 | `moshubrd.md` | source/raw / historical | Сохранённый/сгенерированный Mos.Hub README и связанные заметки | Не считать документацией проекта; сохранить как provenance до разбора `moshub.md` |
+| `mihomo-dns.md` | source/raw → extracted | Research-диалог (2026-09-22) о DNS Keenetic через ProxyN→Mihomo; с header-указателем на извлечённую статью | Provenance для `docs/keenetic-dns-via-mihomo.md`; как production-процедуру не использовать |
 | `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
 | `VirtIO-FS.md` | source/raw / historical | Ответ/заметка про VirtIO-FS в Windows, в частности mount point/букву диска | Вынести из Keenetic-тематики; технические утверждения перепроверить перед повторным использованием |
 | `virtiofsd.md` | source/raw → candidate | Материал по virtiofsd/VirtIO-FS и обмену файлами в виртуализации | Возможная отдельная Linux/KVM reference-статья, но не Keenetic core |
@@ -44,7 +45,7 @@
 | `class.md` | unrelated | Астрологическая классификация в IT-метафорах | Не относится к Keenetic/networking; безопасный кандидат на отдельный архив |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
-| `docs/` | candidate | Первые извлечённые статьи (TB-05): 7 тем по ARTICLE_TEMPLATE со разведёнными статусами | Повышать до canonical по мере проверки; расширять из catalog-тем |
+| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
 
 ## NVR/

@@ -29,6 +29,7 @@ historical note / further research.
 | K8 | #230 | Тюнинг health-check proxy-groups (interval/tolerance/idle_timeout) | домен конфигов пользователя/генератора, не инсталлера; AWL-failover уже настроен в link-generators (NIGHT-06) | — | — | — | no action |
 | K9 | #96, #181, #1146 | DNS-связки (AdGuardHome, DoT ndmc) | чувствительная зона DNS; вне скоупа | — | — | сеть | no action |
 | K10 | #882 | Бан MTProxy по JA3 | информационно; к проекту отношения не имеет | — | — | — | no action |
+| K11 | `mihomo-dns.md` (research 2026-09-22) + `docs/keenetic-dns-via-mihomo.md` (2026-09-24) | DNS upstream роутера через ProxyN: `dns-proxy tls upstream … on ProxyN` (DoT через SOCKS5 → Mihomo) | **не реализовано**; примитивы подтверждены (CLI-справочник + контракт ProxyN из install.sh), сквозная цепочка на живом роутере не проверялась | штатный DNS-egress без iptables-хаков: installer/Doctor увидят ProxyN и DNS на одном проектном интерфейсе | безопасный domain-scoped тест-план в статье (без `system configuration save` до доказательства) | DNS — чувствительная зона; неверная настройка ломает резолв всего роутера | **needs live validation first** — эксперимент оператора; в код не переносить до доказательства |
 
 ## saymer-alt/link-generators
 

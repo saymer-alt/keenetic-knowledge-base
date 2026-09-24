@@ -63,6 +63,10 @@ AI-ответов, research-сессий или их переработок:
 - `amnezia.md`
 - `awg.md`
 - `check.md`
+- `mihomo-dns.md` — research-диалог о DNS через ProxyN→Mihomo (2026-09-22);
+  проверенные выводы извлечены в `docs/keenetic-dns-via-mihomo.md` (сверка с
+  официальным CLI-справочником Keenetic, кодом `keenetic-auto-setup` и документацией
+  Mihomo, 2026-09-24)
 - `proxy.md`
 - `moshub.md`
 - `VirtIO-FS.md`

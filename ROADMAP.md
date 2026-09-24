@@ -113,7 +113,14 @@ Raw Telegram export остаётся входным материалом. В п�
 
 - [x] NVR и streaming через ffmpeg — технический аудит выполнен (`NVR/AUDIT.md`), совместимость FFmpeg исправлена; canonical статус ждёт live-test;
 - Entware service helper — после проверки происхождения, лицензии и совместимости;
-- архитектурные объяснения Mihomo / DIRECT / policy routing;
+- [x] архитектурные объяснения Mihomo / DIRECT / policy routing — извлечены
+  (`docs/mihomo-keenetic-routing.md`, `docs/keenetic-policy-segment-ssid-naming.md`,
+  `docs/whitelist-mode-architecture.md`); именование слоёв — отдельная статья 2026-09-23;
+- [x] DNS через Mihomo — research-диалог `mihomo-dns.md` (2026-09-22) извлечён в
+  `docs/keenetic-dns-via-mihomo.md` (2026-09-24): примитивы подтверждены по CLI-справочнику
+  и коду `keenetic-auto-setup`, сквозная цепочка не проверялась;
+- [ ] live-валидация DNS-пути `DoT on ProxyN → Mihomo → proxy` на реальном роутере
+  (задача оператора; тест-план — в статье) — до неё DNS-поведение не считать Confirmed;
 - реальные failure cases Keenetic/Entware, если они обнаружатся в сырье.
 
 ### VPN / proxy / routing
