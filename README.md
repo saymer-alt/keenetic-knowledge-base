@@ -70,6 +70,9 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 - [docs/iot-cloud-routing-methodology.md](docs/iot-cloud-routing-methodology.md) —
   как выяснить облачные зависимости камеры/IoT и направить в Mihomo только нужный
   трафик (извлечено из `NVR/WL.md`).
+- [docs/kvm-windows-virtiofs.md](docs/kvm-windows-virtiofs.md) —
+  KVM/libvirt-хост → Windows-гость → общая папка через VirtIO-FS: проверенный рецепт,
+  поведение буквы диска и аудит `setup-kvm-motech.sh` (извлечено из MosTech-кластера).
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
@@ -178,13 +181,18 @@ TechnoBypass — важный источник того, **что стоит и�
 1. ~~определить, что уникального ещё осталось в большом `proxy.md`~~ — выполнено
    2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и
    `docs/proxy-tunnel-protocol-stack.md`, сам файл помечен как provenance-снимок;
-2. разобрать `moshub.md` и проверить, остались ли там актуальные идеи для `entware-go`;
+2. ~~разобрать `moshub.md` и проверить, остались ли там актуальные идеи для
+   `entware-go`~~ — выполнено 2026-09-24 (TASK-KB-09): результат —
+   `docs/moshub-entware-mirror.md`, решение по пилоту B; реальный пилот — за
+   оператором;
 3. ~~сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist~~ —
    выполнено 2026-09-24 (TASK-KB-10): извлечена
    `docs/iot-cloud-routing-methodology.md`, файл помечен как provenance;
-4. извлечь реальные технические наблюдения из MosTech/VirtIO-FS материалов, после чего
-   отделить их от основной Keenetic/networking KB;
-5. только после содержательного аудита закончить структуру `archive/` / `reference/`
-   и убрать историческое сырьё из корня без потери provenance.
+4. ~~извлечь реальные технические наблюдения из MosTech/VirtIO-FS материалов~~ —
+   выполнено 2026-09-24 (TASK-KB-11): `docs/kvm-windows-virtiofs.md` + аудит
+   `setup-kvm-motech.sh`; творческие файлы классифицированы;
+5. **следующий крупный этап — планирование реорганизации архива** (структура
+   `archive/` / `reference/` и перемещение исторического сырья из корня без потери
+   provenance); содержательная кампания извлечения завершена.
 
 Подробности и текущие статусы — в [ROADMAP.md](ROADMAP.md) и [INVENTORY.md](INVENTORY.md).
