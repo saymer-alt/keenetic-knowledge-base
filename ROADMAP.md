@@ -123,7 +123,10 @@ Raw Telegram export остаётся входным материалом. В п�
 ### Keenetic / Entware
 
 - [x] NVR и streaming через ffmpeg — технический аудит выполнен (`NVR/AUDIT.md`), совместимость FFmpeg исправлена; canonical статус ждёт live-test;
-- Entware service helper — после проверки происхождения, лицензии и совместимости;
+- [x] Entware service helper — проверка выполнена (TASK-KB-13, 2026-09-24):
+  происхождение публично не установлено (класс C), static review и решение
+  REMOVE-FROM-HEAD RECOMMENDED — [`scripts/SERVICE-AUDIT.md`](scripts/SERVICE-AUDIT.md);
+  фактическое удаление — отдельное решение владельца;
 - [x] архитектурные объяснения Mihomo / DIRECT / policy routing — извлечены
   (`docs/mihomo-keenetic-routing.md`, `docs/keenetic-policy-segment-ssid-naming.md`,
   `docs/whitelist-mode-architecture.md`); именование слоёв — отдельная статья 2026-09-23;

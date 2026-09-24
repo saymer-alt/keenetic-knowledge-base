@@ -72,7 +72,7 @@
 
 | Path | First-pass status | Что там сейчас | Возможное действие |
 |---|---|---|---|
-| `scripts/service` | project artifact / reference | Сторонний shell helper для управления Entware services, указан автор Pavel P. / @pnpzx | Проверить происхождение и лицензию перед распространением/изменением; решить, это vendored reference или собственный maintained script |
+| `scripts/service` | third-party / **unlicensed, origin unestablished** | Сторонний helper управления Entware-сервисами (автор по заголовку: Pavel P. / @pnpzx); байт-в-байт не менялся | Аудит выполнен 2026-09-24 ([`scripts/SERVICE-AUDIT.md`](scripts/SERVICE-AUDIT.md)): происхождение не найдено (класс C), static review — 0 High / 6 Medium / кластер Low, решение **REMOVE-FROM-HEAD RECOMMENDED** (удаление — решение владельца, история Git сохраняется) |
 
 ## Candidate knowledge clusters
 
@@ -92,7 +92,7 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 **Аудит выполнен 2026-09-19:** кластер сопоставлен с текущим
 `amnezia-mihomo-gateway`. Результат —
 [`docs/amnezia-mihomo-gateway-evolution.md`](docs/amnezia-mihomo-gateway-evolution.md).
-Старые Markdown-ответы и корневые скрипты остаются provenance и не должны управлять production-кодом.
+Файлы кластера с 2026-09-24 лежат в `archive/historical/` (TASK-KB-12) и не должны управлять production-кодом.
 
 ### 2. Network concepts / proxy taxonomy
 
@@ -100,14 +100,9 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 - `archive/raw/proxy.md`
 
-Возможные будущие статьи:
-
-- VPN vs proxy vs transport;
-- L2 vs L3 tunnels;
-- TUN/TAP;
-- WireGuard/AmneziaWG;
-- VLESS/REALITY и application-layer proxy protocols;
-- где заканчивается транспорт и начинается routing policy.
+Статьи из этого материала созданы 2026-09-24 (TASK-KB-08):
+`docs/vpn-proxy-terminology.md`, `docs/network-layer-tunnel-map.md`,
+`docs/proxy-tunnel-protocol-stack.md`; raw-файл остаётся provenance.
 
 ### 3. Keenetic NVR / streaming
 
@@ -139,7 +134,7 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 `docs/keenetic-policy-segment-ssid-naming.md`, `docs/mihomo-keenetic-routing.md`,
 `docs/whitelist-mode-architecture.md`; методология облачных зависимостей камер/IoT —
 в [`docs/iot-cloud-routing-methodology.md`](docs/iot-cloud-routing-methodology.md).
-Файл остаётся provenance и ждёт физического перемещения при реорганизации.
+Файл перемещён в `archive/raw/NVR-WL.md` 2026-09-24 (TASK-KB-12); физическое перемещение завершено.
 
 ### 5. Mos.Hub / package distribution research
 
@@ -149,8 +144,9 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 - `archive/historical/moshubrd.md`
 - частично `Каталог_ссылок_TechnoBypass.md`
 
-Может дать полезные идеи для резервного размещения Entware/IPK артефактов, но любые
-утверждения о текущих возможностях Mos.Hub требуют свежей проверки.
+Проверено 2026-09-24 (TASK-KB-09): результат — `docs/moshub-entware-mirror.md`
+(решение по пилоту B); свежая проверка hub.mos.ru выполнена, дальнейшие действия — за
+пилотом оператора.
 
 ### 6. MosTech / KVM / VirtIO-FS
 
@@ -163,9 +159,9 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 - `archive/raw/MosTech_cifrovoj.md`
 - `archive/historical/cloudmos.md`
 
-Это отдельная тема, не ядро Keenetic Knowledge Base. В ней смешаны реальные технические
-наблюдения, автоматизация и творческие тексты. Перед перемещением нужно извлечь фактические
-наработки, которые могут быть полезны в отдельной Linux/MosTech базе.
+Это отдельная тема, не ядро Keenetic Knowledge Base. Извлечение выполнено 2026-09-24
+(TASK-KB-11): техническая статья — `docs/kvm-windows-virtiofs.md`, творческие файлы
+классифицированы; кластер перемещён в `archive/` (TASK-KB-12).
 
 ## Immediate priorities
 
@@ -177,4 +173,4 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 6. ~~Сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.~~ Выполнено 2026-09-24 (TASK-KB-10): методология облачных зависимостей камер/IoT извлечена в `docs/iot-cloud-routing-methodology.md`; файл помечен extracted/misplaced, физическое перемещение — позже.
 7. ~~Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.~~ Выполнено 2026-09-24 (TASK-KB-11): `docs/kvm-windows-virtiofs.md` + аудит `setup-kvm-motech.sh`; творческие файлы классифицированы; физическое перемещение в архив — следующий этап.
 8. ~~Планирование реорганизации архива.~~ Выполнено 2026-09-24 (TASK-KB-12): `archive/raw/` + `archive/historical/` созданы, 17 файлов перемещены `git mv`, ссылки отремонтированы.
-9. **Следующий приоритет:** сопровождение (live-валидации DNS/NVR, пилот Mos.Hub, promotion-решения владельца, лицензия `scripts/service`) — не структурные задачи.
+9. **Следующий приоритет:** сопровождение (live-валидации DNS/NVR, пилот Mos.Hub, promotion-решения владельца, решение владельца по `scripts/service` после аудита TASK-KB-13) — не структурные задачи.

@@ -183,7 +183,9 @@ SOURCES, ARTICLE_TEMPLATE, PROMOTION_BACKLOG, Каталог_ссылок_Techno
 - promotion-решения владельца из [PROMOTION_BACKLOG.md](PROMOTION_BACKLOG.md)
   (sing-box в entware-go, Proton-конвертер и др.);
 - будущие импорты TechnoBypass через `tools/parse_telegram_export.py`;
-- лицензионный вопрос `scripts/service`;
+- статус `scripts/service` после аудита (TASK-KB-13):
+  [`scripts/SERVICE-AUDIT.md`](scripts/SERVICE-AUDIT.md) — REMOVE-FROM-HEAD
+  RECOMMENDED, фактическое удаление за владельцем;
 - сопровождение статусов статей (Research → Confirmed по мере проверок).
 
 Подробности и текущие статусы — в [ROADMAP.md](ROADMAP.md) и [INVENTORY.md](INVENTORY.md).
