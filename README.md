@@ -67,6 +67,9 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 - [docs/moshub-entware-mirror.md](docs/moshub-entware-mirror.md) —
   пригодность Mos.Hub как вторичного зеркала .ipk для `entware-go`: что подтверждено
   живой проверкой, что осталось GitLab-предположением, и план пилота.
+- [docs/iot-cloud-routing-methodology.md](docs/iot-cloud-routing-methodology.md) —
+  как выяснить облачные зависимости камеры/IoT и направить в Mihomo только нужный
+  трафик (извлечено из `NVR/WL.md`).
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
@@ -176,8 +179,9 @@ TechnoBypass — важный источник того, **что стоит и�
    2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и
    `docs/proxy-tunnel-protocol-stack.md`, сам файл помечен как provenance-снимок;
 2. разобрать `moshub.md` и проверить, остались ли там актуальные идеи для `entware-go`;
-3. сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist и оставить только
-   уникальный provenance;
+3. ~~сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist~~ —
+   выполнено 2026-09-24 (TASK-KB-10): извлечена
+   `docs/iot-cloud-routing-methodology.md`, файл помечен как provenance;
 4. извлечь реальные технические наблюдения из MosTech/VirtIO-FS материалов, после чего
    отделить их от основной Keenetic/networking KB;
 5. только после содержательного аудита закончить структуру `archive/` / `reference/`

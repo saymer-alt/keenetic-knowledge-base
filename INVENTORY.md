@@ -45,7 +45,7 @@
 | `class.md` | unrelated | Астрологическая классификация в IT-метафорах | Не относится к Keenetic/networking; безопасный кандидат на отдельный архив |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
-| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
+| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала + методология облачных зависимостей IoT (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
 
 ## NVR/
@@ -57,7 +57,7 @@
 | `NVR/cleanup_cctv.sh` | project artifact, reviewed | Малый cleanup-скрипт для архива | Сохранить текущую `find -mtime +3` semantics; проверить фактический retention на устройстве при live-test |
 | `NVR/S99cctv` | project artifact, reviewed | Entware init script для записи CCTV | Аудит выявил stale-PID/PID-reuse и SIGKILL caveats; менять lifecycle только после live-test |
 | `NVR/S99stream` | project artifact, reviewed | Entware init/streaming logic для HTTP MPEG-TS | Проверены структура и stop lifecycle; credentials должны оставаться с ограниченными правами; нужен live reconnect/load test |
-| `NVR/WL.md` | source/raw → candidate, **misplaced** | Обсуждение архитектуры Mihomo, DIRECT vs proxy и обхода ограничений/белых списков | Вынести из NVR при реорганизации; сверить с `keenetic-auto-setup` и текущей архитектурой whitelist mode |
+| `NVR/WL.md` | source/raw → extracted, **misplaced** | Исторический диалог: уровни Mihomo/правила/политики + облачные зависимости камер; с header-указателем | Знание извлечено: терминология — в статьи именования/маршрутизации/whitelist; методология камер/IoT — в `docs/iot-cloud-routing-methodology.md` (2026-09-24); физическое перемещение в архив — отдельная задача |
 
 ## scripts/
 
@@ -128,6 +128,12 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 Потенциально полезен для общей документации и для проверки текущего whitelist mode в
 активных проектах.
 
+**Контент извлечён 2026-09-24 (TASK-KB-10):** терминологические части — в
+`docs/keenetic-policy-segment-ssid-naming.md`, `docs/mihomo-keenetic-routing.md`,
+`docs/whitelist-mode-architecture.md`; методология облачных зависимостей камер/IoT —
+в [`docs/iot-cloud-routing-methodology.md`](docs/iot-cloud-routing-methodology.md).
+Файл остаётся provenance и ждёт физического перемещения при реорганизации.
+
 ### 5. Mos.Hub / package distribution research
 
 Источники:
@@ -161,5 +167,6 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 3. ~~Аудировать NVR как самостоятельный мини-проект.~~ Выполнено 2026-09-19; результат — `NVR/AUDIT.md`, до canonical нужен live-test.
 4. ~~Разобрать `proxy.md` на карту оставшегося уникального знания.~~ Выполнено 2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и `docs/proxy-tunnel-protocol-stack.md`; файл помечен как provenance.
 5. ~~Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.~~ Выполнено 2026-09-24 (TASK-KB-09): результат — `docs/moshub-entware-mirror.md`, решение по пилоту B; реальный пилот — за оператором.
-6. **Следующий приоритет:** вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива; сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.
-7. Только после этого выбрать окончательную структуру каталогов.
+6. ~~Сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.~~ Выполнено 2026-09-24 (TASK-KB-10): методология облачных зависимостей камер/IoT извлечена в `docs/iot-cloud-routing-methodology.md`; файл помечен extracted/misplaced, физическое перемещение — позже.
+7. **Следующий приоритет:** вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.
+8. Только после этого выбрать окончательную структуру каталогов.
