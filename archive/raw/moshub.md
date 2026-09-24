@@ -4,7 +4,7 @@
 > часть уверенных утверждений — вывод по аналогии «раз это GitLab, значит работает»,
 > а некоторые факты ошибочны (сервис `moshub.ru`, «лимит 10 МБ у GitLab Releases»).
 > Поддерживаемые, проверенные выводы извлечены в
-> [`docs/moshub-entware-mirror.md`](docs/moshub-entware-mirror.md)
+> [`docs/moshub-entware-mirror.md`](../../docs/moshub-entware-mirror.md)
 > (анонимная публичная проверка hub.mos.ru 2026-09-24). Сырые утверждения этого
 > файла не использовать как факты о Mos.Hub без сверки с той статьёй.
 

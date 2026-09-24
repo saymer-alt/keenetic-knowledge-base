@@ -3,7 +3,7 @@
 > (`hub.mos.ru/sayone/saymer`, создан 2026-05-09, публичный; проверено анонимным
 > API-запросом 2026-09-24). Файл доказывает существование namespace для потенциального
 > пилота зеркала и сохранён именно как provenance. Выводы о Mos.Hub — в
-> [`docs/moshub-entware-mirror.md`](docs/moshub-entware-mirror.md); здесь только
+> [`docs/moshub-entware-mirror.md`](../../docs/moshub-entware-mirror.md); здесь только
 > шаблонная болванка без уникального знания.
 
 # Saymer

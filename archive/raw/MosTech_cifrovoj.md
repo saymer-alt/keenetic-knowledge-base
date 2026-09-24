@@ -3,7 +3,7 @@
 > на трёх машинах (среда MosTech/ALT) — это Observed-история, а не универсальный
 > рецепт. Утверждения про QXL/Secure Boot, порядок установки драйверов и упаковку
 > `virtiofsd` — наблюдения своей среды, не проверенные независимо; актуальная
-> техническая статья — [`docs/kvm-windows-virtiofs.md`](docs/kvm-windows-virtiofs.md).
+> техническая статья — [`docs/kvm-windows-virtiofs.md`](../../docs/kvm-windows-virtiofs.md).
 
 # Выпуск специальный: MosTech — цифровой стокгольмский синдром, или Как я заставил ALT Linux работать трижды
 

@@ -1,6 +1,6 @@
 > **⚠️ Историческое raw-исследование / provenance-снимок, не актуальная инструкция.**
 > Рабочий путь VirtIO-FS из этого файла поддерживается теперь в
-> [`docs/kvm-windows-virtiofs.md`](docs/kvm-windows-virtiofs.md) (сверено с
+> [`docs/kvm-windows-virtiofs.md`](../../docs/kvm-windows-virtiofs.md) (сверено с
 > документацией libvirt и исходниками virtio-win/WinFSP, 2026-09-24). Старые команды
 > здесь могут быть небезопасны/устаревшими — особенно fallback-раздел с Samba
 > (`chmod 777`, `guest ok = yes`, `force user`): это НЕ рекомендуемые дефолты, а

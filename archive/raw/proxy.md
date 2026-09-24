@@ -2,11 +2,11 @@
 > Это сохранённый исследовательский диалог (таксономия протоколов, цепочки туннелей,
 > рассуждения о слоях абстракции). Часть идей позже проверена по официальным источникам,
 > часть — нет; утверждения здесь не являются доказанными фактами.
-> Базовая терминология извлечена в [`docs/vpn-proxy-terminology.md`](docs/vpn-proxy-terminology.md);
+> Базовая терминология извлечена в [`docs/vpn-proxy-terminology.md`](../../docs/vpn-proxy-terminology.md);
 > материал про уровни и встраивание в ОС (L2/L3, TUN/TAP, bridge/route, интерфейс vs
-> listener) — в [`docs/network-layer-tunnel-map.md`](docs/network-layer-tunnel-map.md);
+> listener) — в [`docs/network-layer-tunnel-map.md`](../../docs/network-layer-tunnel-map.md);
 > материал про слои протокола/транспорта/маскировки и цепочки — в
-> [`docs/proxy-tunnel-protocol-stack.md`](docs/proxy-tunnel-protocol-stack.md).
+> [`docs/proxy-tunnel-protocol-stack.md`](../../docs/proxy-tunnel-protocol-stack.md).
 > Сырые списки технологий и рассуждения в этом файле не следует использовать как
 > актуальную справку без проверки.
 

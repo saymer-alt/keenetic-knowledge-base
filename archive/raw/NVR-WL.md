@@ -1,11 +1,11 @@
 > **⚠️ Исторический raw-диалог / provenance-снимок, не каноническая документация.**
 > Термологические части (уровни Mihomo/правила/политики, путаница `WL`,
 > «маршрутизировать соединения, а не устройства») уже извлечены в поддерживаемые
-> статьи: [именование слоёв](../docs/keenetic-policy-segment-ssid-naming.md),
-> [маршрутизация Mihomo](../docs/mihomo-keenetic-routing.md),
-> [режим белых списков](../docs/whitelist-mode-architecture.md).
+> статьи: [именование слоёв](../../docs/keenetic-policy-segment-ssid-naming.md),
+> [маршрутизация Mihomo](../../docs/mihomo-keenetic-routing.md),
+> [режим белых списков](../../docs/whitelist-mode-architecture.md).
 > Методология обнаружения облачных зависимостей камер/IoT поддерживается теперь в
-> [`docs/iot-cloud-routing-methodology.md`](../docs/iot-cloud-routing-methodology.md).
+> [`docs/iot-cloud-routing-methodology.md`](../../docs/iot-cloud-routing-methodology.md).
 > Вендорские домены и особенно IP-списки ниже могут быть историческими —
 > не копировать их в правила без проверки по статье. Файл лежит не в своей
 > тематической области (NVR/) — перемещение в архив отдельной задачей.
