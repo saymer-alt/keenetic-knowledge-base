@@ -32,8 +32,8 @@
 | `check.md` | historical / concept promoted | Ранняя версия watchdog/self-healing через systemd timer | Концепция уже встроена в `amnezia-mihomo-gateway`; оставить как историю эволюции |
 | `install.sh` | historical project artifact / superseded | Ранний installer AmneziaWG → Mihomo routing | Не запускать из KB; текущий source of truth — `amnezia-mihomo-gateway/install.sh` |
 | `uninstall.sh` | historical duplicate snapshot | Cleanup companion; на 2026-09-19 blob совпадает с активным `amnezia-mihomo-gateway/uninstall.sh` | Не считать canonical copy; rollback неполный, детали в `docs/amnezia-mihomo-gateway-evolution.md` |
-| `moshub.md` | source/raw → candidate | Очень крупное исследование Mos.Hub/GitLab как площадки для артефактов, IPK/OPKG feed и зеркалирования | Высокий приоритет на тематическое извлечение; текущие возможности/квоты/URL перепроверить; возможные выводы сравнить с `entware-go` |
-| `moshubrd.md` | source/raw / historical | Сохранённый/сгенерированный Mos.Hub README и связанные заметки | Не считать документацией проекта; сохранить как provenance до разбора `moshub.md` |
+| `moshub.md` | source/raw → extracted | Компиляция AI-разведок о Mos.Hub/GitLab/GitHub для IPK-дистрибуции; выводы противоречивы; с header-указателем | Проверенные выводы — в `docs/moshub-entware-mirror.md` (аудит 2026-09-24, решение по пилоту B); хранить как provenance |
+| `moshubrd.md` | historical / provenance artifact | Нетронутый шаблонный README реального проекта владельца на Mos.Hub (`sayone/saymer`, 2026-05-09); с header-указателем | Уникального знания нет; доказывает существование namespace для пилота; не удалять до решения по зеркалу |
 | `mihomo-dns.md` | source/raw → extracted | Research-диалог (2026-09-22) о DNS Keenetic через ProxyN→Mihomo; с header-указателем на извлечённую статью | Provenance для `docs/keenetic-dns-via-mihomo.md`; как production-процедуру не использовать |
 | `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
 | `VirtIO-FS.md` | source/raw / historical | Ответ/заметка про VirtIO-FS в Windows, в частности mount point/букву диска | Вынести из Keenetic-тематики; технические утверждения перепроверить перед повторным использованием |
@@ -45,7 +45,7 @@
 | `class.md` | unrelated | Астрологическая классификация в IT-метафорах | Не относится к Keenetic/networking; безопасный кандидат на отдельный архив |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
-| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
+| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
 
 ## NVR/
@@ -160,6 +160,6 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 2. ~~Глубоко разобрать VPS-кластер и сравнить его с текущим VPS-проектом.~~ Выполнено 2026-09-19.
 3. ~~Аудировать NVR как самостоятельный мини-проект.~~ Выполнено 2026-09-19; результат — `NVR/AUDIT.md`, до canonical нужен live-test.
 4. ~~Разобрать `proxy.md` на карту оставшегося уникального знания.~~ Выполнено 2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и `docs/proxy-tunnel-protocol-stack.md`; файл помечен как provenance.
-5. **Следующий приоритет:** разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.
-6. Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.
+5. ~~Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.~~ Выполнено 2026-09-24 (TASK-KB-09): результат — `docs/moshub-entware-mirror.md`, решение по пилоту B; реальный пилот — за оператором.
+6. **Следующий приоритет:** вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива; сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.
 7. Только после этого выбрать окончательную структуру каталогов.

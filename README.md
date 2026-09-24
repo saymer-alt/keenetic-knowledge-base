@@ -64,6 +64,9 @@ TechnoBypass / старые заметки / upstream / реальные тес�
   [docs/proxy-tunnel-protocol-stack.md](docs/proxy-tunnel-protocol-stack.md) —
   слоёные модели туннелей/прокси: уровни L2/L3, TUN/TAP и встраивание в ОС;
   стек протокол/транспорт/маскировка и чтение цепочек (извлечено из `proxy.md`).
+- [docs/moshub-entware-mirror.md](docs/moshub-entware-mirror.md) —
+  пригодность Mos.Hub как вторичного зеркала .ipk для `entware-go`: что подтверждено
+  живой проверкой, что осталось GitLab-предположением, и план пилота.
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
