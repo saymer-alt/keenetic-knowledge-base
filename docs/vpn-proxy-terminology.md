@@ -54,8 +54,10 @@ Keenetic + Mihomo + Xray + AmneziaWG.
 Mihomo (документация MetaCubeX).
 
 **Research:** расширенная классификация (L2/L3, все типы transport) —
-извлекается из raw `proxy.md`; детальная проверка каждой категории —
-предмет отдельной статьи (см. ROADMAP).
+извлечена из raw `proxy.md` в два проверенных материала:
+[network-layer-tunnel-map.md](network-layer-tunnel-map.md) (уровни и встраивание
+в ОС) и [proxy-tunnel-protocol-stack.md](proxy-tunnel-protocol-stack.md) (слои
+протокола/транспорта/маскировки).
 
 ## Источники и provenance
 
@@ -67,3 +69,5 @@ Mihomo (документация MetaCubeX).
 
 - [docs/mihomo-keenetic-routing.md](mihomo-keenetic-routing.md)
 - [docs/keenetic-entware-base.md](keenetic-entware-base.md)
+- [docs/network-layer-tunnel-map.md](network-layer-tunnel-map.md) — развёрнутая карта уровней и встраивания.
+- [docs/proxy-tunnel-protocol-stack.md](proxy-tunnel-protocol-stack.md) — слоёная модель протокол/транспорт/маскировка.
