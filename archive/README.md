@@ -26,6 +26,7 @@
 | --- | --- |
 | [`raw/proxy.md`](raw/proxy.md) | [`docs/vpn-proxy-terminology.md`](../docs/vpn-proxy-terminology.md), [`docs/network-layer-tunnel-map.md`](../docs/network-layer-tunnel-map.md), [`docs/proxy-tunnel-protocol-stack.md`](../docs/proxy-tunnel-protocol-stack.md) |
 | [`raw/mihomo-dns.md`](raw/mihomo-dns.md) | [`docs/keenetic-dns-via-mihomo.md`](../docs/keenetic-dns-via-mihomo.md) |
+| [`raw/google-vps-geolocation-dns-ecs-research-2026-09.md`](raw/google-vps-geolocation-dns-ecs-research-2026-09.md) | [`docs/dns-geoip-ecs-leak-diagnostics.md`](../docs/dns-geoip-ecs-leak-diagnostics.md) — нормализованная диагностика DNS leak/ECS/границы туннеля; AI-гипотезы о внутреннем GeoIP-алгоритме не повышены до Confirmed |
 | [`raw/moshub.md`](raw/moshub.md) | [`docs/moshub-entware-mirror.md`](../docs/moshub-entware-mirror.md) |
 | [`raw/NVR-WL.md`](raw/NVR-WL.md) | [`docs/iot-cloud-routing-methodology.md`](../docs/iot-cloud-routing-methodology.md), [`docs/whitelist-mode-architecture.md`](../docs/whitelist-mode-architecture.md), [`docs/mihomo-keenetic-routing.md`](../docs/mihomo-keenetic-routing.md), [`docs/keenetic-policy-segment-ssid-naming.md`](../docs/keenetic-policy-segment-ssid-naming.md) |
 | [`raw/VirtIO-FS.md`](raw/VirtIO-FS.md), [`raw/virtiofsd.md`](raw/virtiofsd.md), [`raw/MosTech_cifrovoj.md`](raw/MosTech_cifrovoj.md) | [`docs/kvm-windows-virtiofs.md`](../docs/kvm-windows-virtiofs.md) |
