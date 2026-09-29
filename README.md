@@ -72,9 +72,12 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 - [docs/iot-cloud-routing-methodology.md](docs/iot-cloud-routing-methodology.md) —
   как выяснить облачные зависимости камеры/IoT и направить в Mihomo только нужный
   трафик (извлечено из `NVR/WL.md`).
-- [docs/kvm-windows-virtiofs.md](docs/kvm-windows-virtiofs.md) —
-  KVM/libvirt-хост → Windows-гость → общая папка через VirtIO-FS: проверенный рецепт,
-  поведение буквы диска и аудит `setup-kvm-motech.sh` (извлечено из MosTech-кластера).
+- [MosTech/README.md](MosTech/README.md) — авторский цикл MosTech: сатирические
+  статьи, raw-заметки и скрипт о жизни с корпоративным ALT Linux, а также
+  поддерживаемая техническая статья
+  [MosTech/kvm-windows-virtiofs.md](MosTech/kvm-windows-virtiofs.md)
+  (KVM/Windows/VirtIO-FS: проверенный рецепт, поведение буквы диска и аудит
+  `setup-kvm-motech.sh`).
 - [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
   Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
 
@@ -110,6 +113,7 @@ TechnoBypass — важный источник того, **что стоит и�
 
 ```text
 docs/       поддерживаемые статьи знаний
+MosTech/    авторский цикл MosTech (статьи, raw-материалы, скрипт)
 catalog/    исследовательский каталог TechnoBypass
 NVR/        проверенный NVR/streaming мини-проект
 tools/      детерминированные инструменты импорта
@@ -172,7 +176,10 @@ SOURCES, ARTICLE_TEMPLATE, PROMOTION_BACKLOG, Каталог_ссылок_Techno
 `proxy.md`, `moshub.md`, `NVR/WL.md`, MosTech/VirtIO-кластера и VPS-кластера извлечено
 в поддерживаемые статьи; 2026-09-24 (TASK-KB-12) все отработанные raw/исторические
 файлы физически перемещены в `archive/raw/` и `archive/historical/` (карта замен —
-[archive/README.md](archive/README.md)).
+[archive/README.md](archive/README.md)); 2026-09-29 весь авторский цикл MosTech
+(сатирические статьи, raw-заметки, скрипт и техническую статью) дополнительно
+объединён в самостоятельный раздел [MosTech/](MosTech/) — решение владельца
+сохранить цикл единым произведением.
 
 **Оставшаяся конкретная работа** (не структурная):
 

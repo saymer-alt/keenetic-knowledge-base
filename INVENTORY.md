@@ -26,10 +26,11 @@
 | `INVENTORY.md` | canonical | Эта карта содержимого | Уточнять после глубокого аудита |
 | `SOURCES.md` | canonical | Журнал provenance, сторонних материалов и текущего статуса лицензирования | Поддерживать при переносе/добавлении внешних материалов |
 | `ARTICLE_TEMPLATE.md` | canonical | Шаблон для будущих проверенных статей | Использовать как ориентир, не как обязательную бюрократию |
-| `archive/` | canonical (provenance/history) | Прованс и история: `archive/raw/` (исследовательские снимки после извлечения знания) и `archive/historical/` (заменённые артефакты, исторические/творческие файлы); карта замен — `archive/README.md` | Не источник актуальных инструкций; утверждения не продвигать без перепроверки |
+| `archive/` | canonical (provenance/history) | Прованс и история: `archive/raw/` (исследовательские снимки после извлечения знания) и `archive/historical/` (заменённые артефакты, исторические файлы); карта замен — `archive/README.md` | Не источник актуальных инструкций; утверждения не продвигать без перепроверки |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
-| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала + методология облачных зависимостей IoT + KVM/Windows/VirtIO-FS из MosTech-кластера (2026-09-24) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
+| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала + методология облачных зависимостей IoT (статья KVM/Windows/VirtIO-FS из MosTech-кластера с 2026-09-29 живёт в `MosTech/`) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
+| `MosTech/` | canonical (авторский цикл) | Единый раздел цикла MosTech: сатирические статьи, raw-заметки, скрипт провижининга и поддерживаемая статья `kvm-windows-virtiofs.md`; собран 2026-09-29 из `archive/` + `docs/` по решению владельца | Поддерживать как самостоятельную серию (см. `MosTech/README.md`); скрипт не утверждён к выполнению |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
 
 
@@ -49,14 +50,26 @@
 | `archive/historical/moshubrd.md` | historical / provenance artifact | Нетронутый шаблонный README реального проекта владельца на Mos.Hub (`sayone/saymer`, 2026-05-09); с header-указателем | Уникального знания нет; доказывает существование namespace для пилота; не удалять до решения по зеркалу |
 | `archive/raw/mihomo-dns.md` | source/raw → extracted | Research-диалог (2026-09-22) о DNS Keenetic через ProxyN→Mihomo; с header-указателем на извлечённую статью | Provenance для `docs/keenetic-dns-via-mihomo.md`; как production-процедуру не использовать |
 | `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
-| `archive/raw/VirtIO-FS.md` | source/raw → extracted | Исторический диалог: буква диска/реестр VirtIO-FS в Windows; с header-указателем | Заявки проверены по исходникам virtio-win/WinFSP в `docs/kvm-windows-virtiofs.md`; часть опровергнута (дефолт `*`, перебор Z→D); хранить как provenance |
-| `archive/raw/virtiofsd.md` | source/raw → extracted | Историческое сравнение VirtIO-FS / QEMU-SMB / Samba с рабочим путём VirtIO-FS; с header-указателем | Рабочий путь извлечён в `docs/kvm-windows-virtiofs.md`; Samba-советы (`chmod 777`, guest ok) в статью сознательно не перенесены |
-| `archive/historical/setup-kvm-motech.sh` | historical project artifact / **не утверждён к выполнению** | Скрипт провижининга KVM+virt-manager (root; dnf; группа libvirt; polkit-правило) | Static-аудит выполнен 2026-09-24 (`docs/kvm-windows-virtiofs.md` §«Аудит»): 1 High (безусловное polkit-YES на org.libvirt.unix.manage всей группе), 2 Medium, 1 Low-кластер; не правился, не выполнялся |
-| `archive/historical/MosTech.md` | historical / creative (unrelated) | Сатирический текст про MosTech | Классифицирован header'ом (2026-09-24): проверяемых техфактов нет; перемещён в archive/historical 2026-09-24 |
-| `archive/raw/MosTech_cifrovoj.md` | historical narrative / extracted | Нарратив с реальными наблюдениями: связка воспроизведена на 3 машинах; с header-указателем | Наблюдения учтены как Observed в `docs/kvm-windows-virtiofs.md`; QXL/secboot/порядок — не универсализированы |
-| `archive/historical/cloudmos.md` | historical / creative (unrelated) | Сатирическая анкета про корпоративную среду | Классифицирован header'ом (2026-09-24); технического содержания нет |
-| `archive/historical/class.md` | unrelated creative | Астрологические знаки как IT-метафоры | Классифицирован header'ом (2026-09-24); к сетевой тематике отношения не имеет |
 | `archive/raw/NVR-WL.md` (бывший `NVR/WL.md`) | source/raw → extracted | Исторический диалог: уровни Mihomo/правила/политики + облачные зависимости камер | Знание извлечено в статьи именования/маршрутизации/whitelist и `docs/iot-cloud-routing-methodology.md`; перемещён из NVR/ 2026-09-24 |
+
+## MosTech/ (авторский цикл, собран 2026-09-29)
+
+Весь исторический цикл MosTech (корень 2026-07/09 → `archive/` 2026-09-24 →
+`MosTech/` 2026-09-29) объединён в одном разделе по решению владельца: цикл
+сохраняется единым произведением, без деления на «техническую» и «творческую»
+части. Содержимое файлов при сборке не переписывалось; статусы аудита 2026-09-24
+сохранены. Назначение раздела — `MosTech/README.md`.
+
+| Path | Статус | Что там | Действие/замена |
+|---|---|---|---|
+| `MosTech/MosTech.md` | historical / creative (часть цикла) | Сатирический выпуск-основание про MosTech (2026-07-21) | Хранить как часть цикла; проверяемых техфактов нет |
+| `MosTech/MosTech_cifrovoj.md` | historical narrative / extracted | Нарратив с реальными наблюдениями: связка воспроизведена на 3 машинах; с header-указателем | Наблюдения учтены как Observed в `MosTech/kvm-windows-virtiofs.md`; QXL/secboot/порядок — не универсализированы |
+| `MosTech/virtiofsd.md` | source/raw → extracted | Исторический диалог: буква диска/реестр VirtIO-FS в Windows; с header-указателем | Заявки проверены по исходникам virtio-win/WinFSP в `MosTech/kvm-windows-virtiofs.md`; часть опровергнута (дефолт `*`, перебор Z→D); хранить как provenance |
+| `MosTech/VirtIO-FS.md` | source/raw → extracted | Историческое сравнение VirtIO-FS / QEMU-SMB / Samba с рабочим путём VirtIO-FS; с header-указателем | Рабочий путь извлечён в `MosTech/kvm-windows-virtiofs.md`; Samba-советы (`chmod 777`, guest ok) в статью сознательно не перенесены |
+| `MosTech/cloudmos.md` | historical / creative (часть цикла) | Сатирическая анкета про корпоративную среду (2026-07-30) | Хранить как часть цикла; технического содержания нет |
+| `MosTech/class.md` | unrelated creative → часть цикла (2026-09-29) | Астрологические знаки как IT-метафоры (2026-09-06); с header-примечанием о релокации | Хранить как часть цикла; к сетевой тематике отношения не имеет |
+| `MosTech/setup-kvm-motech.sh` | historical project artifact / **не утверждён к выполнению** | Скрипт провижининга KVM+virt-manager (root; dnf; группа libvirt; polkit-правило) | Static-аудит 2026-09-24 (`MosTech/kvm-windows-virtiofs.md` §«Аудит»): 1 High, 2 Medium, 1 Low-кластер; не правился, не выполнялся |
+| `MosTech/kvm-windows-virtiofs.md` | canonical (техническая статья цикла) | Поддерживаемая статья (TASK-KB-11): рецепт VirtIO-FS, поведение буквы диска, аудит скрипта | Поддерживать; provenance-ссылки — на соседние raw-файлы цикла |
 
 ## NVR/
 
@@ -153,18 +166,12 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 
 ### 6. MosTech / KVM / VirtIO-FS
 
-Источники:
-
-- `archive/raw/VirtIO-FS.md`
-- `archive/raw/virtiofsd.md`
-- `archive/historical/setup-kvm-motech.sh`
-- `archive/historical/MosTech.md`
-- `archive/raw/MosTech_cifrovoj.md`
-- `archive/historical/cloudmos.md`
-
-Это отдельная тема, не ядро Keenetic Knowledge Base. Извлечение выполнено 2026-09-24
-(TASK-KB-11): техническая статья — `docs/kvm-windows-virtiofs.md`, творческие файлы
-классифицированы; кластер перемещён в `archive/` (TASK-KB-12).
+Весь цикл (статьи, raw-заметки, скрипт, техническая статья) с 2026-09-29 собран в
+корневом разделе `MosTech/` — см. таблицу в разделе `MosTech/` выше. Это отдельная
+авторская тема, не ядро Keenetic Knowledge Base. Техническое извлечение выполнено
+2026-09-24 (TASK-KB-11): `MosTech/kvm-windows-virtiofs.md`; прежнее разделение
+«творческое в archive/ + техническая статья в docs/» отменено решением владельца —
+цикл сохраняется единым произведением.
 
 ## Immediate priorities
 
@@ -174,6 +181,6 @@ Docker/AmneziaWG traffic → policy routing → Mihomo TUN → recovery/health-c
 4. ~~Разобрать `proxy.md` на карту оставшегося уникального знания.~~ Выполнено 2026-09-24 (TASK-KB-08): извлечены `docs/network-layer-tunnel-map.md` и `docs/proxy-tunnel-protocol-stack.md`; файл помечен как provenance.
 5. ~~Разобрать `moshub.md` по темам и проверить, есть ли там актуальные идеи для `entware-go`.~~ Выполнено 2026-09-24 (TASK-KB-09): результат — `docs/moshub-entware-mirror.md`, решение по пилоту B; реальный пилот — за оператором.
 6. ~~Сопоставить `NVR/WL.md` с уже созданными статьями про Mihomo/whitelist.~~ Выполнено 2026-09-24 (TASK-KB-10): методология облачных зависимостей камер/IoT извлечена в `docs/iot-cloud-routing-methodology.md`; файл помечен extracted/misplaced, физическое перемещение — позже.
-7. ~~Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.~~ Выполнено 2026-09-24 (TASK-KB-11): `docs/kvm-windows-virtiofs.md` + аудит `setup-kvm-motech.sh`; творческие файлы классифицированы; физическое перемещение в архив — следующий этап.
+7. ~~Вытащить технические факты из MosTech/VirtIO материалов и затем отделить их от творческого архива.~~ Выполнено 2026-09-24 (TASK-KB-11): `kvm-windows-virtiofs.md` + аудит `setup-kvm-motech.sh`; творческие файлы классифицированы; физическое перемещение в архив — следующий этап. 2026-09-29: весь цикл дополнительно объединён в `MosTech/` (решение владельца).
 8. ~~Планирование реорганизации архива.~~ Выполнено 2026-09-24 (TASK-KB-12): `archive/raw/` + `archive/historical/` созданы, 17 файлов перемещены `git mv`, ссылки отремонтированы.
 9. **Следующий приоритет:** сопровождение (live-валидации DNS/NVR, пилот Mos.Hub, promotion-решения владельца, сопровождение архива (например, судьба `archive/historical/entware-service-helper-audit.md`)) — не структурные задачи.

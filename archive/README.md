@@ -15,10 +15,10 @@
 
 ## `historical/`
 
-Заменённые скрипты/артефакты проектов, исторические снимки, творческий/несвязанный
-материал, сохранённый ради истории. Тоже **не актуальная документация**. Исторические
-`.sh`-файлы сохранены байт-в-байт для provenance: их не запускать и не считать
-рабочими рецептами.
+Заменённые скрипты/артефакты проектов и исторические снимки. Тоже **не актуальная
+документация**. Исторические `.sh`-файлы сохранены байт-в-байт для provenance: их
+не запускать и не считать рабочими рецептами. (Творческие файлы MosTech-цикла
+с 2026-09-29 хранятся в `MosTech/`, не здесь.)
 
 ## Карта: архив → поддерживаемая замена
 
@@ -29,13 +29,12 @@
 | [`raw/google-vps-geolocation-dns-ecs-research-2026-09.md`](raw/google-vps-geolocation-dns-ecs-research-2026-09.md) | [`docs/dns-geoip-ecs-leak-diagnostics.md`](../docs/dns-geoip-ecs-leak-diagnostics.md) — нормализованная диагностика DNS leak/ECS/границы туннеля; AI-гипотезы о внутреннем GeoIP-алгоритме не повышены до Confirmed |
 | [`raw/moshub.md`](raw/moshub.md) | [`docs/moshub-entware-mirror.md`](../docs/moshub-entware-mirror.md) |
 | [`raw/NVR-WL.md`](raw/NVR-WL.md) | [`docs/iot-cloud-routing-methodology.md`](../docs/iot-cloud-routing-methodology.md), [`docs/whitelist-mode-architecture.md`](../docs/whitelist-mode-architecture.md), [`docs/mihomo-keenetic-routing.md`](../docs/mihomo-keenetic-routing.md), [`docs/keenetic-policy-segment-ssid-naming.md`](../docs/keenetic-policy-segment-ssid-naming.md) |
-| [`raw/VirtIO-FS.md`](raw/VirtIO-FS.md), [`raw/virtiofsd.md`](raw/virtiofsd.md), [`raw/MosTech_cifrovoj.md`](raw/MosTech_cifrovoj.md) | [`docs/kvm-windows-virtiofs.md`](../docs/kvm-windows-virtiofs.md) |
 | [`historical/amnezia.md`](historical/amnezia.md), [`historical/awg.md`](historical/awg.md), [`historical/check.md`](historical/check.md), [`historical/install.sh`](historical/install.sh), [`historical/uninstall.sh`](historical/uninstall.sh) | [`docs/amnezia-mihomo-gateway-evolution.md`](../docs/amnezia-mihomo-gateway-evolution.md); актуальный source of truth — [saymer-alt/amnezia-mihomo-gateway](https://github.com/saymer-alt/amnezia-mihomo-gateway) |
 | [`historical/moshubrd.md`](historical/moshubrd.md) | [`docs/moshub-entware-mirror.md`](../docs/moshub-entware-mirror.md) (README реального проекта владельца на Mos.Hub; namespace для возможного пилота) |
-| [`historical/setup-kvm-motech.sh`](historical/setup-kvm-motech.sh) | аудит — в [`docs/kvm-windows-virtiofs.md`](../docs/kvm-windows-virtiofs.md) §«Аудит»; **исторический артефакт; не утверждён к выполнению** |
-| [`historical/MosTech.md`](historical/MosTech.md), [`historical/cloudmos.md`](historical/cloudmos.md), [`historical/class.md`](historical/class.md) | творческий/несвязанный исторический материал; поддерживаемой технической замены нет |
 | [`historical/entware-service-helper-audit.md`](historical/entware-service-helper-audit.md) | аудит/provenance стороннего Entware-хелпера, удалённого из текущего HEAD 2026-09-24 (TASK-KB-14) после того, как публичное происхождение и права на распространение установить не удалось; сам файл существует только в истории Git — под `archive/` он намеренно не копировался |
 
 Физическое перемещение выполнено 2026-09-24 (TASK-KB-12) после завершения кампании
 содержательного аудита (TASK-KB-08..11); исходные пути в корне репозитория больше не
-используются.
+используются. 2026-09-29 весь MosTech-кластер (7 raw/historical-файлов этой карты и
+техническая статья) вынесен из `archive/` и `docs/` в корневой раздел
+[`../MosTech/`](../MosTech/) — решение владельца об объединении авторского цикла.

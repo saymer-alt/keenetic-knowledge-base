@@ -70,8 +70,8 @@ AI-ответов, research-сессий или их переработок:
   Mihomo, 2026-09-24)
 - `archive/raw/proxy.md`
 - `archive/raw/moshub.md`
-- `archive/raw/VirtIO-FS.md`
-- `archive/raw/virtiofsd.md`
+- `MosTech/VirtIO-FS.md`
+- `MosTech/virtiofsd.md`
 - `archive/raw/NVR-WL.md`
 - части MosTech-related материалов
 

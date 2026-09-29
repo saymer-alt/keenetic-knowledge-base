@@ -103,9 +103,11 @@ Raw Telegram export остаётся входным материалом. В п�
   терминология уже была в статьях, методология облачных зависимостей камер/IoT —
   `docs/iot-cloud-routing-methodology.md`; файл перемещён в `archive/raw/NVR-WL.md` 2026-09-24 (TASK-KB-12);
 - MosTech/VirtIO-FS материалы — извлечение выполнено 2026-09-24 (TASK-KB-11):
-  `docs/kvm-windows-virtiofs.md` (с аудитом `setup-kvm-motech.sh`);
+  `kvm-windows-virtiofs.md` (с аудитом `setup-kvm-motech.sh`);
   `MosTech.md`/`cloudmos.md`/`class.md` классифицированы как creative/unrelated;
-  весь кластер перемещён в `archive/` 2026-09-24 (TASK-KB-12).
+  весь кластер перемещён в `archive/` 2026-09-24 (TASK-KB-12);
+  2026-09-29 весь цикл (включая техническую статью) объединён в корневом разделе
+  `MosTech/` по решению владельца — разделение creative/unrelated отменено.
 
 **Кампания извлечения (TASK-KB-08..11) и физическая реорганизация архива
 (TASK-KB-12) завершены 2026-09-24.** Содержательный аудит каждого файла выполнен до
@@ -158,8 +160,9 @@ Raw Telegram export остаётся входным материалом. В п�
 - [ ] реальный пилот Mos.Hub-зеркала (одноразовый тестовый проект + dummy .ipk;
   оператор) — до него никаких изменений в дистрибуции `entware-go`;
 - [x] KVM/Windows/VirtIO-FS из MosTech-кластера — извлечено с проверкой по
-  документации libvirt и исходникам virtio-win/WinFSP (TASK-KB-11, 2026-09-24):
-  `docs/kvm-windows-virtiofs.md`; скрипт `setup-kvm-motech.sh` статически
+  документации libvirt и исходникам virtio-win/WinFSP (TASK-KB-11, 2026-09-24);
+  с 2026-09-29 статья живёт в `MosTech/kvm-windows-virtiofs.md` (весь цикл
+  объединён в `MosTech/`); скрипт `setup-kvm-motech.sh` статически
   проаудирован (1 High по polkit) и помечен «не утверждён к выполнению»;
 - связанные выводы для `entware-go`, если они всё ещё полезны.
 
