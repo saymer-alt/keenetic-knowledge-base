@@ -74,6 +74,7 @@ AI-ответов, research-сессий или их переработок:
 - `MosTech/virtiofsd.md`
 - `archive/raw/NVR-WL.md`
 - части MosTech-related материалов
+- `archive/raw/gemini-mihomo-systemd-hardening-2026-09-29.md` — переданная владельцем рекомендация Gemini о переводе Mihomo с root на отдельного systemd-пользователя; сохранена как Research, а проверенная переработка находится в `docs/mihomo-systemd-nonroot-hardening.md`
 
 Такие файлы являются **research sources**, а не доказательством технической корректности.
 
