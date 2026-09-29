@@ -62,6 +62,8 @@ TechnoBypass / старые заметки / upstream / реальные тес�
   подтверждённые примитивы, безопасный тест-план и что ещё требует live-проверки.
 - [docs/dns-geoip-ecs-leak-diagnostics.md](docs/dns-geoip-ecs-leak-diagnostics.md) —
   диагностика DNS leak, ECS, IPv4/IPv6 и границы туннеля при VPN/proxy/VPS; отдельно отмечено, что точный алгоритм service-specific GeoIP остаётся research без публичного подтверждения.
+- [docs/mihomo-systemd-nonroot-hardening.md](docs/mihomo-systemd-nonroot-hardening.md) —
+  research по запуску Mihomo под отдельным systemd-пользователем и least-privilege capabilities: что подтверждает upstream, где исходная рекомендация Gemini слишком оптимистична, безопасный тест-план и rollback.
 - [docs/network-layer-tunnel-map.md](docs/network-layer-tunnel-map.md) и
   [docs/proxy-tunnel-protocol-stack.md](docs/proxy-tunnel-protocol-stack.md) —
   слоёные модели туннелей/прокси: уровни L2/L3, TUN/TAP и встраивание в ОС;
