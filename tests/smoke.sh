@@ -2,7 +2,7 @@
 # Offline BusyBox ash integration smoke. Run from repository root.
 set -eu
 cd "$(dirname "$0")/.."
-for f in NVR/v2/nvr.sh NVR/v2/install-router.sh NVR/v2/fresh-install.sh NVR/v2/bootstrap.sh; do
+for f in NVR/v2/nvr.sh NVR/v2/install-router.sh NVR/v2/fresh-install.sh NVR/v2/upgrade-router.sh NVR/v2/bootstrap.sh; do
   sh -n "$f"
   busybox sh -n "$f"
 done
