@@ -144,7 +144,7 @@ schedule() {
     sed '/\/opt\/etc\/nvr-v2\.sh check/d; /\/opt\/etc\/nvr-v2\.sh cleanup/d' "$oldcron" > "$tempfile"
     rm -f "$oldcron" "$tempfile.err"
     printf '\n*/5 * * * * /bin/sh /opt/etc/nvr-v2.sh check\n' >> "$tempfile"
-    printf '0 * * * * /bin/sh /opt/etc/nvr-v2.sh cleanup\n' >> "$tempfile"
+    printf '3 * * * * /bin/sh /opt/etc/nvr-v2.sh cleanup\n' >> "$tempfile"
     crontab "$tempfile" || fail 'Unable to install cron'
     "$CRON" restart || fail 'Unable to restart cron'
     rm -f "$tempfile"
