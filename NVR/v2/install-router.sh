@@ -15,6 +15,17 @@ SRC="$(CDPATH= cd -- "$(dirname "$0")" && pwd)/nvr.sh"
 ROOT_CRON_TEMP='/tmp/nvr-v2-root-crontab'
 SYSTEM_CRON_TEMP='/tmp/nvr-v2-system-crontab'
 
+# Parse a v2.4 status line: "CAM <id>: HEALTHY, last write <n>s ago".
+status_cam_age() {
+    id=$1; output=$2
+    line=$(printf '%s\n' "$output" | grep "^CAM $id: HEALTHY, last write [0-9][0-9]*s ago\$" || :)
+    [ -n "$line" ] || return 1
+    age=${line##*last write }
+    age=${age%s ago}
+    case "$age" in ''|*[!0-9]*) return 1;; esac
+    printf '%s\n' "$age"
+}
+
 err() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 mounted_rw() { awk -v d="$MNT" '$2==d && $4 ~ /(^|,)rw(,|$)/ {ok=1} END{exit !ok}' /proc/mounts; }
 
@@ -79,9 +90,8 @@ verify_started() {
         all_good=1
         status_output=$(sh "$V2" status) || all_good=0
         for id in 101 201 301; do
-            line=$(printf '%s\n' "$status_output" | grep "^CAM $id: running ") || { all_good=0; continue; }
-            age=${line##*latest_write_age_sec=}
-            case "$age" in ''|*[!0-9]*) all_good=0;; *) [ "$age" -lt 60 ] || all_good=0;; esac
+            age=$(status_cam_age "$id" "$status_output") || { all_good=0; continue; }
+            [ "$age" -lt 60 ] || all_good=0
         done
         if [ "$all_good" -eq 1 ]; then return 0; fi
         attempt=$((attempt+1))
@@ -131,7 +141,7 @@ switch() {
     fi
     # Do not adopt a still-running legacy camera FFmpeg during cutover.
     for p in $(pidof ffmpeg 2>/dev/null || :); do
-        if tr '\000' '\n' < "/proc/$p/cmdline" 2>/dev/null | grep -Eq '/Streaming/Channels/(101|201|301)'; then
+        if tr '\000' '\n' < "/proc/$p/cmdline" 2>/dev/null | grep -Eq '/Streaming/Channels/(101|201|301)$'; then
             err "Legacy FFmpeg pid=$p still alive; run rollback or investigate before v2 start"
         fi
     done
@@ -145,11 +155,12 @@ switch() {
     } > /tmp/nvr-v2-new-crontab
     crontab /tmp/nvr-v2-new-crontab
     /opt/etc/init.d/S10cron restart
-    printf '\nNVR v2 activated with three running cameras.\n'
+    printf '\nNVR v2.4 activated with three running cameras.\n'
     sh "$V2" status
     printf '\nCron rules:\n'
     crontab -l
     printf '\nRollback: sh %s rollback\n' "$BACKUP/rollback.sh"
+    printf '\nOptional notifications (Telegram/webhook): add NVR_NOTIFY_* keys to %s (mode 600)\nand run: sh %s notify test\nSee NVR/v2/README.md, section Notifications.\n' "$CONF" "$V2"
     trap - EXIT
 }
 

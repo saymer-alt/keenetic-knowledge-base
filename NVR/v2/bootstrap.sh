@@ -1,5 +1,5 @@
 #!/bin/sh
-# Download NVR v2.3 from the owner's GitHub repository before installation.
+# Download NVR v2.4 from the owner's GitHub repository before installation.
 set -eu
 umask 077
 ACTION=${1:-}
@@ -7,7 +7,9 @@ case "$ACTION" in
     preflight|switch|preflight-fresh|install-fresh|configure-fresh) ;;
     *) echo 'Usage: bootstrap.sh {preflight|switch|preflight-fresh|install-fresh|configure-fresh}' >&2; exit 2;;
 esac
-RAW=${NVR_RAW_BASE:-https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/nvr/watchdog-v2-candidate/NVR/v2}
+# The default follows the published main branch. To test a development branch,
+# export NVR_RAW_BASE=<raw URL base of that branch> before running.
+RAW=${NVR_RAW_BASE:-https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/main/NVR/v2}
 if ! command -v curl >/dev/null 2>&1; then
     echo 'curl missing. Install: opkg update && opkg install curl' >&2
     exit 1
