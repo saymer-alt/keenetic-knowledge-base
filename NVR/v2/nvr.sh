@@ -229,8 +229,8 @@ status() {
         if owned "$id" "$pid"; then state=running; else state=stopped; fi
         f=$(newest "$id")
         if [ -f "$f" ]; then
-            mt=$(stat -c %Y "$f" 2>/dev/null) || mt=0
-            if isnum "$mt"; then age=$((NOW-mt)); else age='?'; fi
+            mt=$(stat -c %Y "$f" 2>/dev/null) || mt='stat_error'
+            if isnum "$mt" && [ "$mt" -gt 0 ]; then age=$((NOW-mt)); else age='stat_error'; fi
         else age='no_files'; fi
         echo "CAM $id: $state pid=$pid latest_write_age_sec=$age"
     done
