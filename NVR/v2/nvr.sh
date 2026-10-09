@@ -422,8 +422,9 @@ save_cleanup_state() {
     ok_epoch=${CLEANUP_OK_EPOCH:-0}; ok_human=${CLEANUP_OK_HUMAN:-never}
     isnum "$ok_epoch" || ok_epoch=0
     now=$(date +%s); hu=$(date '+%Y-%m-%d %H:%M:%S')
+    # PARTIAL has skipped/unprocessed entries and is not a fully successful cleanup.
     case $result in
-        OK|PARTIAL) ok_epoch=$now; ok_human=$hu;;
+        OK) ok_epoch=$now; ok_human=$hu;;
     esac
     content="CLEANUP_LAST_EPOCH=$now
 CLEANUP_LAST_HUMAN=$hu
@@ -546,10 +547,54 @@ status() {
     if isnum "${CHECK_LAST_EPOCH:-}" && [ "${CHECK_LAST_EPOCH:-0}" -gt 0 ]; then
         last_check_age=$(( NOW - CHECK_LAST_EPOCH ))
     fi
-    if is_paused; then overall=PAUSED
-    elif ! mounted_rw || [ ! -d "$NVR_BASE_DIR" ]; then overall='NO-DISK'
-    else overall=HEALTHY
+    paused=0
+    is_paused && paused=1
+    if [ "$paused" -eq 1 ]; then
+        overall=PAUSED
+    elif ! mounted_rw || [ ! -d "$NVR_BASE_DIR" ]; then
+        overall='NO-DISK'
+    else
+        overall=HEALTHY
     fi
+    # A running camera with no recent watchdog check is not a proven healthy NVR.
+    # Two missed cron ticks + one minute slack is the initial conservative window.
+    if [ "$overall" = HEALTHY ]; then
+        if [ "$last_check_age" = unknown ] || [ "$last_check_age" -lt 0 ] || [ "$last_check_age" -gt 660 ]; then
+            overall=DEGRADED
+        fi
+    fi
+    cam_report=''
+    for id in $CAMERAS; do
+        pid=$(numfile "$STATE/cam$id.pid")
+        age=$(file_age "$id")
+        if ! mounted_rw || [ ! -d "$NVR_BASE_DIR" ]; then
+            state=UNKNOWN
+        elif [ "$paused" -eq 1 ]; then
+            state=STOPPED
+        elif owned "$id" "$pid"; then
+            case $age in
+                none) state=STARTING;;
+                unknown|*[!0-9-]*) state=UNKNOWN;;
+                -*) if [ "$age" -ge "-$STALE" ]; then state=HEALTHY
+                    else state=UNKNOWN; fi;;
+                *) if [ "$age" -le "$STALE" ]; then state=HEALTHY
+                   else state=STALE; fi;;
+            esac
+        else
+            # A recent video file is not proof of an active recorder.
+            state=DOWN
+        fi
+        if [ "$overall" = HEALTHY ] && [ "$state" != HEALTHY ]; then
+            overall=DEGRADED
+        fi
+        case $age in
+            none) disp='no file yet';;
+            unknown) disp=unknown;;
+            *) disp="${age}s ago";;
+        esac
+        cam_report="${cam_report}CAM $id: $state, last write $disp
+"
+    done
     echo "NVR v2.4 - $overall"
     if mounted_rw; then
         u=$(usage_pct) || u=unknown
@@ -570,36 +615,7 @@ status() {
     echo "LAST CLEANUP: ${CLEANUP_LAST_HUMAN:-never} ${CLEANUP_RESULT:-NEVER}"
     echo "LAST SUCCESSFUL CLEANUP: ${CLEANUP_OK_HUMAN:-never}"
     echo "REMOVED FILES: ${CLEANUP_REMOVED:-0} (skipped ${CLEANUP_SKIPPED:-0})"
-    for id in $CAMERAS; do
-        pid=$(numfile "$STATE/cam$id.pid")
-        age=$(file_age "$id")
-        if ! mounted_rw || [ ! -d "$NVR_BASE_DIR" ]; then
-            state=UNKNOWN
-        elif owned "$id" "$pid"; then
-            case $age in
-                none) state=STARTING;;
-                unknown) state=UNKNOWN;;
-                *[!0-9-]*) state=UNKNOWN;;
-                -*) state=HEALTHY;;   # future mtime within tolerance: clock stepped back
-                *) if [ "$age" -le "$STALE" ]; then state=HEALTHY
-                   else state=STALE; fi;;
-            esac
-        else
-            case $age in
-                none|unknown) state=DOWN;;
-                *) if isnum "$age" && [ "$age" -le "$STALE" ]; then
-                       state=STOPPED   # recent footage, process gone (paused/just stopped)
-                   else state=DOWN; fi;;
-            esac
-        fi
-        if is_paused; then [ "$state" = DOWN ] && state=STOPPED; fi
-        case $age in
-            none) disp='no file yet';;
-            unknown) disp=unknown;;
-            *) disp="${age}s ago";;
-        esac
-        echo "CAM $id: $state, last write $disp"
-    done
+    printf '%s' "$cam_report"
     if [ -n "$TG_TOKEN" ] || [ -n "$WEBHOOK" ]; then
         echo 'ALERTS: enabled'
     else
