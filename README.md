@@ -3,6 +3,8 @@
 Личная инженерная база знаний и исследовательская мастерская по Keenetic, Entware,
 сетям, VPN/proxy, Mihomo/Xray, DPI и смежным темам.
 
+> **EN:** Personal engineering knowledge base: research notes and verified articles on Keenetic routers, Entware, Mihomo, VPN routing and DPI bypass (content in Russian).
+
 Одним из основных входящих источников является Telegram-канал **TechnoBypass**: туда
 попадают найденные проекты, ссылки, пересылки, эксперименты и рабочие заметки, а этот
 репозиторий должен превращать такой поток в удобный каталог и проверенные знания.
@@ -45,16 +47,21 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 
 ## С чего начать
 
-- [AGENTS.md](AGENTS.md) — правила работы для AI-агентов и границы безопасности.
+**Читателю:**
+
+- [docs/](docs/) — извлечённые проверяемые статьи из материалов канала и новых
+  research-заметок (Keenetic/Entware, маршрутизация Mihomo, белые списки, DPI,
+  терминология, APN). Лучшая стартовая точка.
+- [catalog/techno-bypass/README.md](catalog/techno-bypass/README.md) — каталог экспорта
+  TechnoBypass (темы, проекты, статьи, provenance, аудиты и верификация).
+
+**Навигация и метаданные репозитория:**
+
 - [INVENTORY.md](INVENTORY.md) — первичная карта текущих файлов и их предполагаемая ценность.
 - [ROADMAP.md](ROADMAP.md) — план превращения накопленных материалов в настоящую базу знаний.
 - [SOURCES.md](SOURCES.md) — происхождение сторонних и raw-материалов, а также текущий статус лицензирования.
 - [ARTICLE_TEMPLATE.md](ARTICLE_TEMPLATE.md) — шаблон для будущих проверенных статей.
-- [catalog/techno-bypass/README.md](catalog/techno-bypass/README.md) — каталог экспорта
-  TechnoBypass (темы, проекты, статьи, provenance, аудиты и верификация).
-- [docs/](docs/) — извлечённые проверяемые статьи из материалов канала и новых
-  research-заметок (Keenetic/Entware, маршрутизация Mihomo, белые списки, DPI,
-  терминология, APN).
+- [AGENTS.md](AGENTS.md) — правила работы для AI-агентов и границы безопасности (не документация пользователя).
 - [docs/keenetic-policy-segment-ssid-naming.md](docs/keenetic-policy-segment-ssid-naming.md) —
   почему политика доступа, локальный сегмент, SSID, MagiTrickle/Mihomo и операторский WL — разные слои, и как именовать их без путаницы.
 - [docs/keenetic-dns-via-mihomo.md](docs/keenetic-dns-via-mihomo.md) —
@@ -143,8 +150,10 @@ SOURCES, ARTICLE_TEMPLATE, PROMOTION_BACKLOG, Каталог_ссылок_Techno
   генерация конфигураций, поддержка протоколов, валидация и UI;
 - [saymer-alt/entware-go](https://github.com/saymer-alt/entware-go) —
   Entware-пакеты и их сборка;
-- профильные VPS-репозитории владельца — серверная маршрутизация, gateway/bootstrap и
-  связанные systemd/iptables решения.
+- [saymer-alt/vps-gateway-bootstrap](https://github.com/saymer-alt/vps-gateway-bootstrap) —
+  framework для аудируемого VPS-провижининга (ранняя стадия);
+- [saymer-alt/amnezia-mihomo-gateway](https://github.com/saymer-alt/amnezia-mihomo-gateway) —
+  маршрутизация AmneziaAWG через Mihomo TUN/WARP на VPS (серверная systemd/iptables схема).
 
 **Код проекта, который реализует поведение, является источником истины.**
 Здесь остаются объяснения, исследования, исторический контекст и материалы для дальнейшей
