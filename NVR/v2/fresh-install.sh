@@ -54,6 +54,14 @@ configured_mount() {
 configure() {
     [ -r /dev/tty ] && [ -w /dev/tty ] || fail 'Run through interactive SSH with TTY'
     if [ -e "$CONFIG" ]; then
+        for pidfile in /tmp/nvr-v2/cam*.pid; do
+            [ -f "$pidfile" ] || continue
+            pid=$(cat "$pidfile" 2>/dev/null || :)
+            case "$pid" in ''|*[!0-9]*) continue;; esac
+            if kill -0 "$pid" 2>/dev/null; then
+                fail 'Stop v2 recorder before changing credentials: sh /opt/etc/nvr-v2.sh stop'
+            fi
+        done
         ask 'Local config already exists. Replace it? [type YES]: '
         [ "$answer" = YES ] || fail 'No changes to existing config'
     fi
@@ -125,7 +133,16 @@ verify_video() {
 schedule() {
     tempfile=$(mktemp /tmp/nvr-fresh-cron.XXXXXX) || fail 'Cannot create cron temp file'
     trap 'rm -f "$tempfile"' EXIT HUP INT TERM
-    crontab -l 2>/dev/null | sed '/\/opt\/etc\/nvr-v2\.sh check/d; /\/opt\/etc\/nvr-v2\.sh cleanup/d' > "$tempfile" || :
+    oldcron=$(mktemp /tmp/nvr-fresh-oldcron.XXXXXX) || fail 'Cannot create cron backup temp file'
+    if crontab -l > "$oldcron" 2>"$tempfile.err"; then
+        :
+    elif grep -qi 'no crontab' "$tempfile.err"; then
+        :
+    else
+        fail 'Cannot read existing root crontab; refusing to overwrite other jobs'
+    fi
+    sed '/\/opt\/etc\/nvr-v2\.sh check/d; /\/opt\/etc\/nvr-v2\.sh cleanup/d' "$oldcron" > "$tempfile"
+    rm -f "$oldcron" "$tempfile.err"
     printf '\n*/5 * * * * /bin/sh /opt/etc/nvr-v2.sh check\n' >> "$tempfile"
     printf '0 * * * * /bin/sh /opt/etc/nvr-v2.sh cleanup\n' >> "$tempfile"
     crontab "$tempfile" || fail 'Unable to install cron'
