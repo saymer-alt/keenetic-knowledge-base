@@ -28,16 +28,30 @@ preflight() {
     [ -x /opt/sbin/cron ] || err 'Entware cron is missing'
     [ -f /opt/etc/crontab ] || err 'System crontab missing'
     sh -n "$SRC" || err 'New recorder has invalid shell syntax'
+    command -v stat >/dev/null 2>&1 || err 'stat missing: run opkg update && opkg install coreutils-stat; no changes made'
+    file_mtime=$(stat -c %Y "$OLD" 2>/dev/null) || err 'stat -c %Y failed: install coreutils-stat; no changes made'
+    case "$file_mtime" in ''|*[!0-9]*) err 'stat returned invalid mtime: install coreutils-stat';; esac
+    [ "$file_mtime" -gt 0 ] || err 'stat returned zero mtime: install coreutils-stat'
+    file_size=$(stat -c %s "$OLD" 2>/dev/null) || err 'stat -c %s failed: install coreutils-stat'
+    case "$file_size" in ''|*[!0-9]*) err 'stat returned invalid size';; esac
+    [ "$file_size" -gt 0 ] || err 'Record script empty (stat size=0)'
     # ffmpeg 6.1 should expose `-timeout`; fail closed on incompatible builds.
     /opt/bin/ffmpeg -hide_banner -h demuxer=rtsp 2>&1 | grep -q -- '-timeout ' || err 'FFmpeg RTSP -timeout capability not detected; no changes made'
     for k in RTSP_USER RTSP_PASS RTSP_IP; do
         grep -q "^${k}=" "$OLD" || err "Missing $k in old configuration"
     done
-    printf 'Preflight PASS. Mounted disk RW; FFmpeg RTSP timeout supported.\n'
+    printf 'Preflight PASS. Mounted disk RW; stat mtime/size OK; FFmpeg RTSP timeout supported.\n'
 }
 
 save_backup() {
-    [ ! -e "$BACKUP" ] || err "Backup already exists ($BACKUP); refusing second cutover"
+    if [ -d "$BACKUP" ]; then
+        for required in S99cctv record_cctv.sh system-crontab root-crontab rollback.sh; do
+            [ -f "$BACKUP/$required" ] || err "Incomplete existing backup: $required; refusing cutover"
+        done
+        printf 'Reusing original local backup at %s after previous rollback.\n' "$BACKUP"
+        return 0
+    fi
+    [ ! -e "$BACKUP" ] || err "Backup path exists but is not a directory: $BACKUP"
     mkdir -m 700 "$BACKUP"
     cp -p "$INIT" "$BACKUP/S99cctv"
     cp "$0" "$BACKUP/rollback.sh"
@@ -59,13 +73,22 @@ remove_old_cron() {
 }
 
 verify_started() {
-    sleep 8
-    for id in 101 201 301; do
-        line=$(sh "$V2" status | grep "^CAM $id: running ") || err "Camera $id process failed to start"
-        age=${line##*latest_write_age_sec=}
-        case "$age" in ''|*[!0-9]*) err "Camera $id has no video: $line";; esac
-        [ "$age" -lt 60 ] || err "Camera $id latest segment is stale: $line"
+    # RTSP handshake + first video frames can take longer than eight seconds.
+    attempt=0
+    while [ "$attempt" -lt 12 ]; do
+        all_good=1
+        status_output=$(sh "$V2" status) || all_good=0
+        for id in 101 201 301; do
+            line=$(printf '%s\n' "$status_output" | grep "^CAM $id: running ") || { all_good=0; continue; }
+            age=${line##*latest_write_age_sec=}
+            case "$age" in ''|*[!0-9]*) all_good=0;; *) [ "$age" -lt 60 ] || all_good=0;; esac
+        done
+        if [ "$all_good" -eq 1 ]; then return 0; fi
+        attempt=$((attempt+1))
+        [ "$attempt" -ge 12 ] || sleep 5
     done
+    printf 'NVR verification after 60 seconds:\n%s\n' "$status_output" >&2
+    err 'At least one camera did not produce a fresh MKV; automatic rollback initiated'
 }
 
 restore() {
