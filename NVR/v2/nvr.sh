@@ -57,7 +57,7 @@ if [ -n "$TG_CHAT" ]; then
         *) echo 'NVR: invalid NVR_NOTIFY_TELEGRAM_CHAT' >&2; exit 2;;
     esac
 fi
-case $WEBHOOK in ''|http://*|https://*) : ;; *) echo 'NVR: NVR_NOTIFY_WEBHOOK_URL must be http(s)' >&2; exit 2;; esac
+case $WEBHOOK in ''|https://*) : ;; *) echo 'NVR: NVR_NOTIFY_WEBHOOK_URL must use HTTPS' >&2; exit 2;; esac
 
 mounted_rw() {
     awk -v d="$NVR_MOUNT" '$2==d && $4 ~ /(^|,)rw(,|$)/ {ok=1} END {exit !ok}' "${NVR_MOUNTS_FILE:-/proc/mounts}"
@@ -681,7 +681,11 @@ do_start() {
     check
 }
 cleanup() {
-    disk_ok || { save_cleanup_state FAILED 0 0; return 1; }
+    if ! disk_ok; then
+        save_cleanup_state FAILED 0 0
+        notify_event WARN cleanup-error 'archive cleanup failed: storage unavailable'
+        return 1
+    fi
     disk_health
     # Strict retention policy: a per-camera, rolling 72-hour *time* horizon.
     # Fullness must NEVER shorten it; do not remove unexpired footage.
@@ -722,8 +726,15 @@ cleanup() {
     if [ "$removed" -gt 0 ] || [ "$result" != OK ]; then
         log "INFO retention cleanup removed=$removed skipped=$skipped failed=$failed result=$result"
     fi
+    # Persistent cleanup incidents are alerted independently of last run time.
+    if [ "$result" = OK ]; then
+        notify_event RECOVERY cleanup-error 'archive cleanup is successful again'
+    else
+        notify_event WARN cleanup-error "archive cleanup $result: removed=$removed skipped=$skipped failed=$failed"
+    fi
     # Disk alerts only; NEVER evict video because of free-space pressure.
     forecast_space
+    [ "$result" = OK ]
 }
 
 mkdir -p "$STATE" || exit 2
