@@ -141,7 +141,7 @@ switch() {
     {
         cat "$ROOT_CRON_TEMP"
         printf '\n*/5 * * * * /bin/sh /opt/etc/nvr-v2.sh check\n'
-        printf '0 * * * * /bin/sh /opt/etc/nvr-v2.sh cleanup\n'
+        printf '3 * * * * /bin/sh /opt/etc/nvr-v2.sh cleanup\n'
     } > /tmp/nvr-v2-new-crontab
     crontab /tmp/nvr-v2-new-crontab
     /opt/etc/init.d/S10cron restart
