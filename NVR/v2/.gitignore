@@ -10,3 +10,5 @@ nvr.conf
 *.log
 *.pid
 backups/
+*.state
+paused
