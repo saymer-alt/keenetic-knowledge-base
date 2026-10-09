@@ -174,21 +174,41 @@ sh /opt/etc/nvr-v2-backup/rollback.sh rollback   # откат, если пона
 После миграции пароль камеры рекомендуется сменить (он уже встречался в старом
 скрипте и истории команд) и обновить локально в `/opt/etc/nvr-v2.conf`.
 
-## Обновление существующего NVR v2.x до v2.4
+## Обновление работающей v2.3 до v2.4
 
-Конфигурация и записи не затрагиваются:
+**Нельзя** обновлять старым способом `stop → curl -o /opt/etc/nvr-v2.sh → start`:
+v2.3 не блокирует автоматический перезапуск через cron после `stop`.
+Для обновления добавлен `upgrade-router.sh` с отдельным бэкапом, временным
+отключением только NVR Cron, проверкой трёх камер и автоматическим откатом.
+
+До слияния PR #3 загрузите версию из проверенной ветки:
 
 ```sh
-sh /opt/etc/nvr-v2.sh stop
-curl -fSsL <RAW>/nvr.sh -o /opt/etc/nvr-v2.sh && chmod 700 /opt/etc/nvr-v2.sh
-sh -n /opt/etc/nvr-v2.sh && sh /opt/etc/nvr-v2.sh start
-sh /opt/etc/nvr-v2.sh status
+curl -fSsL https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/nvr/watchdog-v2-candidate/NVR/v2/bootstrap.sh -o /tmp/nvr-upgrade.sh
+export NVR_RAW_BASE=https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/nvr/watchdog-v2-candidate/NVR/v2
+sh /tmp/nvr-upgrade.sh preflight-upgrade
 ```
 
-Новые ключи конфига необязательны: всё работает и без них (значения по умолчанию —
-в `nvr.conf.example`). При обновлении с v2.3 учитывайте новую семантику `stop`
-(долгая пауза, см. выше).
+Если проверка PASS и владелец разрешил тестовый переход:
 
+```sh
+sh /tmp/nvr-upgrade.sh upgrade
+```
+
+Резервная копия старого скрипта и полного исходного root crontab:
+`/opt/etc/nvr-v24-upgrade-backup/`. Обновление не редактирует
+`/opt/etc/nvr-v2.conf`, не удаляет MKV и не затрагивает чужие Cron-задачи.
+При неудаче установщик пытается автоматически откатиться.
+
+```sh
+sh /opt/etc/nvr-v24-upgrade-backup/rollback.sh rollback
+```
+
+Ручной rollback возвращает снимок root crontab: проверьте, что после
+обновления в нём не появились новые, не включённые в бэкап задания.
+Перед `main` необходим live-тест на реальном Keenetic.
+Для воспроизводимого обновления предпочтительно зафиксировать commit SHA
+в `NVR_RAW_BASE`, а не постоянно движущуюся ветку.
 ## Диагностика типовых ситуаций
 
 - `CAM 101: DOWN` дольше 30 минут → смотреть `nvr logs cam101` и `nvr status`;
