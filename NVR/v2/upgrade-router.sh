@@ -12,6 +12,7 @@ SRC="$(CDPATH= cd -- "$(dirname "$0")" && pwd)/nvr.sh"
 fail() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 preflight() {
     [ -f "$LIVE" ] || fail 'No installed NVR v2 to upgrade'
+    grep -q 'NVR v2.3' "$LIVE" || fail 'This upgrade is for v2.3 only; no changes made'
     [ -r "$CONF" ] || fail 'Local NVR config missing'
     [ -r "$SRC" ] && sh -n "$SRC" || fail 'Downloaded v2.4 script missing or invalid'
     grep -q 'NVR v2.4' "$SRC" || fail 'New script is not v2.4'
