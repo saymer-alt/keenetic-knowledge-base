@@ -5,6 +5,10 @@ umask 077
 ACTION=${1:-}
 case "$ACTION" in preflight|switch) ;; *) echo 'Usage: bootstrap.sh {preflight|switch}' >&2; exit 2;; esac
 RAW=${NVR_RAW_BASE:-https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/nvr/watchdog-v2-candidate/NVR/v2}
+if ! command -v curl >/dev/null 2>&1; then
+    echo 'curl missing. Install: opkg update && opkg install curl' >&2
+    exit 1
+fi
 DIR=$(mktemp -d /tmp/nvr-setup.XXXXXX) || exit 1
 trap 'rm -rf "$DIR"' EXIT
 for file in nvr.sh install-router.sh; do
