@@ -61,7 +61,7 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 - [INVENTORY.md](INVENTORY.md) — первичная карта текущих файлов и их предполагаемая ценность.
 - [ROADMAP.md](ROADMAP.md) — план превращения накопленных материалов в настоящую базу знаний.
 - [SOURCES.md](SOURCES.md) — происхождение сторонних и raw-материалов, а также текущий статус лицензирования.
-- [COPYRIGHT_AND_LICENSING.md](COPYRIGHT_AND_LICENSING.md) — какие разделы можно рассматривать для отдельного лицензирования и что ещё требует проверки; общей лицензии пока нет.
+- [COPYRIGHT_AND_LICENSING.md](COPYRIGHT_AND_LICENSING.md) — утверждённые области **CC BY 4.0** для авторских статей и **MIT** для собственного кода; сторонние материалы и архивы исключены, общей лицензии на репозиторий нет.
 - [ARTICLE_TEMPLATE.md](ARTICLE_TEMPLATE.md) — шаблон для будущих проверенных статей.
 - [AGENTS.md](AGENTS.md) — правила работы для AI-агентов и границы безопасности (не документация пользователя).
 - [docs/keenetic-policy-segment-ssid-naming.md](docs/keenetic-policy-segment-ssid-naming.md) —
