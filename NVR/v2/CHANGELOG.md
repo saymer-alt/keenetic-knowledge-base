@@ -1,5 +1,19 @@
 # NVR v2 — changelog
 
+## Дополнение к v2.4 — Telegram read-only commands (2026-10-10)
+
+- Отдельный `telegram-bot.sh`: `/status`, `/cameras`, `/disk`, `/help`.
+- Разрешены только запросы из указанного приватного Telegram-чата.
+- Опрос Bot API по Cron каждую минуту, отдельный lock и offset, сохранённые
+  на Entware, и предотвращение повторных ответов после перезагрузки.
+- `telegram-bot-install.sh`: `preflight|install|remove|status`,
+  сохраняет существующие задачи Cron и аварийные оповещения.
+- Для корректного чтения Telegram JSON требуется Entware `jq`.
+- Добавлен offline fake-API test авторизации, статуса, очистки, dedup и init.
+- На домашнем KN-1012 подтверждены v2.4 HEALTHY (3 камеры), Cron cleanup
+  2026-10-10 15:03 МСК, Telegram test доставлен (HTTP 200).
+- Интерактивные Telegram-команды ещё требуют испытаний на устройстве.
+
 ## 2.4 (2026-10-09, candidate)
 
 Production hardening поверх v2.3. Все изменения покрыты офлайн-тестами
