@@ -31,7 +31,7 @@ class SiteStagingTests(unittest.TestCase):
             validate_local_links("index.md", "[private](sensitive-source.md)")
 
     def test_explicit_allowlist_excludes_raw_dirs(self):
-        self.assertEqual(len(PAGES), 19)
+        self.assertEqual(len(PAGES), 20)
         for name in PAGES:
             self.assertFalse("/" in name)
             self.assertTrue(name.endswith(".md"))

@@ -41,6 +41,7 @@ PAGES = (
     "vpn-proxy-terminology.md",
     "whitelist-mode-architecture.md",
     "zapret-ecosystem.md",
+    "github-traffic-window-semantics.md",
 )
 
 # Only Markdown links; do not rewrite examples or arbitrary prose containing ../ .
