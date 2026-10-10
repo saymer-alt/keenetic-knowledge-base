@@ -54,10 +54,13 @@ def rewrite_source_links(content: str) -> str:
 
     def replace(match: re.Match[str]) -> str:
         url = match.group("url")
+        # MkDocs gives README.md the same route as index.md; publish the
+        # existing docs/README.md source as catalog.md in the staged site.
+        path, sep, fragment = url.partition("#")
+        if path == "README.md":
+            return match.group("before") + "catalog.md" + ("#" + fragment if sep else "") + match.group("after")
         if not url.startswith("../"):
             return match.group(0)
-
-        path, sep, fragment = url.partition("#")
         normalized = posixpath.normpath(posixpath.join("docs", unquote(path)))
         if normalized in {".", ".."} or normalized.startswith("../") or normalized.startswith("/"):
             raise ValueError(f"Link escapes repository: {url}")
@@ -77,7 +80,7 @@ def rewrite_source_links(content: str) -> str:
 
 def validate_local_links(page: str, body: str) -> None:
     """Prevent broken links between the explicitly published articles."""
-    curated = set(PAGES)
+    curated = {"catalog.md" if name == "README.md" else name for name in PAGES}
     for match in MARKDOWN_URL.finditer(body):
         url = match.group("url")
         if url.startswith(("https://", "http://", "mailto:", "#", "tel:")):
@@ -108,7 +111,8 @@ def build() -> None:
         source = (SOURCE / filename).read_text(encoding="utf-8")
         transformed = rewrite_source_links(source)
         validate_local_links(filename, transformed)
-        (OUTPUT / filename).write_text(transformed, encoding="utf-8")
+        published_name = "catalog.md" if filename == "README.md" else filename
+        (OUTPUT / published_name).write_text(transformed, encoding="utf-8")
 
     unpublished = sorted({p.name for p in SOURCE.glob("*.md")} - set(PAGES))
     print(f"Staged {len(PAGES)} curated Markdown pages in {OUTPUT.name}/.")
