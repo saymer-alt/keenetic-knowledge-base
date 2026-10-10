@@ -1,7 +1,8 @@
 # 📚 Keenetic Knowledge Base
 
-Личная инженерная база знаний и исследовательская мастерская по Keenetic, Entware,
-сетям, VPN/proxy, Mihomo/Xray, DPI и смежным темам.
+**Русскоязычный справочник по Keenetic, Entware и Mihomo:** маршрутизация VPN/прокси, DNS через ProxyN, DPI-диагностика и устройство сетевых туннелей. [Открыть статьи с поиском и разделами](https://saymer-alt.github.io/keenetic-knowledge-base/).
+
+Справочник помогает разобраться, **как настроить маршрутизацию Mihomo на Keenetic**, чем отличаются VPN и прокси и где искать причины сетевых сбоев. Это технические объяснения, а не универсальный установщик: для установки Mihomo используйте [keenetic-auto-setup](https://github.com/saymer-alt/keenetic-auto-setup).
 
 > **EN:** Personal engineering knowledge base: research notes and verified articles on Keenetic routers, Entware, Mihomo, VPN routing and DPI bypass (content in Russian).
 
@@ -49,7 +50,7 @@ TechnoBypass / старые заметки / upstream / реальные тес�
 
 **Читателю:**
 
-- 🌐 **[Открыть онлайн-справочник](https://saymer-alt.github.io/keenetic-knowledge-base/)** — тематическая навигация, поиск и 16 отобранных статей. Сырой архив не опубликован на сайте.
+- 🌐 **[Открыть онлайн-справочник](https://saymer-alt.github.io/keenetic-knowledge-base/)** — тематическая навигация, поиск и 18 отобранных статей. Сырой архив не опубликован на сайте.
 - [docs/](docs/) — извлечённые проверяемые статьи из материалов канала и новых
   research-заметок (Keenetic/Entware, маршрутизация Mihomo, белые списки, DPI,
   терминология, APN). Лучшая стартовая точка.
