@@ -1,0 +1,40 @@
+"""Safety and link-conversion contract of the curated MkDocs staging."""
+import unittest
+from tools.prepare_site_docs import PAGES, rewrite_source_links, validate_local_links
+
+
+class SiteStagingTests(unittest.TestCase):
+    def test_rewrites_archived_sources_to_github(self):
+        result = rewrite_source_links(
+            "[источник](../archive/raw/mihomo-dns.md) "
+            "[каталог](../catalog/techno-bypass/topics/dpi-zapret.md#x)"
+        )
+        self.assertIn(
+            "https://github.com/saymer-alt/keenetic-knowledge-base/blob/main/archive/raw/mihomo-dns.md",
+            result,
+        )
+        self.assertIn("topics/dpi-zapret.md#x", result)
+
+    def test_keeps_cross_article_links(self):
+        source = "[статья](network-layer-tunnel-map.md) [домой](README.md)"
+        self.assertEqual(rewrite_source_links(source), source)
+        validate_local_links("index.md", source)
+
+    def test_rejects_unpublished_markdown(self):
+        with self.assertRaisesRegex(ValueError, "non-published"):
+            validate_local_links("index.md", "[private](sensitive-source.md)")
+
+    def test_explicit_allowlist_excludes_raw_dirs(self):
+        self.assertEqual(len(PAGES), 18)
+        for name in PAGES:
+            self.assertFalse("/" in name)
+            self.assertTrue(name.endswith(".md"))
+        self.assertNotIn("AGENTS.md", PAGES)
+
+    def test_rejects_unsafe_escape(self):
+        with self.assertRaises(ValueError):
+            rewrite_source_links("[outside](../../../private.md)")
+
+
+if __name__ == "__main__":
+    unittest.main()
