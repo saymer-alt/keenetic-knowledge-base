@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: MIT
 """Safety and link-conversion contract of the curated MkDocs staging."""
+import re
 import unittest
+from pathlib import Path
 from tools.prepare_site_docs import PAGES, rewrite_source_links, validate_local_links
 
 
@@ -34,6 +36,15 @@ class SiteStagingTests(unittest.TestCase):
             self.assertFalse("/" in name)
             self.assertTrue(name.endswith(".md"))
         self.assertNotIn("AGENTS.md", PAGES)
+
+    def test_site_publications_have_explicit_cc_by_scope(self):
+        # No page may silently become CC BY without a documented owner decision.
+        policy = (Path(__file__).resolve().parents[1] /
+                  "COPYRIGHT_AND_LICENSING.md").read_text(encoding="utf-8")
+        scope = policy.split("## 1. CC BY 4.0:", 1)[1].split("## 2. MIT:", 1)[0]
+        licensed = re.findall(r"\|\s*`docs/([^\`]+\.md)`\s*\|", scope)
+        self.assertEqual(set(PAGES), set(licensed))
+        self.assertEqual(len(PAGES), len(licensed))
 
     def test_rejects_unsafe_escape(self):
         with self.assertRaises(ValueError):
