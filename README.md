@@ -87,8 +87,8 @@ TechnoBypass / старые заметки / upstream / реальные тес�
   [MosTech/kvm-windows-virtiofs.md](MosTech/kvm-windows-virtiofs.md)
   (KVM/Windows/VirtIO-FS: проверенный рецепт, поведение буквы диска и аудит
   `setup-kvm-motech.sh`).
-- [NVR/README.md](NVR/README.md) — один из наиболее оформленных текущих разделов:
-  Keenetic + Entware + ffmpeg для записи и HTTP-вещания IP-камер.
+- [Keenetic NVR](https://github.com/saymer-alt/keenetic-nvr) — **самостоятельный основной репозиторий** NVR v2.4, Telegram-бота, установщиков и тестов.
+  [NVR/README.md](NVR/README.md) здесь оставлен как исторический раздел v1 и HTTP-вещания.
 
 
 ## TechnoBypass как основной research source
@@ -124,7 +124,7 @@ TechnoBypass — важный источник того, **что стоит и�
 docs/       поддерживаемые статьи знаний
 MosTech/    авторский цикл MosTech (статьи, raw-материалы, скрипт)
 catalog/    исследовательский каталог TechnoBypass
-NVR/        проверенный NVR/streaming мини-проект
+NVR/        исторические NVR v1/streaming и сохранённая копия NVR v2 (upstream: keenetic-nvr)
 tools/      детерминированные инструменты импорта
 archive/    provenance: raw-исследования и исторические файлы
 ```

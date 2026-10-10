@@ -1,11 +1,12 @@
-# Keenetic NVR + Streaming
+# Keenetic NVR + Streaming — исторический раздел
 
-> **Текущая версия NVR — v2.4** (`NVR/v2/`, PR #3): резервный кольцевой архив
-> 72 часа на камеру, watchdog, уведомления, интерактивная установка.
-> Документация: [NVR/v2/README.md](v2/README.md), архитектура:
-> [NVR/v2/ARCHITECTURE.md](v2/ARCHITECTURE.md). Материал ниже — исходная v1-схема:
-> План безопасного выделения v2 в отдельный проект: [NVR/v2/REPOSITORY-EXTRACTION.md](v2/REPOSITORY-EXTRACTION.md).
-> она сохраняется как история и как основа миграции `switch`.
+> **Актуальный NVR v2.4 находится в отдельном репозитории:**
+> [saymer-alt/keenetic-nvr](https://github.com/saymer-alt/keenetic-nvr).
+> Там поддерживаются установщики, Telegram, тесты и документация.
+>
+> Здесь сохранена исходная **v1 и HTTP-streaming**, а также старый
+> `NVR/v2/` для совместимости опубликованных GitHub raw-ссылок.
+> Домашний NVR не требует переустановки ради переноса.
 
 Набор скриптов для превращения роутеров Keenetic (Entware) в автономный NVR и/или HTTP-вещатель для IP-камер. Тестировалось на Keenetic 1012 (MediaTek Filogic) — запись трёх потоков H.265 (2K) даёт почти нулевую нагрузку на CPU благодаря `-c copy`.
 
