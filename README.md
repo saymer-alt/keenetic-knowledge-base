@@ -87,7 +87,7 @@ TechnoBypass / старые заметки / upstream / реальные тес�
   [MosTech/kvm-windows-virtiofs.md](MosTech/kvm-windows-virtiofs.md)
   (KVM/Windows/VirtIO-FS: проверенный рецепт, поведение буквы диска и аудит
   `setup-kvm-motech.sh`).
-- [Keenetic NVR](https://github.com/saymer-alt/keenetic-nvr) — **самостоятельный основной репозиторий** NVR v2.4, Telegram-бота, установщиков и тестов.
+- [Keenetic NVR](https://github.com/saymer-alt/keenetic-nvr) — **самостоятельный основной репозиторий** NVR v2.4, Telegram-бота, установщиков и тестов. Старый каталог `NVR/`: **ARCHIVED / MOVED**.
   [NVR/README.md](NVR/README.md) здесь оставлен как исторический раздел v1 и HTTP-вещания.
 
 
