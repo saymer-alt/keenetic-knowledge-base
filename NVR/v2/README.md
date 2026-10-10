@@ -134,6 +134,76 @@ Telegram запись камер не останавливается. Не пу�
 `sh /opt/etc/nvr-v2.sh notify test`. Если у бота включён webhook,
 `getUpdates` может быть недоступен: потребуется ручное указание Chat ID.
 
+## Telegram: статус по запросу из чата
+
+После подключения аварийных Telegram-уведомлений можно отдельно включить
+**приём команд**. Он не включается автоматически: бот NVR отвечает только
+на запросы из заранее настроенного *приватного чата* и не позволяет менять
+состояние записи, останавливать камеры или удалять архив.
+
+| Команда в Telegram | Ответ |
+| --- | --- |
+| `/status` | Общий HEALTHY/DEGRADED/PAUSED, камера 101/201/301, диск, последняя проверка и очистка |
+| `/cameras` | Состояние записи и возраст последнего MKV по каждой камере |
+| `/disk` | Свободное место, политика хранения 72 ч, очистка |
+| `/help` или `/start` | Доступные команды |
+
+Для обычного Keenetic за NAT входящий веб-сервер не нужен. Скрипт
+`telegram-bot.sh` раз в минуту опрашивает Telegram Bot API `getUpdates` через
+HTTPS, выполняет только **read-only** `sh /opt/etc/nvr-v2.sh status`,
+отправляет ответ через `sendMessage` и сохраняет последний `update_id`
+в `/opt/var/lib/nvr-telegram/` (сохраняется после перезагрузки).
+Токен берётся из уже настроенного `/opt/etc/nvr-v2.conf`, повторно вводить не надо.
+
+### Включение на уже работающем NVR v2.4
+
+Зависимость для безопасного разбора Telegram JSON:
+
+```sh
+opkg update
+opkg install jq
+```
+
+Загрузить небольшой установщик и проверить требования:
+
+```sh
+curl -fSsL https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/main/NVR/v2/telegram-bot-install.sh -o /tmp/nvr-telegram-bot-install.sh
+sh -n /tmp/nvr-telegram-bot-install.sh
+sh /tmp/nvr-telegram-bot-install.sh preflight
+```
+
+После `PASS` включить:
+
+```sh
+sh /tmp/nvr-telegram-bot-install.sh install
+```
+
+Добавляется только одна строка root Cron:
+
+```cron
+* * * * * /bin/sh /opt/etc/nvr-telegram-bot.sh poll
+```
+
+**После установки** подождать минуту и отправить `/status` боту,
+который ранее прислал сообщение `NVR TEST`. Исторические сообщения
+не воспроизводятся: установщик инициализирует offset через `getUpdates`.
+Задержка ответа обычно до 1 минуты, зависит от Cron и связи.
+
+Диагностика и отключение:
+
+```sh
+sh /tmp/nvr-telegram-bot-install.sh status
+sh /opt/etc/nvr-telegram-bot.sh status
+crontab -l | grep nvr-telegram-bot
+sh /tmp/nvr-telegram-bot-install.sh remove
+```
+
+Отключение модуля команд не отключает **аварийные Telegram-уведомления**
+или запись камер. При ошибках `getUpdates` проверяйте наличие webhook или
+другого процесса, который опрашивает **того же бота**: Telegram не гарантирует
+корректную работу нескольких независимых потребителей очереди обновлений.
+Пароли, токены и локальный конфиг не выкладывайте в GitHub.
+
 ## Установка с нуля (другой Keenetic, без старого NVR)
 
 Требования: Keenetic с Entware, отдельный USB-накопитель EXT4 (не системный диск
