@@ -35,7 +35,9 @@ install_bot() {
     mkdir -p "$BACKUP"
     chmod 700 "$BACKUP"
     [ -e "$DEST" ] && cp -p "$DEST" "$BACKUP/nvr-telegram-bot.previous.sh"
-    cp -p "$TEMP" "$DEST"
+    # Same-directory rename avoids a partially copied script if already scheduled.
+    mv -f "$TEMP" "$DEST"
+    TEMP=''
     # Import update offset before enabling minute cron. This never replies.
     if ! sh "$DEST" init; then
         if [ -f "$BACKUP/nvr-telegram-bot.previous.sh" ]; then
