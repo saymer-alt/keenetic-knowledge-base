@@ -1,6 +1,6 @@
 #!/bin/sh
 # Offline Telegram command acceptance/auth/replay test with fake Bot API.
-set -eu
+set -eux
 cd "$(dirname "$0")/.."
 busybox sh -n NVR/v2/telegram-bot.sh
 busybox sh -n NVR/v2/telegram-bot-install.sh
