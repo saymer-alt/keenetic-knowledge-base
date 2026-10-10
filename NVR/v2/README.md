@@ -104,8 +104,31 @@ NVR отправляет:
   (см. KNOWN-LIMITATIONS.md).
 
 Настройка: интерактивный установщик спрашивает про уведомления при `install-fresh`
-(токен вводится скрыто). Для уже установленного NVR — добавить ключи в
-`/opt/etc/nvr-v2.conf` и выполнить `nvr notify test`.
+(токен вводится скрыто). Для уже установленного NVR v2.4 предусмотрен
+**короткий мастер**, без копирования длинного here-document в SSH.
+
+1. В Telegram через `@BotFather` выполнить `/newbot` и получить **API token**
+   (цифры, двоеточие, буквенно-цифровая строка). Это не `@username` и не
+   полный текст ответа BotFather. Токен никогда не пересылать другим лицам.
+2. Открыть созданного бота, нажать «Запустить», отправить `/start` и ещё
+   одно сообщение. Это нужно для определения Chat ID.
+3. На роутере запустить:
+
+```sh
+curl -fSsL https://raw.githubusercontent.com/saymer-alt/keenetic-knowledge-base/main/NVR/v2/telegram-setup.sh -o /tmp/nvr-telegram-setup.sh
+sh -n /tmp/nvr-telegram-setup.sh && sh /tmp/nvr-telegram-setup.sh
+```
+
+Токен вводится **скрыто**, передаётся в Telegram API через stdin `curl -K -`,
+Chat ID выбирается из `getUpdates` с подтверждением пользователя.
+Мастер сохраняет приватную резервную копию конфига с правами 600, атомарно
+обновляет `/opt/etc/nvr-v2.conf` и выполняет `notify test`. При недоступном
+Telegram запись камер не останавливается. Не публиковать токен, конфиг и
+полные команды HTTP-запросов.
+
+Для проверки: `sh /opt/etc/nvr-v2.sh status` и
+`sh /opt/etc/nvr-v2.sh notify test`. Если у бота включён webhook,
+`getUpdates` может быть недоступен: потребуется ручное указание Chat ID.
 
 ## Установка с нуля (другой Keenetic, без старого NVR)
 
