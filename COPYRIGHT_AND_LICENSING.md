@@ -13,7 +13,7 @@
 [полный юридический текст](https://creativecommons.org/licenses/by/4.0/legalcode).
 
 Лицензия покрывает **собственное авторское изложение, структуру и
-оригинальные пояснения** в **следующих 19 Markdown-файлах**:
+оригинальные пояснения** в **следующих 20 Markdown-файлах**:
 
 | Файл | Тема |
 | --- | --- |
@@ -30,6 +30,7 @@
 | `docs/network-layer-tunnel-map.md` | Сетевые слои и туннели |
 | `docs/proxy-tunnel-protocol-stack.md` | Протоколы, транспорты и туннели |
 | `docs/dns-geoip-ecs-leak-diagnostics.md` | DNS/ECS/GeoIP диагностика |
+| `docs/github-traffic-window-semantics.md` | Семантика GitHub Traffic |
 | `docs/amnezia-mihomo-gateway-evolution.md` | История реализации gateway |
 | `docs/mihomo-systemd-nonroot-hardening.md` | systemd least privilege |
 | `docs/dpi-diagnostics-map.md` | DPI-диагностика |
