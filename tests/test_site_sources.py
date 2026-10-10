@@ -17,8 +17,11 @@ class SiteStagingTests(unittest.TestCase):
 
     def test_keeps_cross_article_links(self):
         source = "[статья](network-layer-tunnel-map.md) [домой](README.md)"
-        self.assertEqual(rewrite_source_links(source), source)
-        validate_local_links("index.md", source)
+        self.assertEqual(
+            rewrite_source_links(source),
+            "[статья](network-layer-tunnel-map.md) [домой](catalog.md)",
+        )
+        validate_local_links("index.md", rewrite_source_links(source))
 
     def test_rejects_unpublished_markdown(self):
         with self.assertRaisesRegex(ValueError, "non-published"):
