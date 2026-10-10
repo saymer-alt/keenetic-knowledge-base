@@ -13,7 +13,7 @@
 [полный юридический текст](https://creativecommons.org/licenses/by/4.0/legalcode).
 
 Лицензия покрывает **собственное авторское изложение, структуру и
-оригинальные пояснения** в **следующих 18 Markdown-файлах**:
+оригинальные пояснения** в **следующих 19 Markdown-файлах**:
 
 | Файл | Тема |
 | --- | --- |
@@ -21,6 +21,7 @@
 | `docs/README.md` | Каталог технических статей |
 | `docs/keenetic-entware-base.md` | Основы Keenetic и Entware |
 | `docs/mihomo-keenetic-routing.md` | Архитектура маршрутизации Mihomo |
+| `docs/mipsel-binary-supply-chain.md` | Поставка и лицензии MIPSel-бинарника |
 | `docs/keenetic-dns-via-mihomo.md` | DNS через ProxyN |
 | `docs/keenetic-policy-segment-ssid-naming.md` | Политики, сегменты и SSID |
 | `docs/iot-cloud-routing-methodology.md` | Камеры, IoT и маршрутизация |
