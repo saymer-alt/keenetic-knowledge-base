@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Stage only curated docs/ Markdown for MkDocs; do not publish repository root.
 
 Run from any cwd: python tools/prepare_site_docs.py
