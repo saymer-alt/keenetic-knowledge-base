@@ -34,17 +34,46 @@ KEY=${TOKEN#*:}
 case $ID in ''|*[!0-9]*) fail 'Invalid token prefix; expected digits before the colon' ;; esac
 case $KEY in ''|*[!A-Za-z0-9_-]*) fail 'Token contains invalid characters. Copy only the BotFather API token' ;; esac
 
-# The API token is passed via curl stdin, never through CLI arguments.
-REPLY=$(printf 'silent\nurl = "https://api.telegram.org/bot%s/getUpdates"\n' "$TOKEN" |
-    curl -K - -fSs --connect-timeout 10 --max-time 20) || fail 'Telegram API failed; verify token and connectivity'
-if ! printf '%s' "$REPLY" | grep -q '"ok"[[:space:]]*:[[:space:]]*true'; then
-    fail 'Telegram API did not confirm token (or getUpdates blocked by webhook)'
+# All bot API calls keep the token in curl stdin, never command arguments.
+BOT=$(printf 'silent\nurl = "https://api.telegram.org/bot%s/getMe"\n' "$TOKEN" |
+    curl -K - -fSs --connect-timeout 10 --max-time 20) ||
+    fail 'getMe failed: invalid token or Telegram unreachable'
+printf '%s' "$BOT" | grep -q '"ok"[[:space:]]*:[[:space:]]*true' ||
+    fail 'getMe did not confirm the bot token'
+BOT_NAME=$(printf '%s' "$BOT" |
+    grep -oE '"username"[[:space:]]*:[[:space:]]*"[^"]+"' |
+    head -n 1 | cut -d '"' -f 4) || :
+[ -n "$BOT_NAME" ] || fail 'Could not read bot username from getMe'
+printf 'Token belongs to Telegram bot: @%s\n' "$BOT_NAME" >/dev/tty
+printf 'Check that this is the SAME bot you sent /start to.\n' >/dev/tty
+
+# getUpdates may be empty if the token belongs to a different bot, another
+# client consumes updates, or the bot has a webhook. None is a recorder error.
+get_chat_id() {
+    CHAT=''
+    UPDATES=$(printf 'silent\nurl = "https://api.telegram.org/bot%s/getUpdates"\n' "$TOKEN" |
+        curl -K - -fSs --connect-timeout 10 --max-time 20) || return 1
+    printf '%s' "$UPDATES" | grep -q '"ok"[[:space:]]*:[[:space:]]*true' || return 1
+    CHAT=$(printf '%s' "$UPDATES" | tr '\n' ' ' |
+        grep -oE '"chat"[[:space:]]*:[[:space:]]*\{[^}]*\}' |
+        grep -oE '"id"[[:space:]]*:[[:space:]]*-?[0-9]+' |
+        tail -n 1 | sed 's/.*:[[:space:]]*//') || :
+    [ -n "$CHAT" ]
+}
+if ! get_chat_id; then
+    printf 'No chat ID in getUpdates for @%s.\n' "$BOT_NAME" >/dev/tty
+    printf 'Send a NEW message (for example: nvr test) to @%s, then press Enter here: ' "$BOT_NAME" >/dev/tty
+    IFS= read -r RETRY </dev/tty || fail 'Input interrupted'
+    get_chat_id || :
 fi
-CHAT=$(printf '%s\n' "$REPLY" |
-    grep -oE '"chat"[[:space:]]*:[[:space:]]*\{[[:space:]]*"id"[[:space:]]*:[[:space:]]*-?[0-9]+' |
-    tail -n 1 | sed 's/.*:[[:space:]]*//') || :
-case $CHAT in ''|*[!0-9-]*) fail 'Chat ID not found; send /start and a message to your bot, then retry' ;; esac
-printf 'Telegram Chat ID found: %s\n' "$CHAT" >/dev/tty
+if [ -z "$CHAT" ]; then
+    printf 'Still no updates. Another client may consume them, or a webhook is active.\n' >/dev/tty
+    printf 'Enter your numeric Telegram Chat ID manually (Enter cancels): ' >/dev/tty
+    IFS= read -r CHAT </dev/tty || fail 'Input interrupted'
+fi
+case $CHAT in -*) CHAT_DIGITS=${CHAT#-} ;; *) CHAT_DIGITS=$CHAT ;; esac
+case $CHAT_DIGITS in ''|*[!0-9]*) fail 'Chat ID missing or invalid; original config unchanged' ;; esac
+printf 'Telegram Chat ID: %s\n' "$CHAT" >/dev/tty
 printf 'Use this Chat ID? [y/N] ' >/dev/tty
 IFS= read -r OK </dev/tty || fail 'Confirmation not received'
 case $OK in y|Y) : ;; *) fail 'Cancelled, original config unchanged' ;; esac
@@ -59,7 +88,7 @@ cp -p "$CONF" "$BACKUP" || fail 'Cannot back up existing config'
 chmod 600 "$BACKUP"
 mv -f "$TMP" "$CONF"
 TMP=''
-unset TOKEN KEY ID REPLY
+unset TOKEN KEY ID BOT BOT_NAME UPDATES CHAT_DIGITS RETRY
 printf 'Telegram settings saved in local NVR config (mode 600).\n'
 sh /opt/etc/nvr-v2.sh notify test || fail 'Config saved but test delivery failed; inspect bot and WAN'
 sh /opt/etc/nvr-v2.sh status
