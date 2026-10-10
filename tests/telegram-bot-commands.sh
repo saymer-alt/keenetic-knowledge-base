@@ -1,6 +1,6 @@
 #!/bin/sh
 # Offline Telegram command acceptance/auth/replay test with fake Bot API.
-set -eux
+set -eu
 cd "$(dirname "$0")/.."
 busybox sh -n NVR/v2/telegram-bot.sh
 busybox sh -n NVR/v2/telegram-bot-install.sh
@@ -65,10 +65,10 @@ export NVR_TEST_SENDS="$T/sends"
 busybox sh NVR/v2/telegram-bot.sh poll
 [ "$(cat "$T/state/offset")" = 106 ]
 [ -f "$T/state/last_poll" ]
-[ "$(grep -c '"chat_id":"42"' "$T/sends")" -eq 2 ]
+[ "$(grep -Ec '"chat_id"[[:space:]]*:[[:space:]]*"42"' "$T/sends")" -eq 2 ]
 grep -q 'CAM 101: HEALTHY' "$T/sends"
 grep -q 'LAST CLEANUP' "$T/sends"
-if grep -q '"chat_id":"999"' "$T/sends"; then
+if grep -Eq '"chat_id"[[:space:]]*:[[:space:]]*"999"' "$T/sends"; then
   echo 'FAIL unauthorized chat received a reply' >&2; exit 1
 fi
 # No duplicate sends if poll sees already consumed updates again.
