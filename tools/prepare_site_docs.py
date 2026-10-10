@@ -34,6 +34,7 @@ PAGES = (
     "mihomo-keenetic-routing.md",
     "mihomo-systemd-nonroot-hardening.md",
     "mobile-apn-methodology.md",
+    "mipsel-binary-supply-chain.md",
     "moshub-entware-mirror.md",
     "network-layer-tunnel-map.md",
     "proxy-tunnel-protocol-stack.md",

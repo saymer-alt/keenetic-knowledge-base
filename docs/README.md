@@ -21,6 +21,7 @@
 - [DNS Keenetic через Mihomo / ProxyN](keenetic-dns-via-mihomo.md) — подтверждённые механизмы и отдельно обозначенная необходимость сквозного live-теста.
 - [Методология маршрутизации камер и IoT через облака](iot-cloud-routing-methodology.md) — как обнаружить реальные зависимости, не угадывая домены.
 - [Mos.Hub как вторичное зеркало Entware/IPK](moshub-entware-mirror.md) — подтверждённые факты и ещё не испытанные сценарии.
+- [Бинарник Mihomo для MIPSel: checksums и лицензии](mipsel-binary-supply-chain.md) — что распространяется вместе с бинарником и как это проверить.
 
 ## VPN, VPS, диагностика и безопасность
 

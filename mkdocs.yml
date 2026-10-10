@@ -57,6 +57,7 @@ nav:
       - Терминология VPN и прокси: vpn-proxy-terminology.md
       - Сетевые слои и туннели: network-layer-tunnel-map.md
       - Mihomo на Keenetic: mihomo-keenetic-routing.md
+      - Бинарник Mihomo для MIPSel: mipsel-binary-supply-chain.md
       - Основы Keenetic и Entware: keenetic-entware-base.md
       - Политика, сегмент и SSID: keenetic-policy-segment-ssid-naming.md
   - Keenetic и маршрутизация:
