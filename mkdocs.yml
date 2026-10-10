@@ -1,0 +1,74 @@
+site_name: Keenetic Knowledge Base
+site_description: "Технические статьи по Keenetic, Entware, Mihomo, VPN и сетевой диагностике"
+site_url: https://saymer-alt.github.io/keenetic-knowledge-base/
+repo_url: https://github.com/saymer-alt/keenetic-knowledge-base
+repo_name: saymer-alt/keenetic-knowledge-base
+edit_uri: edit/main/docs/
+
+# Prepared from a strict, audited allowlist; never point this at repository root.
+docs_dir: .site-content
+site_dir: .site-build
+use_directory_urls: true
+
+theme:
+  name: material
+  language: ru
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Переключить на тёмную тему
+    - scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Переключить на светлую тему
+
+plugins:
+  - search:
+      lang:
+        - ru
+        - en
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - Главная: index.md
+  - Каталог статей: README.md
+  - Основы и архитектура:
+      - Терминология VPN и прокси: vpn-proxy-terminology.md
+      - Сетевые слои и туннели: network-layer-tunnel-map.md
+      - Mihomo на Keenetic: mihomo-keenetic-routing.md
+      - Основы Keenetic и Entware: keenetic-entware-base.md
+      - Политика, сегмент и SSID: keenetic-policy-segment-ssid-naming.md
+  - Keenetic и маршрутизация:
+      - DNS через Mihomo и ProxyN: keenetic-dns-via-mihomo.md
+      - IoT, камеры и облачные зависимости: iot-cloud-routing-methodology.md
+      - Mos.Hub и IPK-зеркало: moshub-entware-mirror.md
+  - VPN, VPS и диагностика:
+      - DNS, ECS и диагностика утечек: dns-geoip-ecs-leak-diagnostics.md
+      - Стек прокси и туннелей: proxy-tunnel-protocol-stack.md
+      - AmneziaAWG и Mihomo gateway — история: amnezia-mihomo-gateway-evolution.md
+      - Mihomo systemd без полного root: mihomo-systemd-nonroot-hardening.md
+  - DPI и мобильный интернет:
+      - Карта DPI-диагностики: dpi-diagnostics-map.md
+      - Экосистема zapret: zapret-ecosystem.md
+      - Белые списки: whitelist-mode-architecture.md
+      - Методология APN: mobile-apn-methodology.md
