@@ -51,7 +51,7 @@ markdown_extensions:
 
 nav:
   - Главная: index.md
-  - Каталог статей: README.md
+  - Каталог статей: catalog.md
   - Основы и архитектура:
       - Терминология VPN и прокси: vpn-proxy-terminology.md
       - Сетевые слои и туннели: network-layer-tunnel-map.md
