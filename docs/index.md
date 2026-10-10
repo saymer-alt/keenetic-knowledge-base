@@ -1,6 +1,6 @@
 # Keenetic Knowledge Base
 
-Инженерный справочник о Keenetic, Entware, Mihomo, VPN, сетевой маршрутизации и диагностике DPI.
+Русскоязычный инженерный справочник: **Mihomo на Keenetic с Entware**, маршрутизация VPN/прокси, DNS через ProxyN, диагностика DPI и сетевые туннели.
 
 Здесь собраны **отобранные технические статьи** из публичного репозитория. Это не копия всего исследовательского архива и не замена документации проектов, в которых реализован описанный код.
 
@@ -13,12 +13,12 @@
 | --- | --- |
 | VPN, прокси и транспортные протоколы | [Словарь терминов](vpn-proxy-terminology.md) |
 | Keenetic + Entware | [Базовая модель](keenetic-entware-base.md) |
-| Mihomo на роутере | [Архитектура маршрутизации](mihomo-keenetic-routing.md) |
+| Mihomo на роутере | [Архитектура маршрутизации](mihomo-keenetic-routing.md) · [Установка Mihomo на Keenetic](https://github.com/saymer-alt/keenetic-auto-setup) |
 | DNS через ProxyN | [Keenetic DNS через Mihomo](keenetic-dns-via-mihomo.md) |
 | IoT и маршрутизация камер | [Методология обнаружения облачных зависимостей](iot-cloud-routing-methodology.md) |
 | DPI и неполадки доступа | [Карта диагностических инструментов](dpi-diagnostics-map.md) |
 
-[Открыть полный каталог из 16 статей](README.md)
+[Открыть полный каталог из 18 статей](README.md)
 
 ## Как пользоваться
 
