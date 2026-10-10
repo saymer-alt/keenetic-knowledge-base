@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Safety and link-conversion contract of the curated MkDocs staging."""
 import unittest
 from tools.prepare_site_docs import PAGES, rewrite_source_links, validate_local_links
