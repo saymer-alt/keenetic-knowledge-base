@@ -377,3 +377,7 @@ Good progress means one or more of the following:
 When unsure whether something is trash, **preserve it and classify it first**. The whole point
 of this repository is to turn accumulated material into useful engineering knowledge without
 losing the reasons and experiments that produced it.
+
+## AI agent engineering upstream research (30.10.2026)
+
+Preserve the original research and provenance in [docs/ai-agent-engineering-pstack.md](docs/ai-agent-engineering-pstack.md). Cross-project normative rules belong to [saymer-alt/saymer-alt, PR #11](https://github.com/saymer-alt/saymer-alt/pull/11), not to this knowledge-base research article; respect each target repository's AGENTS, constitution and owner GO.
