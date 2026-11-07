@@ -40,6 +40,8 @@ jobs:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: requirements-docs.txt
+      - name: Agent provenance and context budget contract
+        run: python tests/check-agent-context.py
       - name: Install pinned documentation tooling
         run: python -m pip install -r requirements-docs.txt
       - name: Test curation and link safety
