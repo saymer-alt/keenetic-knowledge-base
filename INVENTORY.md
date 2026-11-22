@@ -25,14 +25,32 @@
 | `ROADMAP.md` | canonical | План переработки архива в KB | Обновлять по мере этапов |
 | `INVENTORY.md` | canonical | Эта карта содержимого | Уточнять после глубокого аудита |
 | `SOURCES.md` | canonical | Журнал provenance, сторонних материалов и текущего статуса лицензирования | Поддерживать при переносе/добавлении внешних материалов |
+| `COPYRIGHT_AND_LICENSING.md` | canonical | Граница прав: CC BY 4.0 на 20 перечисленных страниц `docs/` §1, MIT на 5 файлов §2; всё остальное — без новой лицензии | Менять только вместе с тестом `tests/test_site_sources.py` и разделом License status в `SOURCES.md` |
+| `LICENSES/` | canonical | Тексты лицензий: `CC-BY-4.0.md`, `MIT.txt` | Не редактировать тексты лицензий |
 | `ARTICLE_TEMPLATE.md` | canonical | Шаблон для будущих проверенных статей | Использовать как ориентир, не как обязательную бюрократию |
+| `CONTRIBUTING.md` | canonical | Правила вклада: scope, статусы, проверки | Поддерживать при изменении процесса |
+| `SECURITY.md` | canonical | Политика сообщения об уязвимостях | Поддерживать контакт и сроки |
+| `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения (лежит в корне) | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
 | `archive/` | canonical (provenance/history) | Прованс и история: `archive/raw/` (исследовательские снимки после извлечения знания) и `archive/historical/` (заменённые артефакты, исторические файлы); карта замен — `archive/README.md` | Не источник актуальных инструкций; утверждения не продвигать без перепроверки |
 | `catalog/` | canonical | Каталог TechnoBypass: темы, индекс проектов, unclassified, STATS + аудиты (REVIEW, SECURITY_REVIEW, OWNER_LINK_AUDIT, VERIFIED_RESOURCES) | Поддерживать при новых экспортах (парсер — ниже); статусы не понижать без причины |
 | `tools/` | project artifact | `parse_telegram_export.py` — детерминированный парсер Telegram-экспортов (stdlib-only) | Использовать для будущих экспортов; выход — только в рабочий каталог вне git |
-| `docs/` | candidate | Извлечённые статьи по ARTICLE_TEMPLATE со разведёнными статусами: 7 тем TB-05 + эволюция amnezia-mihomo-gateway + именование слоёв Keenetic (2026-09-23) + DNS через ProxyN + карта уровней/встраивания и стек протоколов из `proxy.md` + аудит Mos.Hub-зеркала + методология облачных зависимостей IoT (статья KVM/Windows/VirtIO-FS из MosTech-кластера с 2026-09-29 живёт в `MosTech/`) | Повышать до canonical по мере проверки; расширять из catalog-тем и новых research-материалов |
+| `docs/` | canonical (публикуемый набор) | 20 файлов: 18 поддерживаемых статей + `index.md` + `README.md` (каталог статей); плюс внутренние `agent-guidance/` (4) и непубликуемый `ai-agent-engineering-pstack.md` — состав см. в разделе `docs/` ниже | Расширять только через allowlist `PAGES` (`tools/prepare_site_docs.py`) с синхронным обновлением §1 `COPYRIGHT_AND_LICENSING.md` |
 | `MosTech/` | canonical (авторский цикл) | Единый раздел цикла MosTech: сатирические статьи, raw-заметки, скрипт провижининга и поддерживаемая статья `kvm-windows-virtiofs.md`; собран 2026-09-29 из `archive/` + `docs/` по решению владельца | Поддерживать как самостоятельную серию (см. `MosTech/README.md`); скрипт не утверждён к выполнению |
 | `PROMOTION_BACKLOG.md` | canonical | Реестр кандидатов на перенос в активные проекты (TB-06) | Закрывать пункты по мере выполнения/отклонения |
 
+
+## docs/ (публикуемый набор)
+
+Публикуется только allowlist `PAGES` в `tools/prepare_site_docs.py`; он сверяется
+с таблицей §1 `COPYRIGHT_AND_LICENSING.md` тестом `tests/test_site_sources.py`.
+
+| Path | Статус | Что там | Действие/замена |
+|---|---|---|---|
+| `docs/index.md` | canonical (публикуется) | Главная страница онлайн-справочника | Держать навигацию синхронной с `docs/README.md` |
+| `docs/README.md` | canonical (публикуется как `catalog.md`) | Каталог технических статей; при сборке сайта публикуется под именем `catalog.md` | Обновлять при добавлении статьи |
+| 18 поддерживаемых статей `docs/*.md` | canonical (публикуются) | Перечень — §1 `COPYRIGHT_AND_LICENSING.md` и `nav` в `mkdocs.yml`; статусы внутри статей сохраняются | Повышать статусы только по проверке; сырьё остаётся в `archive/` |
+| `docs/agent-guidance/01..04*.md` | canonical (внутренние, не публикуются) | Сохранённые исходные инструкции агентам, разбитые из прежнего длинного `AGENTS.md` | Читать по теме; краткий действующий контракт — `AGENTS.md` |
+| `docs/ai-agent-engineering-pstack.md` | research (не публикуется) | Исследование о навыках и контексте агентов; в `PAGES` не входит | Не публиковать без решения владельца и строки в лицензионной таблице |
 
 ## archive/ (физически перемещено из корня 2026-09-24, TASK-KB-12)
 
@@ -48,8 +66,9 @@
 | `archive/historical/uninstall.sh` | historical duplicate snapshot | Cleanup companion; на 2026-09-19 blob совпадает с активным `amnezia-mihomo-gateway/uninstall.sh` | Не считать canonical copy; rollback неполный, детали в `docs/amnezia-mihomo-gateway-evolution.md` |
 | `archive/raw/moshub.md` | source/raw → extracted | Компиляция AI-разведок о Mos.Hub/GitLab/GitHub для IPK-дистрибуции; выводы противоречивы; с header-указателем | Проверенные выводы — в `docs/moshub-entware-mirror.md` (аудит 2026-09-24, решение по пилоту B); хранить как provenance |
 | `archive/historical/moshubrd.md` | historical / provenance artifact | Нетронутый шаблонный README реального проекта владельца на Mos.Hub (`sayone/saymer`, 2026-05-09); с header-указателем | Уникального знания нет; доказывает существование namespace для пилота; не удалять до решения по зеркалу |
+| `archive/historical/entware-service-helper-audit.md` | historical / audit (provenance) | Аудит стороннего Entware-хелпера `scripts/service`, удалённого из текущего HEAD 2026-09-24 (TASK-KB-14); оригинальный скрипт под `archive/` не копировался и доступен только в истории Git | Хранить как provenance удаления; не восстанавливать скрипт без установления происхождения и прав |
 | `archive/raw/mihomo-dns.md` | source/raw → extracted | Research-диалог (2026-09-22) о DNS Keenetic через ProxyN→Mihomo; с header-указателем на извлечённую статью | Provenance для `docs/keenetic-dns-via-mihomo.md`; как production-процедуру не использовать |
-| `Каталог_ссылок_TechnoBypass.md` | candidate / scaffold | Каркас каталога Keenetic/VPN/DPI/сервисов без полноценного наполнения | Либо превратить в реальный curated index, либо архивировать после появления нормальной навигации |
+| `archive/raw/gemini-mihomo-systemd-hardening-2026-09-29.md` | source/raw → extracted | Raw AI-рекомендация Gemini (2026-09-29) о запуске Mihomo без root через systemd; не подтверждена | Проверенная часть — `docs/mihomo-systemd-nonroot-hardening.md`; файл остаётся provenance |
 | `archive/raw/NVR-WL.md` (бывший `NVR/WL.md`) | source/raw → extracted | Исторический диалог: уровни Mihomo/правила/политики + облачные зависимости камер | Знание извлечено в статьи именования/маршрутизации/whitelist и `docs/iot-cloud-routing-methodology.md`; перемещён из NVR/ 2026-09-24 |
 
 ## MosTech/ (авторский цикл, собран 2026-09-29)
@@ -80,6 +99,50 @@
 | `NVR/cleanup_cctv.sh` | project artifact, reviewed | Малый cleanup-скрипт для архива | Сохранить текущую `find -mtime +3` semantics; проверить фактический retention на устройстве при live-test |
 | `NVR/S99cctv` | project artifact, reviewed | Entware init script для записи CCTV | Аудит выявил stale-PID/PID-reuse и SIGKILL caveats; менять lifecycle только после live-test |
 | `NVR/S99stream` | project artifact, reviewed | Entware init/streaming logic для HTTP MPEG-TS | Проверены структура и stop lifecycle; credentials должны оставаться с ограниченными правами; нужен live reconnect/load test |
+
+## NVR/v2/ (архивная копия upstream 2.4, 15 файлов)
+
+Копия сохранена для совместимости raw-ссылок (решение владельца, см. `NVR/README.md`).
+Это **frozen copy**: в этом репозитории она не поддерживается и не обновляется,
+источник истины — активный проект [keenetic-nvr](https://github.com/saymer-alt/keenetic-nvr).
+Утверждения о live-тестах внутри копии относятся к дате копирования и не являются
+текущим подтверждением.
+
+| Path | Статус | Что там |
+|---|---|---|
+| `NVR/v2/README.md` | historical (frozen copy) | Инструкция и live-статусы версии 2.4 на дату копирования |
+| `NVR/v2/ARCHITECTURE.md` | historical (frozen copy) | Архитектура: компоненты, потоки, размещение |
+| `NVR/v2/CHANGELOG.md` | historical (frozen copy) | История версий до 2.4 |
+| `NVR/v2/KNOWN-LIMITATIONS.md` | historical (frozen copy) | Известные ограничения копии |
+| `NVR/v2/REPOSITORY-EXTRACTION.md` | historical (frozen copy) | Записка о выделении проекта в отдельный репозиторий |
+| `NVR/v2/nvr.sh` | project artifact (frozen copy) | Основной CLI/менеджер записи |
+| `NVR/v2/nvr.conf.example` | project artifact (frozen copy) | Пример конфигурации |
+| `NVR/v2/bootstrap.sh`, `fresh-install.sh`, `install-router.sh`, `upgrade-router.sh` | project artifact (frozen copy) | Установка, первичная настройка и обновление на роутере |
+| `NVR/v2/telegram-bot.sh`, `telegram-bot-install.sh`, `telegram-setup.sh` | project artifact (frozen copy) | Telegram-бот и его установка/настройка |
+| `NVR/v2/.gitignore` | project artifact (frozen copy) | Игнорируемые локальные артефакты |
+
+## tests/ (9 файлов, offline)
+
+| Path | Статус | Что там |
+|---|---|---|
+| `tests/test_site_sources.py` | canonical (MIT, §2) | Контракт публикации: allowlist `PAGES`, конвертация ссылок, совпадение с лицензионной таблицей |
+| `tests/check-agent-context.py` | canonical | Бюджет контекста `AGENTS.md` (≤ 12 КиБ), сохранность исходных разделов гайдов, 20 страниц в `PAGES` |
+| `tests/secrets-scan.sh` | project artifact | Поиск секретов и креденшелов; часть архивных NVR-файлов исключена из проверки |
+| `tests/smoke.sh` | project artifact | Host-side smoke: требует `gcc` и GNU coreutils (`touch -d`), а не только BusyBox |
+| `tests/retention-cases.sh` | project artifact | Матрица retention: границы возраста, открытые сегменты, сбои камер, перевод часов, идемпотентность |
+| `tests/notify-logic.sh` | project artifact | Логика уведомлений: дедупликация, recovery-gating, эскалация; сеть не используется |
+| `tests/fresh-config-smoke.sh` | project artifact | Кавычки креденшелов и smoke новой конфигурации без реальных секретов |
+| `tests/telegram-bot-commands.sh` | project artifact | Приём команд, авторизация и replay с фейковым Bot API |
+| `tests/ffmpeg-stub.c` | project artifact (test fixture) | Заглушка RTSP-канала для офлайн-тестов |
+
+## .github/
+
+| Path | Статус | Что там |
+|---|---|---|
+| `.github/workflows/docs-site.yml` | canonical (MIT, §2) | Сборка и деплой MkDocs: контракт контекста, тесты публикации, `mkdocs build --strict`, GitHub Pages |
+| `.github/workflows/nvr-ci.yml` | canonical | Shell-проверки NVR: smoke, retention, notify, telegram-bot, secrets |
+| `.github/ISSUE_TEMPLATE/bug_report.yml`, `feature_request.yml` | canonical | Шаблоны обращений |
+| `.github/pull_request_template.md` | canonical | Шаблон pull request |
 
 ## scripts/
 

@@ -1,0 +1,30 @@
+name: Telegram URL classifier regressions
+
+on:
+  pull_request:
+    paths:
+      - 'tools/parse_telegram_export.py'
+      - 'tests/test_telegram_url_hosts.py'
+      - '.github/workflows/telegram-url-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/parse_telegram_export.py'
+      - 'tests/test_telegram_url_hosts.py'
+      - '.github/workflows/telegram-url-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Telegram URL host-boundary regressions
+        run: python -m unittest discover -s tests -p 'test_telegram_url_hosts.py' -v

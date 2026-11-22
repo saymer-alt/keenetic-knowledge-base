@@ -87,6 +87,13 @@ def date_to_iso(s: str) -> str | None:
     return "%s-%s-%s %s:%s" % (y, mo, d, h, mi)
 
 
+def host_matches_domain(host: str, domain: str) -> bool:
+    """True only for the exact domain or a real subdomain (dot boundary).
+    A suffix-only lookalike such as ``notgithub.com`` must not match
+    ``github.com``."""
+    return host == domain or host.endswith("." + domain)
+
+
 def normalize_url(url: str) -> str:
     """Conservative normalization: lowercase scheme+host, drop tracking
     params, strip trailing slash. Fragments are kept (they are meaningful
@@ -103,9 +110,14 @@ def normalize_url(url: str) -> str:
     path = parts.path or "/"
     if path != "/" and path.endswith("/"):
         path = path.rstrip("/")
+    try:
+        host = parts.hostname or ""
+    except ValueError:
+        host = ""
     # git hosts: repo root vs repo.git point at the same project; distinct
     # paths (issues/releases/blob) are unaffected by this rule.
-    if netloc.endswith(("github.com", "gitlab.com")) and path.endswith(".git"):
+    if (host_matches_domain(host, "github.com")
+            or host_matches_domain(host, "gitlab.com")) and path.endswith(".git"):
         path = path[:-4] or "/"
     query = ""
     if parts.query:
@@ -147,8 +159,8 @@ def classify_url(href: str, anchor: str) -> str:
     u = urlsplit(href)
     host = (u.netloc.lower().split("@")[-1].split(":")[0]) or ""
     path = u.path or "/"
-    if host.endswith("github.com") or host.endswith("githubusercontent.com") or host == "gist.github.com":
-        if host == "gist.github.com" or host.endswith("githubusercontent.com"):
+    if host_matches_domain(host, "github.com") or host_matches_domain(host, "githubusercontent.com"):
+        if host == "gist.github.com" or host_matches_domain(host, "githubusercontent.com"):
             if "gist" in host:
                 return "gist"
             return "github-raw"
@@ -160,21 +172,22 @@ def classify_url(href: str, anchor: str) -> str:
         if len(seg) >= 2:
             return "github-repo"
         return "github-profile"
-    if host.endswith("gitlab.com"):
+    if host_matches_domain(host, "gitlab.com"):
         return "gitlab"
-    if host == "t.me" or host.endswith("telegram.me") or host.endswith(".telegram.org"):
+    if host == "t.me" or host_matches_domain(host, "telegram.me") or host.endswith(".telegram.org"):
         return "telegram"
     if host in ("telegra.ph", "teletype.in", "habr.com", "medium.com", "vc.ru", "dtf.ru",
                 "4pda.to", "forum.keenetic.com", "www.reddit.com", "reddit.com",
-                "linux.org.ru", "forum.zalinux.ru", "svsool.com") or host.startswith("habr."):
+                "linux.org.ru", "forum.zalinux.ru", "svsool.com") \
+            or host_matches_domain(host, "habr.com") or host_matches_domain(host, "habr.ru"):
         return "article-or-forum"
     if host in ("pastebin.com", "ghostbin.com", "paste.ee", "controlc.com", "dpaste.com",
                 "rentry.co", "textbin.net"):
         return "pastebin"
-    if host.endswith("keenetic.com") or host.endswith("magitrickle.dev") or host.endswith("entware.net") \
-            or host.endswith("xray.com") or host.endswith("go.dev") or host.endswith("readthedocs.io") \
-            or host.endswith("mihomo.party") or host.endswith("wireguard.com") \
-            or host.endswith("amnezia.org") or host.endswith("proxifly.com") or "/docs" in path:
+    if any(host_matches_domain(host, d) for d in (
+            "keenetic.com", "magitrickle.dev", "entware.net", "xray.com",
+            "go.dev", "readthedocs.io", "mihomo.party", "wireguard.com",
+            "amnezia.org", "proxifly.com")) or "/docs" in path:
         return "documentation"
     diagnostics = ("browserleaks.com", "dnsleaktest.com", "ipleak.net", "speedtest.net",
                    "check-host.net", "ifconfig.me", "ipinfo.io", "ip.sb", "whatismyipaddress.com",

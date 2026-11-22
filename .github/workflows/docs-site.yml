@@ -7,8 +7,10 @@ on:
       - 'docs/**'
       - 'mkdocs.yml'
       - 'requirements-docs.txt'
+      - 'COPYRIGHT_AND_LICENSING.md'
       - 'tools/prepare_site_docs.py'
       - 'tests/test_site_sources.py'
+      - 'tests/check-agent-context.py'
       - '.github/workflows/docs-site.yml'
   push:
     branches: [main]
@@ -16,8 +18,10 @@ on:
       - 'docs/**'
       - 'mkdocs.yml'
       - 'requirements-docs.txt'
+      - 'COPYRIGHT_AND_LICENSING.md'
       - 'tools/prepare_site_docs.py'
       - 'tests/test_site_sources.py'
+      - 'tests/check-agent-context.py'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 

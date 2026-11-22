@@ -124,16 +124,26 @@ TechnoBypass — важный источник того, **что стоит и�
 ## Структура репозитория
 
 ```text
-docs/       поддерживаемые статьи знаний
+docs/       поддерживаемые статьи знаний; agent-guidance/ — внутренние гайды для агентов
 MosTech/    авторский цикл MosTech (статьи, raw-материалы, скрипт)
 catalog/    исследовательский каталог TechnoBypass
-NVR/        исторические NVR v1/streaming и сохранённая копия NVR v2 (upstream: keenetic-nvr)
+NVR/        исторические NVR v1/streaming; NVR/v2/ — копия upstream 2.4 (источник истины: keenetic-nvr)
 tools/      детерминированные инструменты импорта
+tests/      офлайн-проверки: контракт публикации, внутренние ссылки, секрет-скан
 archive/    provenance: raw-исследования и исторические файлы
+LICENSES/   тексты лицензий (CC BY 4.0, MIT)
+.github/    CI: сборка сайта и проверки Markdown
 ```
 
-Корень содержит только навигацию/метаданные (этот README, AGENTS, INVENTORY, ROADMAP,
-SOURCES, ARTICLE_TEMPLATE, PROMOTION_BACKLOG, Каталог_ссылок_TechnoBypass).
+Корень содержит только навигацию, метаданные и конфигурацию публикации: этот README,
+AGENTS, INVENTORY, ROADMAP, SOURCES, COPYRIGHT_AND_LICENSING, ARTICLE_TEMPLATE,
+PROMOTION_BACKLOG, CONTRIBUTING, SECURITY, Каталог_ссылок_TechnoBypass, а также
+`mkdocs.yml` и `requirements-docs.txt` для сборки сайта.
+
+Проверки из `tests/` запускаются в CI (`.github/workflows/docs-site.yml`):
+`tests/test_internal_links.py` проверяет, что внутренние Markdown-ссылки ведут на
+существующие файлы, `tests/test_site_sources.py` — контракт публикуемых страниц.
+Полная карта файлов — [INVENTORY.md](INVENTORY.md).
 
 История с несовпадением имени и тематики — из предыдущего состояния: например,
 бывший `NVR/WL.md` (сейчас `archive/raw/NVR-WL.md`) содержал материал про Mihomo и
